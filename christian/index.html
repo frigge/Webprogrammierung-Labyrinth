@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Labyrinth</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="view/css/style.css">  
+
+    <script src="libraries/three.r68.js"></script>
+    <script src="libraries/FpsControls.js"></script>
+    
+    <script src="controller/lab_GameController.js"></script>
+    
+    <script src="view/lab_Renderer.js"></script>
+    <script src="view/lab_LabyrinthRenderer.js"></script>
+    <script src="view/lab_MinimapRenderer.js"></script>
+    
+    <script src="model/lab_EntityModel.js"></script>
+    <script src="model/lab_PlayerModel.js"></script>
+
+</head>
+<body>
+                
+    <div id="wrapper">
+        <div id="instructions" style="">
+            <span style="font-size:40px">Zum Spielen klicken!</span>
+            <br /><br />
+            (W, A, S, D = Gehen, SPACE = Springen, SHIFT = Rennen, MAUS = Umschauen)
+        </div>
+    </div>
+
+    <script>
+        
+        var isWebGL = true;
+        
+        // detect if webgl is available
+        try { 
+            var canvas  = document.createElement( 'canvas' );
+            isWebGL = !! window.WebGLRenderingContext && ( canvas.getContext( 'webgl' ) || canvas.getContext( 'experimental-webgl' ) ); 
+        } catch( e ) { 
+            isWebGL = false; 
+        }
+        
+        if(isWebGL){
+            gameController = new lab_GameController('wrapper');
+            console.log(gameController);
+            gameController.initGame();
+            gameController.run();
+        } else {
+            alert('Leider wird WEBGL nicht unterstützt!');
+        }
+        
+        function initGame(){
+            
+            
+            /***********/
+            /* CONTENT */
+            /***********/
+            
+            // floor
+            var geometry = new THREE.PlaneGeometry( 40, 40 ); 
+            var texture = new THREE.ImageUtils.loadTexture("view/images/floor.jpg");
+            texture.wrapS = THREE.RepeatWrapping;
+            texture.wrapT = THREE.RepeatWrapping; 
+            texture.repeat.set( 40, 40 );
+            
+            var material = new THREE.MeshLambertMaterial( {
+                map:  texture, 
+                side: THREE.DoubleSide
+            }); 
+            
+            
+            var ceiling = new THREE.Mesh( geometry, material ); 
+            ceiling.rotation.set(Math.PI / 2, 0.0, 0.0);
+            ceiling.position.set(0.0, 5.0, 0.0);
+            scene.add( ceiling );
+            objects.push( ceiling );
+            
+            var floor = new THREE.Mesh( geometry, material ); 
+            floor.rotation.set(Math.PI / 2, 0.0, 0.0);
+            floor.position.set(0.0, 0.0, 0.0);
+            scene.add( floor );
+            objects.push( floor );
+            
+            
+            // boxes
+            var boxGeometry = new THREE.BoxGeometry(1.0, 1.0, 1.0);
+            var crateTexture = new THREE.ImageUtils.loadTexture("view/images/crate.jpg");
+            var boxMaterial = new THREE.MeshLambertMaterial({ map:crateTexture });
+            
+            addBox(new THREE.Vector3(-1.0,0.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(0.0,0.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(1.0,0.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(2.0,0.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(4.0,0.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(5.0,0.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(6.0,0.5, -3.0), boxGeometry, boxMaterial);
+            
+            addBox(new THREE.Vector3(-1.0,1.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(0.0,1.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(1.0,1.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(2.0,1.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(4.0,1.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(5.0,1.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(6.0,1.5, -3.0), boxGeometry, boxMaterial);
+            
+            addBox(new THREE.Vector3(-1.0,2.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(0.0,2.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(1.0,2.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(2.0,2.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(3.0,2.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(4.0,2.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(5.0,2.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(6.0,2.5, -3.0), boxGeometry, boxMaterial);
+            
+            addBox(new THREE.Vector3(-1.0,3.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(0.0,3.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(1.0,3.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(2.0,3.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(3.0,3.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(4.0,3.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(5.0,3.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(6.0,3.5, -3.0), boxGeometry, boxMaterial);
+            
+            addBox(new THREE.Vector3(7.0,2.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(8.0,1.5, -3.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(9.0,0.5, -3.0), boxGeometry, boxMaterial);
+            
+            
+            addBox(new THREE.Vector3(8.0,-0.4, 7.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(8.0,-0.4, 8.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(7.0,-0.31, 7.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(7.0,-0.31, 8.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(6.0,-0.22, 7.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(6.0,-0.22, 8.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(5.0,-0.13, 7.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(5.0,-0.13, 8.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(4.0,-0.04, 7.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(4.0,-0.04, 8.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(3.0,0.05, 7.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(3.0,0.05, 8.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(2.0,0.14, 7.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(2.0,0.14, 8.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(1.0,0.23, 7.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(1.0,0.23, 8.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(0.0,0.32, 7.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(0.0,0.32, 8.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(-1.0,0.41, 7.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(-1.0,0.41, 8.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(-2.0,0.5, 7.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(-2.0,0.5, 8.0), boxGeometry, boxMaterial);
+            
+            addBox(new THREE.Vector3(-3.0,0.59, 7.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(-3.0,0.59, 8.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(-3.0,-0.41, 7.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(-3.0,-0.41, 8.0), boxGeometry, boxMaterial);
+            
+            addBox(new THREE.Vector3(-4.0,0.68, 7.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(-4.0,0.68, 8.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(-4.0,-0.32, 7.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(-4.0,-0.32, 8.0), boxGeometry, boxMaterial);
+            
+            addBox(new THREE.Vector3(-5.0,0.77, 7.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(-5.0,0.77, 8.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(-5.0,-0.23, 7.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(-5.0,-0.23, 8.0), boxGeometry, boxMaterial);
+            
+            addBox(new THREE.Vector3(-6.0,0.86, 7.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(-6.0,0.86, 8.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(-6.0,-0.14, 7.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(-6.0,-0.14, 8.0), boxGeometry, boxMaterial);
+            
+            addBox(new THREE.Vector3(-7.0,0.95, 7.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(-7.0,0.95, 8.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(-7.0,-0.05, 7.0), boxGeometry, boxMaterial);
+            addBox(new THREE.Vector3(-7.0,-0.05, 8.0), boxGeometry, boxMaterial);
+            
+
+        
+            /**********/
+            /* LIGHTS */
+            /**********/
+            var ambientLight = new THREE.AmbientLight(0xffffff);
+            scene.add(ambientLight);
+            
+            window.addEventListener( 'resize', onWindowResize, false );
+            
+        }
+        
+        
+        function addBox(position, geometry, material){
+            
+            var boxMesh = new THREE.Mesh(geometry, material);
+            boxMesh.position.set(position.x, position.y, position.z);
+            boxMesh.doubleSided = true;
+            scene.add(boxMesh);
+            objects.push( boxMesh );
+            
+        }
+        
+    </script>
+    
+</body>
+</html>
