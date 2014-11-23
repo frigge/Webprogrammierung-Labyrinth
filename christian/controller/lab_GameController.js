@@ -12,6 +12,9 @@ function lab_GameController(screenElement){
     this.labyrinthRenderer;
     this.scene;
     this.camera;
+    this.ambientLights;
+    this.controls;
+    this.collidables = new Array();
     
 }
 
@@ -22,8 +25,7 @@ lab_GameController.prototype.initGame = function(){
 
 lab_GameController.prototype.initStage = function(){
     // RENDERER
-    this.labyrinthRenderer = new lab_LabyrinthRenderer();
-    this.labyrinthRenderer.setSize(this.screenWidth, this.screenHeight);
+    this.labyrinthRenderer = new lab_LabyrinthRenderer(this.screenWidth, this.screenHeight);
 
     this.screen.appendChild(this.labyrinthRenderer.getDomElement());
 
@@ -31,43 +33,50 @@ lab_GameController.prototype.initStage = function(){
     this.scene = new THREE.Scene();
 
     // CAMERA
-    this.camera = new THREE.PerspectiveCamera(45, this.screenWidth / this.screenHeight, 0.01, 1000);
+    this.camera = new THREE.PerspectiveCamera(45, this.screenWidth / this.screenHeight, 0.0001, 1000);
     
-    this.camera.position.set( 0, 2, 6 );
+    // LIGHTS
+    this.ambientLights = new THREE.AmbientLight(0xffffff);
+    this.scene.add(this.ambientLights);
+    
+    // CONTROLLS
+    this.controls = new FpsControls({
+        camera: this.camera,
+        debug: false,
+        collidables: this.collidables,
+        fly: false,
+        xCollisionHeights: [1.8, 1.3, 0.8, 0.5, 0.3],
+        xCollisionCrouchHeights: [0.8, 0.4, 0.3],
+        crouchHeight: 0.8,
+        normalSpeed: 80,
+        sprintSpeed: 150,
+        cameraHeight: 1.8,
+        cameraStartPosition: {y: 1.8, x: 0, z:6},
+    });
+    this.scene.add( this.controls.getObject() );
 };
 
 lab_GameController.prototype.initModel = function(){
-//    player = new lab_PlayerModel();
-//    player.position.x = this.camera.position.x;
-//    player.position.x = this.camera.position.y;
-//    player.position.z = this.camera.position.z;
-
-    // floor
-    var geometry    = new THREE.PlaneGeometry( 40, 40 ); 
-    var texture     = new THREE.ImageUtils.loadTexture("view/images/floor.jpg");
-    texture.wrapS   = THREE.RepeatWrapping;
-    texture.wrapT   = THREE.RepeatWrapping; 
-    texture.repeat.set( 40, 40 );
-
-    var material = new THREE.MeshLambertMaterial( {
-        map:  texture, 
-        side: THREE.DoubleSide
-    }); 
-
-    var floor = new THREE.Mesh( geometry, material ); 
-    floor.rotation.set(Math.PI / 2, 0.0, 0.0);
-    floor.position.set(0.0, 0.0, 0.0);
-    this.scene.add( floor );
-
-    // lights
-    this.scene.add(new THREE.AmbientLight(0xffffff));
+    
+    var game            = new lab_GameModel();
+    var levelHandler    = new lab_LevelHandler(game.getCurrentLevel());
+    
+    
+    var worldElements   = levelHandler.getWorldElements();
+    
+    for(var i = 0; i < worldElements.length; i++){
+        this.scene.add(worldElements[i]);
+        this.collidables.push(worldElements[i]);
+    }
+    
+    var entities = levelHandler.getEntities();
+    
+    for(var i = 0; i < entities.length; i++){
+        this.scene.add(entities[i]);
+    }
+    
 };
 
-lab_GameController.prototype.run = function(){
-    this.render();
-//    requestAnimationFrame(this.run(this));
-};
-
-lab_GameController.prototype.render = function(){
-    this.labyrinthRenderer.render(this.scene, this.camera);
+lab_GameController.prototype.update = function(){
+    this.controls.update();
 };

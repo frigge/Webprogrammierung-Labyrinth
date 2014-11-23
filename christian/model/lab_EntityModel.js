@@ -5,6 +5,8 @@ function lab_EntityModel(){
         return new lab_EntityModel();
     }
     
+    this.id;
+    
     /**
      * @type object
      */
