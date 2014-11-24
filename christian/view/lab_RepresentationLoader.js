@@ -25,6 +25,9 @@ function lab_RepresentationLoader(){
         wall: {
             name:       'Wall Element',
             category:   'cube',
+            width:      1.0,
+            height:     1.0,
+            depth:      1.0,
             textureUrl: 'view/images/crate.jpg'
         }
     };
@@ -44,7 +47,7 @@ lab_RepresentationLoader.prototype.get = function(representationId){
                 plane.rotation.set(representation.rotation.x,representation.rotation.y,representation.rotation.z);
                 return plane;
         case 'cube': 
-            var cube = this.getCube(representation.textureUrl);
+            var cube = this.getCube(representation.textureUrl, representation.width, representation.height, representation.depth);
                 return cube;
     }
     
@@ -69,9 +72,9 @@ lab_RepresentationLoader.prototype.getPlane = function(width, height, textureUrl
     
 };
 
-lab_RepresentationLoader.prototype.getCube = function(textureUrl){
+lab_RepresentationLoader.prototype.getCube = function(textureUrl, width, height, depth){
     
-    var geometry     = new THREE.BoxGeometry(1.0, 1.0, 1.0);
+    var geometry     = new THREE.BoxGeometry(width, height, depth);
     var texture      = new THREE.ImageUtils.loadTexture(textureUrl);
     var material     = new THREE.MeshLambertMaterial({ map: texture });
             
