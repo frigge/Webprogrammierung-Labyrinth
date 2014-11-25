@@ -1,10 +1,5 @@
 function lab_CeilingModel(){
     
-    // make sure instance is created
-    if (!(this instanceof lab_CeilingModel)){
-        return new lab_CeilingModel();
-    }
-    
     lab_EntityModel.call(this);
     
     this.id = 'ceiling';

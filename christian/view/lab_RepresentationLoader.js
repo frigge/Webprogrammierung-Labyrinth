@@ -1,10 +1,5 @@
 function lab_RepresentationLoader(){
     
-    // make sure instance is created
-    if (!(this instanceof lab_RepresentationLoader)){
-        return new lab_RepresentationLoader();
-    }
-    
     this.representations = {
         floor: {
             name:       'Floor',

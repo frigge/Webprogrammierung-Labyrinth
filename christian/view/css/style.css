@@ -7,6 +7,30 @@ body {
     font-family: monospace;
     color: #9fffae;
     font-size: 14px;
+    /* we do not want to get highlighting */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+#crosshair{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+/***********/
+/* MINIMAP */
+/***********/
+#minimap{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background-color: green;
 }
 
 /*********/

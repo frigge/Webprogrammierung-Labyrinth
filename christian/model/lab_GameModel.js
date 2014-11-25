@@ -1,14 +1,29 @@
 function lab_GameModel(){
     
-    // make sure instance is created
-    if (!(this instanceof lab_GameModel)){
-        return new lab_GameModel();
-    }
-    
     this.level = {};
     
+    this.player;
 }
 
+lab_GameModel.prototype.init = function(){
+    this.player = new lab_PlayerModel();
+};
+
+lab_GameModel.prototype.update = function(){
+    
+};
+
 lab_GameModel.prototype.getCurrentLevel = function(){
-    return this.level;
+    return [
+        ['wall','wall','wall','wall','wall','wall','wall','wall','wall','wall'],
+        ['wall','','','','','','','','','wall'],
+        ['wall','','','','','','','','','wall'],
+        ['wall','','','','','','','','','wall'],
+        ['wall','','','','','','','','','wall'],
+        ['wall','','','','','','','','','wall'],
+        ['wall','','','','','','','','','wall'],
+        ['wall','','','','','','','','','wall'],
+        ['wall','','','','','','','','','wall'],
+        ['wall','wall','wall','wall','wall','wall','wall','wall','wall','wall']
+    ];
 };

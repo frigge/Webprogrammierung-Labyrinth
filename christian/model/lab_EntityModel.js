@@ -1,10 +1,5 @@
 function lab_EntityModel(){
     
-    // make sure instance is created
-    if (!(this instanceof lab_EntityModel)){
-        return new lab_EntityModel();
-    }
-    
     this.id;
     
     /**

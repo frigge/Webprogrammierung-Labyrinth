@@ -1,10 +1,14 @@
+/**
+ * This renderer is responsible for the 3D content.
+ * It will be initialized by the gamecontroller and
+ * its render method will be clled by the game loop.
+ * 
+ * @param Integer width
+ * @param Integer height
+ */
 function lab_LabyrinthRenderer(width, height){
     
-    // make sure instance is created
-    if (!(this instanceof lab_LabyrinthRenderer)){
-        return new lab_LabyrinthRenderer();
-    }  
-    
+    // calling parent "class"
     lab_AbstractRenderer.call(this, width, height);
     
 }
@@ -17,6 +21,24 @@ lab_LabyrinthRenderer.prototype.constructor = lab_LabyrinthRenderer;
 
 lab_LabyrinthRenderer.prototype.init = function(){
     this.renderer = new THREE.WebGLRenderer({antialias: true});
-    this.setClearColor(0xDDDDD0);
+    this.setClearColor(0xDDCDD0);
 };
 
+lab_LabyrinthRenderer.prototype.setSize = function(width, height){
+    this.renderer.setSize(width, height);
+};
+
+lab_LabyrinthRenderer.prototype.render = function(scene, camera){
+    this.renderer.render(scene, camera);
+};
+
+lab_LabyrinthRenderer.prototype.setClearColor = function(color, alpha){
+    if(!alpha){
+        alpha = 1;
+    }
+    this.renderer.setClearColor(color, alpha);
+};
+
+lab_LabyrinthRenderer.prototype.getDomElement = function(){
+    return this.renderer.domElement;
+};

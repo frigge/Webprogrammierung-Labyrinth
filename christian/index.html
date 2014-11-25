@@ -3,42 +3,56 @@
 <head>
 
     <title>Labyrinth</title>
+    
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
 
+    <!--styling-->
     <link rel="stylesheet" type="text/css" href="view/css/style.css">  
 
+    <!--libraries and third party software-->
     <script src="libraries/three.r68.js"></script>
     <script src="libraries/FpsControls.js"></script>
     <script src="libraries/stats.min.js"></script>
     
+    <!--helper for more functunality-->
     <script src="helper/math.js"></script>
     
-    <script src="controller/lab_GameController.js"></script>
+    <!--model (MVC)-->
+    <script src="model/lab_GameModel.js"></script>
+    <script src="model/lab_EntityModel.js"></script>
+    <script src="model/lab_PlayerModel.js"></script>
     
+    <!--view (MVC)-->
     <script src="view/lab_AbstractRenderer.js"></script>
     <script src="view/lab_LabyrinthRenderer.js"></script>
     <script src="view/lab_MinimapRenderer.js"></script>
     <script src="view/lab_RepresentationLoader.js"></script>
-    <script src="view/lab_LevelHandler.js"></script>
     
-    <script src="model/lab_GameModel.js"></script>
-    <script src="model/lab_EntityModel.js"></script>
-    <script src="model/lab_PlayerModel.js"></script>
-
+    <!--controller (MVC)-->
+    <script src="controller/lab_GameController.js"></script>
+    <script src="controller/lab_LevelController.js"></script>
+    
 </head>
 <body>
-                
+        
+    <!--wrapper for the game drawings-->
     <div id="wrapper">
+        
+        <!--instructions overlay-->
         <div id="instructions" style="">
             <span style="font-size:40px">Zum Spielen klicken!</span>
-            <br /><br />
-            (W, A, S, D = Gehen, SPACE = Springen, SHIFT = Rennen, MAUS = Umschauen)
         </div>
+        
+        <!--crosshair overlay-->
+        <div id="crosshair">
+            <img src="view/images/crosshair.png" alt="crosshair"/>
+        </div>
+        
     </div>
 
     <script>
         
+        // initializing global variables
         var isWebGL         = true;
         var gameController  = null;
         var stats           = null;
@@ -51,12 +65,17 @@
             isWebGL = false; 
         }
         
+        // initialize game if webgl is available
         if(isWebGL){
+            
+            // creating new game controller and initialize game
             gameController = new lab_GameController('wrapper');
             gameController.initGame();
             
+            // initialize status report (only for debugging)
+            // and append it to the stage
             stats = new Stats();
-            document.getElementById("wrapper").appendChild( stats.domElement );
+            wrapper.appendChild( stats.domElement );
             
             run();
         } else {
@@ -64,20 +83,26 @@
         }
         
         
+        // starting game and make this funtion the game loop
         function run(){
             
             requestAnimationFrame(run);
             
+            // update status
             stats.update();
+            
+            // update model over game controller
             gameController.update();
             
+            // do rendering
             render();
             
         }
         
-        
+        // rendering within the game loop happens here
         function render(){
             gameController.labyrinthRenderer.render(gameController.scene, gameController.camera);
+            gameController.minimapRenderer.render();
         }
         
     </script>

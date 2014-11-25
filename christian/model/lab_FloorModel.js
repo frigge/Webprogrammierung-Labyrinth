@@ -1,10 +1,5 @@
 function lab_FloorModel(){
     
-    // make sure instance is created
-    if (!(this instanceof lab_FloorModel)){
-        return new lab_FloorModel();
-    }
-    
     lab_EntityModel.call(this);
     
     this.id = 'floor';

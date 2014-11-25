@@ -1,9 +1,6 @@
 function lab_PlayerModel(){
     
-    // make sure instance is created
-    if (!(this instanceof lab_PlayerModel)){
-        return new lab_PlayerModel();
-    }
+    lab_EntityModel.call(this);
     
     /**
      * @type int
@@ -15,7 +12,6 @@ function lab_PlayerModel(){
      */
     this.inventory = {};
     
-    lab_EntityModel.call(this);
     
 }
 
@@ -25,22 +21,6 @@ lab_PlayerModel.prototype = Object.create(lab_EntityModel.prototype);
 // Set the "constructor" property to refer to lab_PlayerModel
 lab_PlayerModel.prototype.constructor = lab_PlayerModel;
 
-
-lab_PlayerModel.prototype.setHealth = function(playerHealth){
-    this.health = playerHealth;
-};
-
-lab_PlayerModel.prototype.getHealth = function(){
-    return this.health;
-};
-
-lab_PlayerModel.prototype.setInventory = function(playerInventory){
-    this.inventory = playerInventory;
-};
-
-lab_PlayerModel.prototype.getInventory = function(){
-    return this.inventory;
-};
 
 lab_PlayerModel.prototype.addToInventory = function(key, value){
     this.inventory[key] = value;

@@ -523,7 +523,7 @@ function FpsControls(configurationObject){
             document.addEventListener( 'mozpointerlockerror', pointerlockerror, false );
             document.addEventListener( 'webkitpointerlockerror', pointerlockerror, false );
 
-            instructions.addEventListener( 'click', function ( event ) {
+            wrapper.addEventListener( 'click', function ( event ) {
 
                 instructions.style.display = 'none';
 
