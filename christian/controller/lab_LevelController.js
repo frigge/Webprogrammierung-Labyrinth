@@ -24,7 +24,7 @@ lab_LevelController.prototype.getWorldElements = function(){
         floor.position.set(0,0,0);
         worldElements.push(floor);
     var ceiling = this.loader.get('ceiling');
-        ceiling.position.set(0,5,0);
+        ceiling.position.set(0,3,0);
         worldElements.push(ceiling);
     
     var currentObject;
@@ -32,49 +32,20 @@ lab_LevelController.prototype.getWorldElements = function(){
         for(var j=0;j<this.level[i].length;j++){
             if('' !== this.level[i][j]){
                 currentObject = this.loader.get(this.level[i][j]);
-                currentObject.position.set(i,0.5,j);
+                currentObject.position.set(i - 5,0.5,j - 5);
                 worldElements.push(currentObject);
                 currentObject = this.loader.get(this.level[i][j]);
-                currentObject.position.set(i,1.5,j);
+                currentObject.position.set(i - 5,1.5,j - 5);
                 worldElements.push(currentObject);
                 currentObject = this.loader.get(this.level[i][j]);
-                currentObject.position.set(i,2.5,j);
+                currentObject.position.set(i - 5,2.5,j - 5);
                 worldElements.push(currentObject);
             }
         }
     }
     
-    console.log(worldElements);
-    
-    
     return worldElements;
     
-//    var worldElements = new Array();
-//    
-//    var floor   = this.loader.get('floor');
-//        floor.position.set(0,0,0);
-//        worldElements.push(floor);
-//    var ceiling = this.loader.get('ceiling');
-//        ceiling.position.set(0,5,0);
-//        worldElements.push(ceiling);
-//    
-//    var element;
-//    var rangeX = 20;
-//    var rangeY = 5;
-//    
-//    for(var i = 0; i < 200; i++){
-//        var x = Math.max((randomInt(rangeX) - 0.5) , 0);
-//            x = rangeX - (2 * x) - 0.5;
-//        var z  = Math.max((randomInt(rangeX) - 0.5), 0);
-//            z = rangeX - (2 * z) - 0.5;
-//        var y = Math.min((randomInt(rangeY) + 0.51), 4.48);
-//        
-//        element = this.loader.get('wall');
-//        element.position.set(x, y, z);
-//        worldElements.push(element);
-//    }
-//    
-//    return worldElements;
 };
 
 lab_LevelController.prototype.getLevel = function(){

@@ -73,10 +73,8 @@ lab_RepresentationLoader.prototype.getCube = function(textureUrl, width, height,
     var texture      = new THREE.ImageUtils.loadTexture(textureUrl);
     var material     = new THREE.MeshLambertMaterial({ map: texture });
             
-    var mesh = new THREE.Mesh(geometry, material);
-        mesh.doubleSided = true;
+    return new THREE.Mesh(geometry, material);
     
-    return mesh;
 };
 
 
