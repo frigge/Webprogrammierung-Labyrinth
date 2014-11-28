@@ -23,16 +23,6 @@ body {
     top: 50%;
 }
 
-/***********/
-/* MINIMAP */
-/***********/
-#minimap{
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    background-color: green;
-}
-
 /*********/
 /* STATS */
 /*********/

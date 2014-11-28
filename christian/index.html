@@ -7,7 +7,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
     <!--styling-->
-    <link rel="stylesheet" type="text/css" href="view/css/style.css">  
+    <link rel="stylesheet" type="text/css" href="resources/css/style.css">  
 
     <!--libraries and third party software-->
     <script src="libraries/three.r68.js"></script>
@@ -16,6 +16,7 @@
     
     <!--helper for more functunality-->
     <script src="helper/math.js"></script>
+    <script src="helper/ajax.js"></script>
     
     <!--model (MVC)-->
     <script src="model/lab_GameModel.js"></script>
@@ -45,7 +46,7 @@
         
         <!--crosshair overlay-->
         <div id="crosshair">
-            <img src="view/images/crosshair.png" alt="crosshair"/>
+            <img src="resources/images/crosshair.png" alt="crosshair"/>
         </div>
         
     </div>
@@ -55,6 +56,7 @@
         // initializing global variables
         var isWebGL         = true;
         var gameController  = null;
+        var clock           = new THREE.Clock(true);
         var stats           = null;
         
         // detect if webgl is available
@@ -101,8 +103,8 @@
         
         // rendering within the game loop happens here
         function render(){
-            gameController.labyrinthRenderer.render(gameController.scene, gameController.camera);
-            gameController.minimapRenderer.render();
+            gameController.labyrinthRenderer.render(gameController.scene3D, gameController.camera);
+            gameController.minimapRenderer.render(gameController.scene2D, clock);
         }
         
     </script>

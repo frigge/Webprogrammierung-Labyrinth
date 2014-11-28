@@ -16,10 +16,14 @@ function lab_GameController(screenElement){
     // defining stage properties
     this.labyrinthRenderer;
     this.minimapRenderer;
-    this.scene;
+    this.scene3D;
     this.camera;
     this.ambientLights;
     this.controls;
+    
+    
+    this.scene2D = document.createElement("div");
+    this.scene2D.style.position = "relative";
     
     // level handler
     this.levelController;
@@ -30,6 +34,9 @@ function lab_GameController(screenElement){
     
     // the game model holding the entire model
     this.gameModel;
+    
+    // the current level description
+    this.level;
     
 }
 
@@ -67,33 +74,50 @@ lab_GameController.prototype.initView = function(){
     this.screen.appendChild(this.labyrinthRenderer.getDomElement());
     
     // 2D RENDERER
-    this.minimapRenderer = new lab_MinimapRenderer(this.screenWidth / 6, this.screenHeight / 6);
+    this.minimapRenderer = new lab_MinimapRenderer(380, 210);
     this.screen.appendChild(this.minimapRenderer.getDomElement());
 
     // SCENE
-    this.scene = new THREE.Scene();
+    this.scene3D = new THREE.Scene();
 
     // CAMERA
     this.camera = new THREE.PerspectiveCamera(45, this.screenWidth / this.screenHeight, 0.0001, 1000);
     
     // LIGHTS
     this.ambientLights = new THREE.AmbientLight(0xffffff);
-    this.scene.add(this.ambientLights);
+    this.scene3D.add(this.ambientLights);
     
     // ADDING LEVEL OBJECTS TO THE WORLD
-    this.levelController    = new lab_LevelController(this.gameModel.getCurrentLevel());
-    var worldElements       = this.levelController.getWorldElements();
+    this.level              = this.gameModel.getCurrentLevel();
+    this.levelController    = new lab_LevelController(this.level);
     
-    for(var i = 0; i < worldElements.length; i++){
-        this.scene.add(worldElements[i]);
-        this.collidables.push(worldElements[i]);
+    // init 3D World
+    var worldElements3D       = this.levelController.getWorldElements3D();
+    
+    for(var i = 0; i < worldElements3D.length; i++){
+        this.scene3D.add(worldElements3D[i]);
+        this.collidables.push(worldElements3D[i]);
     }
     
-    var entities = this.levelController.getEntities();
+    var entities3D = this.levelController.getEntities3D();
     
-    for(var i = 0; i < entities.length; i++){
-        this.scene.add(entities[i]);
+    for(var i = 0; i < entities3D.length; i++){
+        this.scene3D.add(entities3D[i]);
     }
+    
+    // init 2D World
+    var worldElements2D       = this.levelController.getWorldElements2D();
+    
+    for(var i = 0; i < worldElements2D.length; i++){
+        this.scene2D.appendChild(worldElements2D[i]);
+    }
+    
+    var entities2D = this.levelController.getEntities2D();
+    
+    for(var i = 0; i < entities2D.length; i++){
+        this.scene2D.push(entities2D[i]);
+    }
+    
 };
 
 /**
@@ -117,7 +141,7 @@ lab_GameController.prototype.initControlls = function(){
         cameraHeight: 1.8, // the player eyes height
         cameraStartPosition: {y: 1.8, x: 0, z:0}
     });
-    this.scene.add( this.controls.getObject() );
+    this.scene3D.add( this.controls.getObject() );
 
 };
 

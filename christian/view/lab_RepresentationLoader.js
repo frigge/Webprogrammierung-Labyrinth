@@ -1,35 +1,20 @@
+/**
+ * This "class" loads the representation of objects.
+ * It will tarnslate a object type id into a
+ * valid THREE 3D object which will be rendered to
+ * our scene
+ */
 function lab_RepresentationLoader(){
     
-    this.representations = {
-        floor: {
-            name:       'Floor',
-            category:   'plane',
-            width:      40,
-            height:     40,
-            rotation:   {x: Math.PI / 2, y: 0.0, z: 0.0},
-            textureUrl: 'view/images/floor.jpg'
-        },
-        ceiling: {
-            name:       'Ceiling',
-            category:   'plane',
-            width:      40,
-            height:     40,
-            rotation:   {x: Math.PI / 2, y: 0.0, z: 0.0},
-            textureUrl: 'view/images/floor.jpg'
-        },
-        wall: {
-            name:       'Wall Element',
-            category:   'cube',
-            width:      1.0,
-            height:     1.0,
-            depth:      1.0,
-            textureUrl: 'view/images/crate.jpg'
-        }
-    };
+    // retrieving the description of how to set up
+    // the different world objects
+    this.representations = lab_ajaxGetJson('view/objectsDescription.json');
     
 }
 
-lab_RepresentationLoader.prototype.get = function(representationId){
+// Provides the THREE 3D objects for rendering. This objects 
+// are created and enriched by model data
+lab_RepresentationLoader.prototype.get3D = function(representationId){
     var representation = this.representations[representationId];
     
     if(!representation){
@@ -38,17 +23,23 @@ lab_RepresentationLoader.prototype.get = function(representationId){
     
     switch(representation.category){
         case 'plane': 
-            var plane = this.getPlane(representation.width, representation.height, representation.textureUrl);
-                plane.rotation.set(representation.rotation.x,representation.rotation.y,representation.rotation.z);
+            var plane = this.getPlane3D(representation.width, representation.height, representation.scale, representation.textureUrl);
+                // we got the rotaion in degree so we have to convert to rad
+                rotationX = ((Math.PI * 2) / 360 ) * representation.rotation.x;
+                rotationY = ((Math.PI * 2) / 360 ) * representation.rotation.y;
+                rotationZ = ((Math.PI * 2) / 360 ) * representation.rotation.z;
+                plane.rotation.set(rotationX, rotationY, rotationZ);
                 return plane;
         case 'cube': 
-            var cube = this.getCube(representation.textureUrl, representation.width, representation.height, representation.depth);
+            var cube = this.getCube3D(representation.textureUrl, representation.width, representation.height, representation.depth);
                 return cube;
     }
     
 };
 
-lab_RepresentationLoader.prototype.getPlane = function(width, height, textureUrl){
+// dynamically setting up a THREE 3D primitive 
+// with given data and texture
+lab_RepresentationLoader.prototype.getPlane3D = function(width, height, scale, textureUrl){
 
     var geometry    = new THREE.PlaneGeometry(width, height); 
     var texture     = new THREE.ImageUtils.loadTexture(textureUrl);
@@ -56,7 +47,7 @@ lab_RepresentationLoader.prototype.getPlane = function(width, height, textureUrl
     texture.wrapS   = THREE.RepeatWrapping;
     texture.wrapT   = THREE.RepeatWrapping; 
     
-    texture.repeat.set(width, height);
+    texture.repeat.set(width * scale, height * scale);
 
     var material = new THREE.MeshLambertMaterial( {
         map:  texture, 
@@ -67,7 +58,9 @@ lab_RepresentationLoader.prototype.getPlane = function(width, height, textureUrl
     
 };
 
-lab_RepresentationLoader.prototype.getCube = function(textureUrl, width, height, depth){
+// dynamically setting up a THREE 3D primitive 
+// with given data and texture
+lab_RepresentationLoader.prototype.getCube3D = function(textureUrl, width, height, depth){
     
     var geometry     = new THREE.BoxGeometry(width, height, depth);
     var texture      = new THREE.ImageUtils.loadTexture(textureUrl);
@@ -77,8 +70,17 @@ lab_RepresentationLoader.prototype.getCube = function(textureUrl, width, height,
     
 };
 
-
-
-
-
-
+lab_RepresentationLoader.prototype.get2D = function(representationId){
+    var representation = this.representations[representationId];
+    
+    var div = document.createElement("div");
+        div.style.width     = '15px';
+        div.style.height    = '15px';
+    var img = document.createElement("img");
+        img.style.width     = '15px';
+        img.style.height    = '15px';
+        img.src             = representation.textureUrl;
+        
+    div.appendChild(img);
+    return div;
+}

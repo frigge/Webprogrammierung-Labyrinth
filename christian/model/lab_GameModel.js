@@ -13,17 +13,8 @@ lab_GameModel.prototype.update = function(){
     
 };
 
+
+// will provide a json encoded list of the level elements
 lab_GameModel.prototype.getCurrentLevel = function(){
-    return [
-        ['wall','wall','wall','wall','wall','wall','wall','wall','wall','wall'],
-        ['wall','','','','','','','','','wall'],
-        ['wall','','','','','','','','','wall'],
-        ['wall','','','','','','','','','wall'],
-        ['wall','','','','','','','','','wall'],
-        ['wall','','','','','','','','','wall'],
-        ['wall','','','','','','','','','wall'],
-        ['wall','','','','','','','','','wall'],
-        ['wall','','','','','','','','','wall'],
-        ['wall','wall','wall','wall','wall','wall','wall','wall','wall','wall']
-    ];
+    return lab_ajaxGetJson('resources/level.json');
 };

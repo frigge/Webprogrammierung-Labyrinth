@@ -30,10 +30,21 @@ lab_MinimapRenderer.prototype.init = function(){
     this.minimap = document.createElement('div');
     this.minimap.setAttribute('id', 'minimap');
     
+    this.minimap.style.position         = "absolute";
+    this.minimap.style.left             = 0;
+    this.minimap.style.bottom           = 0;
+    this.minimap.style.backgroundColor  = 'green';
+//    this.minimap.style.overflow         = "hidden";
+    
 };
 
-lab_MinimapRenderer.prototype.render = function(level){
-    this.minimap.childNodes[0].nodeValue = new Date().getTime();
+lab_MinimapRenderer.prototype.render = function(scene, clock){
+    
+    var elapsedTime = parseInt(clock.getElapsedTime() * 10);
+    
+    if(elapsedTime % 4562 === 0){
+        this.minimap.appendChild(scene);
+    }
 };
 
 lab_MinimapRenderer.prototype.getDomElement = function(){
@@ -47,5 +58,4 @@ lab_MinimapRenderer.prototype.setSize = function(width, height){
     this.minimap.style.width    = this.minimapWidth + 'px';
     this.minimap.style.height   = this.minimapHeight + 'px';
     
-    this.minimap.appendChild(document.createTextNode('')); 
 };
