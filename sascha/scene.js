@@ -1,7 +1,7 @@
 function init() {
     initData();
     initInput();
-    initRenderData();
+    View.initRenderData();
 }
 
 function gameLoop(timestamp) {
@@ -10,6 +10,6 @@ function gameLoop(timestamp) {
     requestAnimationFrame(gameLoop);
 
     updateLogic();
-    render();
+    View.render();
 }
 

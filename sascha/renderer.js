@@ -26,7 +26,7 @@ var View = {
 
         //create a bunsh of cubes
         for(var i = 0; i < 10; ++i) {
-            this.scene.add(createCube());
+            this.scene.add(View.createCube());
         }
         var groundPlane = new THREE.Mesh(planeGeo, planeMat);
         groundPlane.matrixAutoUpdate = false;
@@ -50,17 +50,17 @@ var View = {
         var mat = game.player.transformation;
         var inv = new THREE.Matrix4();
         inv.getInverse(mat);
-        renderData.camera.matrix = mat;
-        renderData.camera.matrixWorldInverse = inv;
-        renderData.camera.updateMatrixWorld(true);
+        View.renderData.camera.matrix = mat;
+        View.renderData.camera.matrixWorldInverse = inv;
+        View.renderData.camera.updateMatrixWorld(true);
     },
 
     render : function () {
-        updateCamera();
+        View.updateCamera();
         //renderData.shadowMapRenderer.render(renderData.scene, renderData.camera);
-        renderData.renderer.render(renderData.scene, renderData.camera);
+        View.renderData.renderer.render(View.renderData.scene, View.renderData.camera);
 
-        updateOverlay();
+        View.updateOverlay();
     },
 
     updateOverlay : function () {
@@ -69,7 +69,7 @@ var View = {
     },
 
     initRenderData : function () {
-        renderData = new RenderData();
-        document.getElementById("main").appendChild(renderData.renderer.domElement);
+        View.renderData = new View.RenderData();
+        document.getElementById("main").appendChild(View.renderData.renderer.domElement);
     }
 }

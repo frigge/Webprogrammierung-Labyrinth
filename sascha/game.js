@@ -37,7 +37,7 @@ function Game() {
 var game;
 
 function start() {
-    if(!renderData)
+    if(!View.renderData)
         init();
     
     gameLoop(0);
@@ -65,7 +65,7 @@ function checkCollision(vec) {
     pos.applyMatrix4(mat);
 
     game.player.rayCaster.set(pos, dir);
-    var hitPos = game.player.rayCaster.intersectObjects(renderData.scene.children);
+    var hitPos = game.player.rayCaster.intersectObjects(View.renderData.scene.children);
     var distance = 99999999.9;
     var hit = null;
     for(var i = 0; i < hitPos.length; ++i) {

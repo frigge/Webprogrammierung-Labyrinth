@@ -1,0 +1,10 @@
+#main {
+
+}
+
+#overlay {
+    margin-left: 10px;
+    position: fixed;
+    float: left;
+    color: white;
+}
