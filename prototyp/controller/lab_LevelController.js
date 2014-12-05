@@ -1,6 +1,4 @@
-function lab_LevelController(levelConfiguration){
-    
-    this.level = levelConfiguration;
+function lab_LevelController(){
     
     this.entities;
     this.worldElements;
@@ -8,10 +6,6 @@ function lab_LevelController(levelConfiguration){
     this.loader = new lab_RepresentationLoader();
     
 }
-
-lab_LevelController.prototype.setLevel = function(currentLevel){
-    this.level = currentLevel;
-};
 
 lab_LevelController.prototype.getEntities3D = function(){
     return new Array();
@@ -34,7 +28,7 @@ lab_LevelController.prototype.getWorldElements3D = function(){
     var rangeX = 20;
     var rangeY = 5;
     
-    for(var i = 0; i < 15   0; i++){
+    for(var i = 0; i < 150; i++){
         var x = Math.max((randomInt(rangeX) - 0.5) , 0);
             x = rangeX - (2 * x) - 0.5;
         var z  = Math.max((randomInt(rangeX) - 0.5), 0);

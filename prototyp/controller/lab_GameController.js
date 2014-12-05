@@ -30,10 +30,7 @@ function lab_GameController(screenElement){
     
     // the game model holding the entire model
     this.gameModel;
-    
-    // the current level description
-    this.level;
-    
+       
 }
 
 /**
