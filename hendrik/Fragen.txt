@@ -1,0 +1,5 @@
+warum funktioniert das Licht nicht (Seiten vom Würfel haben keine Abschattungen)
+
+wie dreht man den Blickwinkel
+
+Wände weiter vorne platzieren funktioniert nicht richtig (stehen nicht korrekt auf der Ebene)
