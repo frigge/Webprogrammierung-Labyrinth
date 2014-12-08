@@ -4,7 +4,7 @@ function initInput() {
     });
 
     document.addEventListener("mousemove", function (event) { 
-        if(!renderData.mouseLocked)
+        if(!View.renderData.mouseLocked)
             return;
 
         rotatePlayer(event);
