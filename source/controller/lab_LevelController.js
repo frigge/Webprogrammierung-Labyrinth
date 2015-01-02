@@ -26,27 +26,30 @@ lab_LevelController.prototype.getWorldElements3D = function(){
     var medikit = this.loader.get3D('medikit');
         medikit.position.set(0,1,1);
         worldElements.push(medikit);
+ 
+	
+	// load level data from Json file
+	var level = lab_ajaxGetJson('view/level-01.json');
+	console.log("Level loaded with ajaxGetJson");
 
-    
     var element;
-    var rangeX = 20;
-    var rangeY = 5;
-    
-    for(var i = 0; i < 150; i++){
-        var x = Math.max((randomInt(rangeX) - 0.5) , 0);
-            x = rangeX - (2 * x) - 0.5;
-        var z  = Math.max((randomInt(rangeX) - 0.5), 0);
-            z = rangeX - (2 * z) - 0.5;
-        var y = Math.min((randomInt(rangeY) + 0.51), 4.48);
-        
-        console.log(x);
-        console.log(y);
-        console.log(z);
-        
-        element = this.loader.get3D('wall');
-        element.position.set(x, y, z);
-        worldElements.push(element);
-    }
+
+	// push elemnts from the level file to the world	
+	for (i=0; i<40; i++) {
+		var str = level.level01[i].line;
+		console.log(str);
+		for (j=0; j<40; j++) {
+			// # = normal wall
+			if (str[j] == "#") {
+				// from floor to ceiling
+				for (k=0; k<5; k++) {
+					element = this.loader.get3D('wall');
+					element.position.set(j-19.5, k+0.5, i-19.5);
+					worldElements.push(element); 				
+				}
+			}
+		}
+	}
 
 
     

@@ -6,7 +6,7 @@
         "height":     40,
         "scale":      0.3,
         "rotation":   {"x": 90, "y": 0, "z": 0},
-        "textureUrl": "resources/images/floor.gif"
+        "textureUrl": "resources/images/tutorialsforblender3d.com_BrownStainedBoards-ColorMap_4x.png"
     },
     "ceiling": {
         "name":       "Ceiling",
@@ -15,7 +15,7 @@
         "height":     40,
         "scale":      1,
         "rotation":   {"x": 90, "y": 0, "z": 0},
-        "textureUrl": "resources/images/floor.gif"
+        "textureUrl": "resources/images/tutorialsforblender3d.com_PlasterCeiling.png"
     },
     "wall": {
         "name":       "Wall",
@@ -23,7 +23,7 @@
         "width":      1.0,
         "height":     1.0,
         "depth":      1.0,
-        "textureUrl": "resources/images/wall.gif"
+        "textureUrl": "resources/images/tutorialsforblender3d.com_OldConcrete.png"
     },
     "medikit":  {
         "name":       "Medikit",
