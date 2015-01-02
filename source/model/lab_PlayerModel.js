@@ -6,7 +6,11 @@ function lab_PlayerModel(){
 
     this.inventory = {};
 
+    // the item currently chosen for use in the inventory
     this.activeItem;
+
+    // the item which is currently in passive use
+    this.passiveItem;
 }
 
 // inherit from lab_EntityModel

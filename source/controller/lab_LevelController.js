@@ -23,6 +23,10 @@ lab_LevelController.prototype.getWorldElements3D = function(){
     var ceiling = this.loader.get3D('ceiling');
         ceiling.position.set(0,5,0);
         worldElements.push(ceiling);
+    var medikit = this.loader.get3D('medikit');
+        medikit.position.set(0,1,1);
+        worldElements.push(medikit);
+
     
     var element;
     var rangeX = 20;
@@ -43,6 +47,8 @@ lab_LevelController.prototype.getWorldElements3D = function(){
         element.position.set(x, y, z);
         worldElements.push(element);
     }
+
+
     
     return worldElements;
 };

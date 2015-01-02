@@ -24,5 +24,14 @@
         "height":     1.0,
         "depth":      1.0,
         "textureUrl": "resources/images/wall.gif"
+    },
+    "medikit":  {
+        "name":       "Medikit",
+        "category":   "cube",
+        "width":      0.5,
+        "height":     0.5,
+        "depth":      0.5,
+        "textureUrl": "resources/images/medikit.gif"
     }
+
 }
