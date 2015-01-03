@@ -1,7 +1,8 @@
-// medikit item
 function lab_MediKitItemModel(){
     
     lab_ItemModel.call(this);
+
+    this.type = 'mediKit';
 
     // set the fixed inventory position for the medikit
     this.inventoryPosition = 3;
@@ -12,10 +13,10 @@ function lab_MediKitItemModel(){
 }
 
 // inherit from lab_EntityModel
-lab_ItemModel.prototype = Object.create(lab_ItemModel.prototype);
+lab_MediKitItemModel.prototype = Object.create(lab_ItemModel.prototype);
 
-// Set the "constructor" property to refer to lab_ItemModel
-lab_ItemModel.prototype.constructor = lab_ItemModel;
+// Set the "constructor" property to refer to lab_MediKitItemModel
+lab_MediKitItemModel.prototype.constructor = lab_MediKitItemModel;
 
 lab_MediKitItemModel.prototype.use = function(){
 	// heal player health with healthBonus amount

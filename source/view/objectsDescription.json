@@ -25,13 +25,60 @@
         "depth":      1.0,
         "textureUrl": "resources/images/tutorialsforblender3d.com_OldConcrete.png"
     },
-    "medikit":  {
+    "mediKit":  {
         "name":       "Medikit",
         "category":   "cube",
-        "width":      0.5,
-        "height":     0.5,
-        "depth":      0.5,
+        "width":      1,
+        "height":     1,
+        "depth":      1,
+        "textureUrl": "resources/images/medikit.gif"
+    },
+    "axe":  {
+        "name":       "Axe",
+        "category":   "cube",
+        "width":      1,
+        "height":     1,
+        "depth":      1,
+        "textureUrl": "resources/images/medikit.gif"
+    },
+    "fireExtinguisher":  {
+        "name":       "Fire Extinguisher",
+        "category":   "cube",
+        "width":      1,
+        "height":     1,
+        "depth":      1,
+        "textureUrl": "resources/images/extinguisher.gif"
+    },
+    "gasMask":  {
+        "name":       "Medikit",
+        "category":   "cube",
+        "width":      1,
+        "height":     1,
+        "depth":      1,
+        "textureUrl": "resources/images/medikit.gif"
+    },
+    "resident":  {
+        "name":       "Resident",
+        "category":   "cube",
+        "width":      1,
+        "height":     1,
+        "depth":      1,
+        "textureUrl": "resources/images/medikit.gif"
+    },
+    "fire":  {
+        "name":       "Fire",
+        "category":   "cube",
+        "width":      1,
+        "height":     1,
+        "depth":      1,
+        "textureUrl": "resources/images/medikit.gif"
+    },
+    "smoke":  {
+        "name":       "Smoke",
+        "category":   "cube",
+        "width":      1,
+        "height":     1,
+        "depth":      1,
         "textureUrl": "resources/images/medikit.gif"
     }
-
 }

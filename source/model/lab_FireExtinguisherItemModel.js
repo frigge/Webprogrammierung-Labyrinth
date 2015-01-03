@@ -1,7 +1,8 @@
-// axe item
 function lab_FireExtinguisherItemModel(){
     
     lab_ItemModel.call(this);
+
+    this.type = 'fireExtinguisher';
 
     // set the fixed inventory position for the fire extinguisher
     this.inventoryPosition = 2;
@@ -10,10 +11,10 @@ function lab_FireExtinguisherItemModel(){
 }
 
 // inherit from lab_EntityModel
-lab_ItemModel.prototype = Object.create(lab_ItemModel.prototype);
+lab_FireExtinguisherItemModel.prototype = Object.create(lab_ItemModel.prototype);
 
-// Set the "constructor" property to refer to lab_ItemModel
-lab_ItemModel.prototype.constructor = lab_ItemModel;
+// Set the "constructor" property to refer to lab_FireExtinguisherItemModel
+lab_FireExtinguisherItemModel.prototype.constructor = lab_FireExtinguisherItemModel;
 
 lab_FireExtinguisherItemModel.prototype.use = function(){
 	// TODO: Feuerlöschungbenutzung
@@ -21,4 +22,3 @@ lab_FireExtinguisherItemModel.prototype.use = function(){
 	// reduce amount of uses
 	this.reduceUses();
 }
-

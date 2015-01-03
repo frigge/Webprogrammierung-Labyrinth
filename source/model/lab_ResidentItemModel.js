@@ -1,7 +1,8 @@
-// resident item
 function lab_ResidentItemModel(){
     
     lab_ItemModel.call(this);
+
+    this.type = 'resident';
 
     // set the fixed inventory position for the resident
     this.inventoryPosition = 5;
@@ -10,10 +11,10 @@ function lab_ResidentItemModel(){
 }
 
 // inherit from lab_EntityModel
-lab_ItemModel.prototype = Object.create(lab_ItemModel.prototype);
+lab_ResidentItemModel.prototype = Object.create(lab_ItemModel.prototype);
 
-// Set the "constructor" property to refer to lab_ItemModel
-lab_ItemModel.prototype.constructor = lab_ItemModel;
+// Set the "constructor" property to refer to lab_ResidentItemModel
+lab_ResidentItemModel.prototype.constructor = lab_ResidentItemModel;
 
 lab_ResidentItemModel.prototype.use = function(){
 	// TODO: Bewohner kann nur "benutzt" werden, wenn er im Zielbereich ist => Zielbereich definieren

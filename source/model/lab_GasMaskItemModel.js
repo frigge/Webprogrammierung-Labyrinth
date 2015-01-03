@@ -1,7 +1,8 @@
-// gas mask item
 function lab_GasMaskItemModel(){
     
     lab_ItemModel.call(this);
+
+    this.type = 'gasMask';
 
     // set the fixed inventory position for the axe
     this.inventoryPosition = 4;
@@ -14,10 +15,10 @@ function lab_GasMaskItemModel(){
 }
 
 // inherit from lab_EntityModel
-lab_ItemModel.prototype = Object.create(lab_ItemModel.prototype);
+lab_GasMaskItemModel.prototype = Object.create(lab_ItemModel.prototype);
 
-// Set the "constructor" property to refer to lab_ItemModel
-lab_ItemModel.prototype.constructor = lab_ItemModel;
+// Set the "constructor" property to refer to lab_GasMaskItemModel
+lab_GasMaskItemModel.prototype.constructor = lab_GasMaskItemModel;
 
 lab_GasMaskItemModel.prototype.use = function(){
 	// activate or deactivate the gasmask as passive Item

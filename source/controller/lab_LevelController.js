@@ -1,57 +1,74 @@
-function lab_LevelController(){
+/**
+ * The LevelController takes (1) a level file and (2) one description file for
+ * each model and view and translates them to populize the game world
+ */
+function lab_LevelController(gameModel,scene){
     
-    this.entities;
-    this.worldElements;
-    
-    this.loader = new lab_RepresentationLoader();
-    
+    this.gameModel 	= gameModel;
+    this.scene 		= scene;
+
+    this.modelLoader 			= new lab_ModelLoader();
+    this.representationLoader 	= new lab_RepresentationLoader();
 }
 
-lab_LevelController.prototype.getEntities3D = function(){
-    return new Array();
-};
+lab_LevelController.prototype.init = function(){
+    // the view elements are collected before drawn in regard to performance
+    var viewElements = [];
 
-lab_LevelController.prototype.getWorldElements3D = function(){
-    
+   	// load level data from JSON file
+    var level = lab_ajaxGetJson('resources/level-01.json');
 
-    // build a example world with random walls
-    var worldElements = new Array();
-    
-    var floor   = this.loader.get3D('floor');
-        floor.position.set(0,0,0);
-        worldElements.push(floor);
-    var ceiling = this.loader.get3D('ceiling');
-        ceiling.position.set(0,5,0);
-        worldElements.push(ceiling);
-    var medikit = this.loader.get3D('medikit');
-        medikit.position.set(0,1,1);
-        worldElements.push(medikit);
- 
-	
-	// load level data from Json file
-	var level = lab_ajaxGetJson('view/level-01.json');
-	console.log("Level loaded with ajaxGetJson");
+   	// floor and ceiling have no influence in the game, only a visual representation is created
+    var floor   = this.representationLoader.get3D('floor');
+    floor.position.set(0,0,0);
+    viewElements.push(floor);
+    this.gameModel.collidables.push(floor); // floor has collision detection
 
-    var element;
+    var ceiling = this.representationLoader.get3D('ceiling');
+    ceiling.position.set(0,5,0);
+    viewElements.push(ceiling);
+    this.gameModel.collidables.push(ceiling); // ceiling has collision detection
 
-	// push elemnts from the level file to the world	
+    // the level file is translated
 	for (i=0; i<40; i++) {
 		var str = level.level01[i].line;
-		console.log(str);
 		for (j=0; j<40; j++) {
-			// # = normal wall
-			if (str[j] == "#") {
-				// from floor to ceiling
-				for (k=0; k<5; k++) {
-					element = this.loader.get3D('wall');
-					element.position.set(j-19.5, k+0.5, i-19.5);
-					worldElements.push(element); 				
+			// 5 times because one wall consists of 5 cubes stacked on top
+			for (k=0; k<5; k++) {
+				// create a unique id for every model and its view
+				id = generateUUID();
+
+				// create entity's model according to the token in the level file (e.g. #)
+				if (this.gameModel.models[id] = this.modelLoader.createModelByToken(str[j])) {
+					this.gameModel.models[id].setPosition(j-19.5,k+0.5,i-19.5);
+
+					// create entity's view and put it in the render-scene
+					objectView = this.representationLoader.get3D(this.gameModel.models[id].type);
+					objectView.position.set(
+						this.gameModel.models[id].position.x,
+						this.gameModel.models[id].position.y,
+						this.gameModel.models[id].position.z);
+
+					// set the id of the view to the same unique id of the model to glue them together
+					objectView.id = id;
+					
+					// set if entity has collision detection
+					if (this.gameModel.models[id].collidable) {
+						this.gameModel.collidables.push(objectView);
+					}
+
+					viewElements.push(objectView);
+				}
+				
+				// do not keep on stacking models on one field if it's not a wall
+				if (str[j] != "#") {
+					break;
 				}
 			}
 		}
 	}
-
-
-    
-    return worldElements;
+	// add to scene
+	for(i=0;i<viewElements.length;i++) {
+		this.scene.add(viewElements[i]);
+	}
 };

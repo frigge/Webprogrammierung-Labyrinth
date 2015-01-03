@@ -8,6 +8,13 @@ function lab_ItemModel(){
     
     // the amount of uses for the item
     this.amountUses;
+
+    // items can by collected
+    this.isCollected = false;
+
+    this.hasAreaEvent = true;
+
+    this.collidable = false;
 }
 
 // inherit from lab_EntityModel
@@ -26,13 +33,13 @@ lab_ItemModel.prototype.use = function(){
 // if item is "empty" remove from repository
 lab_ItemModel.prototype.reduceUses = function(){
 	if (this.amountUses-- == 0) {
-		player.removeFromInventory(this.inventoryPosition);	
+		gameModel.player.removeFromInventory(this.inventoryPosition);
+		// the item is not further used and therefore marked as deleted
+		this.isDeleted = true;
 	}
 }
 
-lab_ItemModel.prototype.removeFromWorld = function(){
-	
+lab_ItemModel.prototype.areaEvent = function(){
+	gameModel.player.addToInventory(this);
+	this.isCollected = true;
 }
-
-
-

@@ -1,5 +1,5 @@
 /**
- * This "class" is intendet to be the game flow controler
+ * This "class" is intended to be the game flow controler
  * and will guide the initialization process towards the 
  * game loop. Furthermore it will be responsible for the updating within the
  * model.
@@ -26,7 +26,7 @@ function lab_GameController(screenElement){
     
     // object collection for collision detection
     // all objects within this list will be checked for collision
-    this.collidables = new Array();
+    // this.collidables = new Array();
     
     // the game model holding the entire model
     this.gameModel;
@@ -40,7 +40,8 @@ function lab_GameController(screenElement){
 lab_GameController.prototype.initGame = function(){
     this.initModel();
     this.initView();
-    this.initControlls();
+    this.initLevel();
+    this.initControls();
 };
 
 
@@ -56,10 +57,9 @@ lab_GameController.prototype.initModel = function(){
 };
 
 /**
- * This method will initialize the view. It will set up the camera, 
+ * This method will initialize a basic view. It will set up the camera, 
  * the scene, the renderers and everything else needed to draw the game 
- * and its components. The controls will be started and attached as well
- * to the game.
+ * and its components. Further drawing will be done in the levelController
  */
 lab_GameController.prototype.initView = function(){
     // 3D RENDERER
@@ -74,40 +74,32 @@ lab_GameController.prototype.initView = function(){
     
     // LIGHTS
     this.ambientLights = new THREE.AmbientLight(0xffffff);
-    this.scene3D.add(this.ambientLights);
-    
-    // ADDING LEVEL OBJECTS TO THE WORLD
-    this.levelController    = new lab_LevelController();
-    
-    // init 3D World
-    var worldElements3D       = this.levelController.getWorldElements3D();
-    
-    for(var i = 0; i < worldElements3D.length; i++){
-        this.scene3D.add(worldElements3D[i]);
-        //TODO: Führt zu Kollision ja/nein in den einzelnen Models festlegen
-        this.collidables.push(worldElements3D[i]);
-    }
-    
-    var entities3D = this.levelController.getEntities3D();
-    
-    for(var i = 0; i < entities3D.length; i++){
-        this.scene3D.add(entities3D[i]);
-    }
-    
+    this.scene3D.add(this.ambientLights);    
 };
 
 /**
- * This method wll initialize the controls. This will instantiate 
+ * This method will initialize the level (model and view)
+ */
+lab_GameController.prototype.initLevel = function(){
+    
+    this.levelController    = new lab_LevelController(this.gameModel,this.scene3D);
+    
+    // init level
+    this.levelController.init();
+};
+
+/**
+ * This method will initialize the controls. This will instantiate 
  * a new controls object and configure it with the apropriaet 
  * settings for this game.
  */
-lab_GameController.prototype.initControlls = function(){
-        
+lab_GameController.prototype.initControls = function(){
+    console.log(this.levelController.collidables);
     // CONTROLLS
     this.controls = new FpsControls({
         camera: this.camera, // add the game camera
         debug: false, // setting debug mode
-        collidables: this.collidables, // setting the list ob objects for collision detection
+        collidables: this.gameModel.collidables, // setting the list ob objects for collision detection
         fly: false, // enable flying (for debug)
         xCollisionHeights: [1.8, 1.3, 0.8, 0.5, 0.3], // setting vertical intervall for detection rays
         xCollisionCrouchHeights: [0.8, 0.4, 0.3], // setting vertical intervall for detection rays for crouching

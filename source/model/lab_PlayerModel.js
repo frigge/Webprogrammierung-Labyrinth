@@ -35,6 +35,5 @@ lab_PlayerModel.prototype.useActiveItem = function(){
 lab_PlayerModel.prototype.collectItem = function(item) {
 	// add to inventory
 	this.addToInventory(item);
-	// remove the item from the game world
-	item.removeFromWorld();
+	item.isCollected = true;
 }

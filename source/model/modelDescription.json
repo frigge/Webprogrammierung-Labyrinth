@@ -1,0 +1,42 @@
+{
+    "wall": {
+        "name":       "Wall",
+        "class":      "lab_WallModel",
+        "mapToken":   "#"
+    },
+    "axe":  {
+        "name":       "Axe",
+        "class":      "lab_AxeItemModel",
+        "mapToken":   "a"
+    },
+    "mediKit":  {
+        "name":       "Medikit",
+        "class":      "lab_MediKitItemModel",
+        "mapToken":   "m"
+    },
+    "fireExtinguisher":  {
+        "name":       "Fire Extinguisher",
+        "class":      "lab_FireExtinguisherItemModel",
+        "mapToken":   "e"
+    },
+    "gasMask":  {
+        "name":       "Medikit",
+        "class":      "lab_GasMaskItemModel",
+        "mapToken":   "g"
+    },
+    "resident":  {
+        "name":       "Resident",
+        "class":      "lab_ResidentItemModel",
+        "mapToken":   "r"
+    },
+    "fire":  {
+        "name":       "Fire",
+        "class":      "lab_FireModel",
+        "mapToken":   "f"
+    },
+    "smoke":  {
+        "name":       "Smoke",
+        "class":      "lab_SmokeModel",
+        "mapToken":   "s"
+    }
+}
