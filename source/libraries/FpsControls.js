@@ -72,6 +72,14 @@ function FpsControls(configurationObject){
             sprint:         16, // SHIFT
             crouch:         17  // CONTROL
         },
+        inventorySelection: {
+            axe : 49, // 1
+            extinguisher : 50, // 2
+            medikit : 51, //3
+            gasmask : 52, //4
+            resident : 53 //4
+        },
+
         invertMouse:                false,
         fly:                        false,
         collidables:                [],
@@ -205,6 +213,8 @@ function FpsControls(configurationObject){
     var onKeyUp = function ( event ) {
 
         var movement = configuration.movement;
+        var inventorySelection = configuration.inventorySelection;
+        var player = gameController.gameModel.player;
 
         switch( event.keyCode ) {
             case movement.jump:     jump            = false; break;
@@ -217,6 +227,12 @@ function FpsControls(configurationObject){
             case movement.left:     moveLeft        = false; break;
             case movement.backward: moveBackward    = false; break;
             case movement.right:    moveRight       = false; break;
+
+            case inventorySelection.axe:             player.setActiveItem(1); break;
+            case inventorySelection.extinguisher:    player.setActiveItem(2); break;
+            case inventorySelection.medikit:         player.setActiveItem(3); break;
+            case inventorySelection.gasmask:         player.setActiveItem(4); break;
+            case inventorySelection.resident:        player.setActiveItem(5); break;
         }
         
         debug('Key up: '+event.key+' ('+event.keyCode+')');

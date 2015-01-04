@@ -34,6 +34,10 @@ lab_PlayerModel.prototype.useActiveItem = function(){
 	this.activeItem.use();
 };
 
+lab_PlayerModel.prototype.setActiveItem = function(item){
+    this.activeItem = this.inventory[item];
+}
+
 lab_PlayerModel.prototype.collectItem = function(item) {
 	// add to inventory
 	this.addToInventory(item);
