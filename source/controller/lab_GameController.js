@@ -76,6 +76,8 @@ lab_GameController.prototype.initView = function(){
     // LIGHTS
     this.ambientLights = new THREE.AmbientLight(0xffffff);
     this.scene3D.add(this.ambientLights);    
+
+    this.overlayController = new lab_OverlayController();
 };
 
 /**
@@ -132,6 +134,7 @@ lab_GameController.prototype.update = function(){
     this.controls.update();
     this.gameModel.update();
     this.levelController.update();
+    this.overlayController.update();
 
     // update the player position according to the position of the controls object
     this.gameModel.player.position.x = this.controls.getObject().position.x;

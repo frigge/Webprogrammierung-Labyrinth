@@ -31,3 +31,11 @@ body {
     text-align: center;
     cursor: pointer;
 }   
+
+#debugoverlay{
+    margin-left: 10px;
+    position: fixed;
+    background-color: white;
+    float: left;
+    color: black;
+}
