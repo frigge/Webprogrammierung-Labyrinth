@@ -9,8 +9,14 @@ lab_OverlayController.prototype.update = function() {
     player = gameController.gameModel.player;
     var text = "";
     text += "Health: " + player.health + " %<br>";
-    text += "Active Item: " + player.activeItem + "<br>";
-    text += "Passive Item: " + player.passiveItem + "<br>";
+    if(player.activeItem !== undefined)
+        text += "Active Item: " + player.activeItem.type + " (" + player.activeItem.amountUses + ")<br>";
+    else
+        text += "Active Item: None<br>";
+    if(player.passiveItem !== undefined)
+        text += "Passive Item: " + player.passiveItem.type + " (" + player.passiveItem.amountUses + ")<br>";
+    else
+        text += "Passive Item: None<br>";
     text += "Inventory: [";
     for (var  slot in player.inventory) {
         text += slot + ": " + player.inventory[slot].type;
