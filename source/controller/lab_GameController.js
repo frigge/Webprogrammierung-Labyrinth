@@ -94,8 +94,7 @@ lab_GameController.prototype.initLevel = function(){
  * settings for this game.
  */
 lab_GameController.prototype.initControls = function(){
-    console.log(this.levelController.collidables);
-    // CONTROLLS
+    // CONTROLS
     this.controls = new FpsControls({
         camera: this.camera, // add the game camera
         debug: false, // setting debug mode
@@ -119,4 +118,10 @@ lab_GameController.prototype.initControls = function(){
 lab_GameController.prototype.update = function(){
     this.controls.update();
     this.gameModel.update();
+    this.levelController.update();
+
+    // update the player position according to the position of the controls object
+    this.gameModel.player.position.x = this.controls.getObject().position.x;
+    this.gameModel.player.position.y = this.controls.getObject().position.y;
+    this.gameModel.player.position.z = this.controls.getObject().position.z;
 };

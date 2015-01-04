@@ -7,6 +7,11 @@ function lab_GameModel(){
     this.models = {};
 
     this.collidables = [];
+
+    // if a state of a model changes, it will be added to this array,
+    // which is then processed in the gameController to update the 
+    // view accordingly
+    this.updateList = [];
 }
 
 lab_GameModel.prototype.init = function(){
@@ -15,4 +20,12 @@ lab_GameModel.prototype.init = function(){
 
 lab_GameModel.prototype.update = function(){
     
+};
+
+lab_GameModel.prototype.addModelToUpdateList = function(model){
+    this.updateList[model.id] = model;
+};
+
+lab_GameModel.prototype.removeModelFromUpdateList = function(model){
+    delete this.updateList[model.id];
 };
