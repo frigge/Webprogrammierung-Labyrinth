@@ -1,6 +1,6 @@
-function lab_GasMaskItemModel(){
+function lab_GasMaskItemModel(gameModel){
     
-    lab_ItemModel.call(this);
+    lab_ItemModel.call(this,gameModel);
 
     this.type = 'gasMask';
 

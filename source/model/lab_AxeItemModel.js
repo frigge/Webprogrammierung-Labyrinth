@@ -1,6 +1,6 @@
-function lab_AxeItemModel(){
+function lab_AxeItemModel(gameModel){
     
-    lab_ItemModel.call(this);
+    lab_ItemModel.call(this,gameModel);
 
     this.type = 'axe';
 
@@ -20,4 +20,3 @@ lab_AxeItemModel.prototype.constructor = lab_AxeItemModel;
 lab_AxeItemModel.prototype.use = function(){
 	// TODO: Axtbenutzung
 }
-

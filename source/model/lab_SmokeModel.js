@@ -1,6 +1,6 @@
-function lab_SmokeModel(){
+function lab_SmokeModel(gameModel){
     
-    lab_EntityModel.call(this);
+    lab_EntityModel.call(this,gameModel);
 
     this.type = 'smoke';
 
@@ -14,5 +14,5 @@ lab_SmokeModel.prototype = Object.create(lab_EntityModel.prototype);
 lab_SmokeModel.prototype.constructor = lab_SmokeModel;
 
 lab_SmokeModel.prototype.areaEvent = function(){
-	gameModel.player.health--;
+	this.gameModel.player.reduceHealth(1);
 }

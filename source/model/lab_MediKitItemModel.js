@@ -1,6 +1,6 @@
-function lab_MediKitItemModel(){
+function lab_MediKitItemModel(gameModel){
     
-    lab_ItemModel.call(this);
+    lab_ItemModel.call(this,gameModel);
 
     this.type = 'mediKit';
 
@@ -19,16 +19,9 @@ lab_MediKitItemModel.prototype = Object.create(lab_ItemModel.prototype);
 lab_MediKitItemModel.prototype.constructor = lab_MediKitItemModel;
 
 lab_MediKitItemModel.prototype.use = function(){
-	// heal player health with healthBonus amount
-	if (gameModel.player.health < (100 - this.healthBonus)) {
-		gameModel.player.health += this.healthBonus;
-	} else {
-		gameModel.player.health = 100;
-	}
+	this.gameModel.player.addHealth(this.healthBonus);
+
 	// reduce amount of uses
 	this.reduceUses();
-
-	// DEBUG
-	console.log("Player Health after use of MediKit: " + gameModel.player.health);
 }
 

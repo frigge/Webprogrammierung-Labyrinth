@@ -1,6 +1,6 @@
-function lab_PlayerModel(){
+function lab_PlayerModel(gameModel){
     
-    lab_EntityModel.call(this);
+    lab_EntityModel.call(this, gameModel);
     
     this.health = 100;
 
@@ -11,6 +11,8 @@ function lab_PlayerModel(){
 
     // the item which is currently in passive use
     this.passiveItem;
+
+    this.isDead = false;
 }
 
 // inherit from lab_EntityModel
@@ -35,5 +37,23 @@ lab_PlayerModel.prototype.useActiveItem = function(){
 lab_PlayerModel.prototype.collectItem = function(item) {
 	// add to inventory
 	this.addToInventory(item);
+    console.log("New Item in Inventory");
 	item.isCollected = true;
+    this.gameModel.removeModelFromAreaEventList(item);
+}
+
+lab_PlayerModel.prototype.reduceHealth = function(minusHealthAmount) {
+    this.health -= minusHealthAmount;
+    if (this.health <= 0) {
+        this.isDead = true;
+        alert("Player is dead");
+    }
+}
+
+lab_PlayerModel.prototype.addHealth = function(bonusHealthAmount) {
+    if (this.health < (100 - bonusHealthAmount)) {
+        this.health += bonusHealthAmount;
+    } else {
+        this.health = 100;
+    }
 }

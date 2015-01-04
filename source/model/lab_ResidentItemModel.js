@@ -1,6 +1,6 @@
-function lab_ResidentItemModel(){
+function lab_ResidentItemModel(gameModel){
     
-    lab_ItemModel.call(this);
+    lab_ItemModel.call(this,gameModel);
 
     this.type = 'resident';
 

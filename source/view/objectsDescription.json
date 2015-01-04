@@ -71,7 +71,7 @@
         "width":      1,
         "height":     1,
         "depth":      1,
-        "textureUrl": "resources/images/medikit.gif"
+        "textureUrl": "resources/images/fire.png"
     },
     "smoke":  {
         "name":       "Smoke",

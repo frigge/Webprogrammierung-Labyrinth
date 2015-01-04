@@ -41,6 +41,7 @@ lab_GameController.prototype.initGame = function(){
     this.initModel();
     this.initView();
     this.initLevel();
+    this.initEvents();
     this.initControls();
 };
 
@@ -89,6 +90,18 @@ lab_GameController.prototype.initLevel = function(){
 };
 
 /**
+ * This method will initialize the events
+ */
+lab_GameController.prototype.initEvents = function(){
+    
+    this.eventController    = new lab_EventController(this.gameModel);
+    
+    // init events
+    this.eventController.init();
+};
+
+
+/**
  * This method will initialize the controls. This will instantiate 
  * a new controls object and configure it with the apropriaet 
  * settings for this game.
@@ -124,4 +137,6 @@ lab_GameController.prototype.update = function(){
     this.gameModel.player.position.x = this.controls.getObject().position.x;
     this.gameModel.player.position.y = this.controls.getObject().position.y;
     this.gameModel.player.position.z = this.controls.getObject().position.z;
+
+    this.eventController.update();
 };

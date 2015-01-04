@@ -1,7 +1,7 @@
 // abstract "class" for all items
-function lab_ItemModel(){
+function lab_ItemModel(gameModel){
     
-    lab_EntityModel.call(this);
+    lab_EntityModel.call(this, gameModel);
 
     // each item which can be collected has a fixed inventory position (1-9)
     this.inventoryPosition;
@@ -33,13 +33,13 @@ lab_ItemModel.prototype.use = function(){
 // if item is "empty" remove from repository
 lab_ItemModel.prototype.reduceUses = function(){
 	if (this.amountUses-- == 0) {
-		gameModel.player.removeFromInventory(this.inventoryPosition);
+		this.gameModel.player.removeFromInventory(this.inventoryPosition);
 		// the item is not further used and therefore marked as deleted
 		this.isDeleted = true;
 	}
 }
 
 lab_ItemModel.prototype.areaEvent = function(){
-	gameModel.player.addToInventory(this);
+	this.gameModel.player.collectItem(this);
 	this.isCollected = true;
 }

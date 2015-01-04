@@ -7,7 +7,7 @@ function lab_LevelController(gameModel,scene){
     this.gameModel 	= gameModel;
     this.scene 		= scene;
 
-    this.modelLoader 			= new lab_ModelLoader();
+    this.modelLoader 			= new lab_ModelLoader(this.gameModel);
     this.representationLoader 	= new lab_RepresentationLoader();
 }
 

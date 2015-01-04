@@ -1,5 +1,7 @@
-function lab_EntityModel(){
+function lab_EntityModel(gameModel){
     
+    this.gameModel = gameModel;
+
     // each entity will get an unique ID
     this.id;
 

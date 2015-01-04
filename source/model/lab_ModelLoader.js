@@ -1,8 +1,10 @@
 /**
  * This "class" loads the informations about models.
  */
-function lab_ModelLoader(){
+function lab_ModelLoader(gameModel){
     
+    this.gameModel = gameModel;
+
     this.models = lab_ajaxGetJson('model/modelDescription.json');
 
 }
@@ -23,7 +25,7 @@ lab_ModelLoader.prototype.createModelByToken = function(mapToken){
         // console.log(modelId);
         if (this.models[modelId].mapToken == mapToken) {
             // return new instance of the "class" of the specific model
-            return new window[this.models[modelId].class]();
+            return new window[this.models[modelId].class](this.gameModel);
         }
     }
     return false;

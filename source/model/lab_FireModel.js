@@ -1,6 +1,6 @@
-function lab_FireModel(){
+function lab_FireModel(gameModel){
     
-    lab_EntityModel.call(this);
+    lab_EntityModel.call(this,gameModel);
 
     this.type = 'fire';
 
@@ -14,5 +14,5 @@ lab_FireModel.prototype = Object.create(lab_EntityModel.prototype);
 lab_FireModel.prototype.constructor = lab_FireModel;
 
 lab_FireModel.prototype.areaEvent = function(){
-	gameModel.player.health--;
+	this.gameModel.player.reduceHealth(1);
 }

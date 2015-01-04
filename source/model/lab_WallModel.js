@@ -1,6 +1,6 @@
-function lab_WallModel(){
+function lab_WallModel(gameModel){
     
-    lab_EntityModel.call(this);
+    lab_EntityModel.call(this,gameModel);
 
     this.type = 'wall';
 }

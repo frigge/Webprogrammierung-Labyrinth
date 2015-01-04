@@ -1,6 +1,6 @@
-function lab_FireExtinguisherItemModel(){
+function lab_FireExtinguisherItemModel(gameModel){
     
-    lab_ItemModel.call(this);
+    lab_ItemModel.call(this,gameModel);
 
     this.type = 'fireExtinguisher';
 
