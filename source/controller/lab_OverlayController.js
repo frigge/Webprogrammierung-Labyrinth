@@ -11,7 +11,12 @@ lab_OverlayController.prototype.update = function() {
     text += "Health: " + player.health + " %<br>";
     text += "Active Item: " + player.activeItem + "<br>";
     text += "Passive Item: " + player.passiveItem + "<br>";
-    text += "Inventory: " + (player.inventory.length > 0 ? player.inventory : "Empty") + "<br>";
+    text += "Inventory: [";
+    for (var  slot in player.inventory) {
+        text += slot + ": " + player.inventory[slot].type;
+        text += ", ";
+    }
+    text += "]<br>";
 
     health.innerHTML = text;
 }
