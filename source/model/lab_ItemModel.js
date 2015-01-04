@@ -32,7 +32,8 @@ lab_ItemModel.prototype.use = function(){
 // reduces the amount of uses left for the specific item
 // if item is "empty" remove from repository
 lab_ItemModel.prototype.reduceUses = function(){
-	if (this.amountUses-- == 0) {
+    this.amountUses--;
+	if (this.amountUses == 0) {
 		this.gameModel.player.removeFromInventory(this.inventoryPosition);
 		// the item is not further used and therefore marked as deleted
 		this.isDeleted = true;
