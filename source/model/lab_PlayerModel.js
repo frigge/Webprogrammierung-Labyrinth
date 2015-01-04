@@ -27,6 +27,13 @@ lab_PlayerModel.prototype.addToInventory = function(item){
 };
 
 lab_PlayerModel.prototype.removeFromInventory = function(key){
+    item = this.inventory[key];
+    if(this.activeItem === item)
+        this.activeItem = undefined;
+
+    if(this.passiveItem === item)
+        this.passiveItem = undefined;
+
     delete this.inventory[key];
 };
 
