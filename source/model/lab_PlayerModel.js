@@ -31,7 +31,8 @@ lab_PlayerModel.prototype.removeFromInventory = function(key){
 };
 
 lab_PlayerModel.prototype.useActiveItem = function(){
-	this.activeItem.use();
+	if(this.activeItem !== undefined)
+        this.activeItem.use();
 };
 
 lab_PlayerModel.prototype.setActiveItem = function(item){

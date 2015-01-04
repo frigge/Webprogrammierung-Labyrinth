@@ -106,7 +106,17 @@ function FpsControls(configurationObject){
         initConfiguration();
         initCamera();
         initMovement();
+        initInteraction();
         initPointerLock();
+    };
+
+    var initInteraction = function(){
+        console.log("init interactions");
+        document.addEventListener("mouseup", function(event) {
+            console.log("lala");
+            player = gameController.gameModel.player;
+            player.useActiveItem();
+        }, false);
     };
     
     var initConfiguration = function(){
@@ -531,8 +541,7 @@ function FpsControls(configurationObject){
             document.addEventListener( 'mozpointerlockerror', pointerlockerror, false );
             document.addEventListener( 'webkitpointerlockerror', pointerlockerror, false );
 
-            wrapper.addEventListener( 'click', function ( event ) {
-
+            document.getElementById("instructions").addEventListener( 'click', function ( event ) {
                 instructions.style.display = 'none';
 
                 // Ask the browser to lock the pointer
