@@ -5,6 +5,8 @@ function lab_SmokeModel(gameModel){
     this.type = 'smoke';
 
     this.hasAreaEvent = true;
+
+    this.collidable = false;
 }
 
 // inherit from lab_EntityModel

@@ -5,6 +5,8 @@ function lab_FireModel(gameModel){
     this.type = 'fire';
 
     this.hasAreaEvent = true;
+
+    this.collidable = false;
 }
 
 // inherit from lab_EntityModel
