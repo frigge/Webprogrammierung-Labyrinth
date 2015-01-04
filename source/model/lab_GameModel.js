@@ -8,10 +8,10 @@ function lab_GameModel(){
 
     this.collidables = [];
 
-    // if a state of a model changes, it will be added to this array,
-    // which is then processed in the gameController to update the 
+    // if a state of a model changes, it will be added here which
+    // is then processed in the gameController to update the 
     // view accordingly
-    this.updateList = [];
+    this.updateList = {};
 }
 
 lab_GameModel.prototype.init = function(){
