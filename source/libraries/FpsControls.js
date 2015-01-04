@@ -484,14 +484,6 @@ function FpsControls(configurationObject){
         
     };
     
-    this.activateControls = function(){
-        activated = true;
-    };
-    
-    this.deactivateControls = function(){
-        activated = false;
-    };
-    
     this.moveForward = function(){
         return moveForward;
     };
