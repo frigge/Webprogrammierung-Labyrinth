@@ -27,12 +27,24 @@ lab_PlayerModel.prototype.addToInventory = function(item){
 };
 
 lab_PlayerModel.prototype.removeFromInventory = function(key){
+    item = this.inventory[key];
+    if(this.activeItem === item)
+        this.activeItem = undefined;
+
+    if(this.passiveItem === item)
+        this.passiveItem = undefined;
+
     delete this.inventory[key];
 };
 
 lab_PlayerModel.prototype.useActiveItem = function(){
-	this.activeItem.use();
+	if(this.activeItem !== undefined)
+        this.activeItem.use();
 };
+
+lab_PlayerModel.prototype.setActiveItem = function(item){
+    this.activeItem = this.inventory[item];
+}
 
 lab_PlayerModel.prototype.collectItem = function(item) {
 	// add to inventory
