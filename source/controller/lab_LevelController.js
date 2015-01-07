@@ -18,30 +18,36 @@ lab_LevelController.prototype.init = function(){
    	// load level data from JSON file
     var level = lab_ajaxGetJson('resources/level-01.json');
 
+	// get level size
+	var levelSizeX = level.levelData.length;
+	var levelSizeY = level.levelData[0].line.length;
+	var rangeX = levelSizeX/2-0.5;
+	var rangeY = levelSizeY/2-0.5;
+
    	// floor and ceiling have no influence in the game, only a visual representation is created
     var floor   = this.representationLoader.get3D('floor');
-    floor.position.set(0,0,0);
-    viewElements.push(floor);
+	floor.position.set(0,0,0);
+	viewElements.push(floor);
     this.gameModel.collidables.push(floor); // floor has collision detection
 
     var ceiling = this.representationLoader.get3D('ceiling');
-    ceiling.position.set(0,5,0);
+    ceiling.position.set(0,3,0);
     viewElements.push(ceiling);
     this.gameModel.collidables.push(ceiling); // ceiling has collision detection
 
     // the level file is translated
-	for (i=0; i<40; i++) {
-		var str = level.level01[i].line;
-		for (j=0; j<40; j++) {
-			// 5 times because one wall consists of 5 cubes stacked on top
-			for (k=0; k<5; k++) {
+	for (i=0; i<levelSizeY; i++) {
+		var str = level.levelData[i].line;
+		for (j=0; j<levelSizeX; j++) {
+			// 3 times because one wall consists of 3 cubes stacked on top
+			for (k=0; k<3; k++) {
 				// create a unique id for every model and its view
 				id = generateUUID();
 
 				// create entity's model according to the token in the level file (e.g. #)
 				if (this.gameModel.models[id] = this.modelLoader.createModelByToken(str[j])) {
 					this.gameModel.models[id].id = id;
-					this.gameModel.models[id].setPosition(j-19.5,k+0.5,i-19.5);
+					this.gameModel.models[id].setPosition(j-rangeX,k+0.5,i-rangeY);
 
 					// create entity's view and put it in the render-scene
 					objectView = this.representationLoader.get3D(this.gameModel.models[id].type);
