@@ -1,37 +1,80 @@
 {
+    "player": {
+        "name":       "Player",
+        "View3D": {
+        },
+        "View2D": {
+            "category":     "sprite",
+            "textureUrl":   "resources/images/medikit.gif",
+            "scaleX":       2,
+            "scaleY":       2
+        }
+    },
     "floor": {
         "name":       "Floor",
-        "category":   "plane",
-        "width":      40,
-        "height":     40,
-        "scale":      0.3,
-        "rotation":   {"x": 90, "y": 0, "z": 0},
-        "textureUrl": "resources/images/tutorialsforblender3d.com_BrownStainedBoards-ColorMap_4x.png"
+        "View3D": { 
+            "category":   "plane",
+            "width":      40,
+            "height":     40,
+            "scale":      0.3,
+            "rotation":   {"x": 90, "y": 0, "z": 0},
+            "textureUrl": "resources/images/tutorialsforblender3d.com_BrownStainedBoards-ColorMap_4x.png"
+        },
+        "View2D": {
+            "category":     "sprite",
+            "textureUrl":   "resources/images/medikit.gif",
+            "scaleX":       1,
+            "scaleY":       1
+        }
     },
     "ceiling": {
-        "name":       "Ceiling",
-        "category":   "plane",
-        "width":      40,
-        "height":     40,
-        "scale":      1,
-        "rotation":   {"x": 90, "y": 0, "z": 0},
-        "textureUrl": "resources/images/tutorialsforblender3d.com_PlasterCeiling.png"
+        "name": "Ceiling",
+        "View3D": { 
+            "category":   "plane",
+            "width":      40,
+            "height":     40,
+            "scale":      1,
+            "rotation":   {"x": 90, "y": 0, "z": 0},
+            "textureUrl": "resources/images/tutorialsforblender3d.com_PlasterCeiling.png"
+        },
+        "View2D": {
+            "category":     "sprite",
+            "textureUrl":   "resources/images/medikit.gif",
+            "scaleX":       1,
+            "scaleY":       1
+        }
     },
     "wall": {
         "name":       "Wall",
-        "category":   "cube",
-        "width":      1.0,
-        "height":     1.0,
-        "depth":      1.0,
-        "textureUrl": "resources/images/tutorialsforblender3d.com_OldConcrete.png"
+        "View3D": { 
+            "category":   "cube",
+            "width":      1.0,
+            "height":     5.0,
+            "depth":      1.0,
+            "textureUrl": "resources/images/tutorialsforblender3d.com_OldConcrete.png"
+        },
+        "View2D": {
+            "category":     "sprite",
+            "textureUrl":   "resources/images/medikit.gif",
+            "scaleX":       1,
+            "scaleY":       1
+        }
     },
     "mediKit":  {
         "name":       "Medikit",
-        "category":   "cube",
-        "width":      1,
-        "height":     1,
-        "depth":      1,
-        "textureUrl": "resources/images/medikit.gif"
+        "View3D": { 
+            "category":   "cube",
+            "width":      1,
+            "height":     1,
+            "depth":      1,
+            "textureUrl": "resources/images/medikit.gif"
+        },
+        "View2D": {
+            "category":     "sprite",
+            "textureUrl":   "resources/images/medikit.gif",
+            "scaleX":       1,
+            "scaleY":       1
+        }      
     },
     "axe":  {
         "name":       "Axe",
@@ -43,11 +86,19 @@
     },
     "fireExtinguisher":  {
         "name":       "Fire Extinguisher",
-        "category":   "cube",
-        "width":      1,
-        "height":     1,
-        "depth":      1,
-        "textureUrl": "resources/images/extinguisher.gif"
+        "View3D": { 
+            "category":   "cube",
+            "width":      1,
+            "height":     1,
+            "depth":      1,
+            "textureUrl": "resources/images/extinguisher.gif"
+        },
+        "View2D": {
+            "category":     "sprite",
+            "textureUrl":   "resources/images/extinguisher.gif",
+            "scaleX":       1,
+            "scaleY":       1
+        }
     },
     "gasMask":  {
         "name":       "Medikit",
@@ -67,11 +118,19 @@
     },
     "fire":  {
         "name":       "Fire",
-        "category":   "cube",
-        "width":      1,
-        "height":     1,
-        "depth":      1,
-        "textureUrl": "resources/images/fire.png"
+        "View3D": { 
+            "category":   "cube",
+            "width":      1,
+            "height":     1,
+            "depth":      1,
+            "textureUrl": "resources/images/fire.png"
+        },
+        "View2D": {
+            "category":     "sprite",
+            "textureUrl":   "resources/images/medikit.gif",
+            "scaleX":       1,
+            "scaleY":       1
+        }
     },
     "smoke":  {
         "name":       "Smoke",

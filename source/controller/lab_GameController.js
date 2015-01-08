@@ -6,21 +6,28 @@
  * 
  * @param HTML tag - screenElement
  */
-function lab_GameController(screenElement){
+function lab_GameController(screenElement, minimapElement){
     
     // setting screen properties
     this.screen          = document.getElementById(screenElement);
     this.screenWidth     = screen.width;
     this.screenHeight    = screen.height;
+
+    // setting minimap properties
+    this.minimap          = document.getElementById(minimapElement);
+    this.minimapWidth     = this.minimap.offsetWidth;
+    this.minimapHeight    = this.minimap.offsetHeight;
     
     // defining stage properties
     this.labyrinthRenderer;
+    this.minimapRenderer;
     this.scene3D;
     this.camera;
     this.ambientLights;
     this.controls;
-    
-    
+
+    this.cameraMap;
+
     // level handler
     this.levelController;
     
@@ -30,7 +37,6 @@ function lab_GameController(screenElement){
     
     // the game model holding the entire model
     this.gameModel;
-       
 }
 
 /**
@@ -63,20 +69,39 @@ lab_GameController.prototype.initModel = function(){
  * and its components. Further drawing will be done in the levelController
  */
 lab_GameController.prototype.initView = function(){
-    // 3D RENDERER
+    // LABYRINTH RENDERER
     this.labyrinthRenderer = new lab_LabyrinthRenderer(this.screenWidth, this.screenHeight);
     this.screen.appendChild(this.labyrinthRenderer.getDomElement());
+
+    // MINIMAP RENDERER
+    this.minimapRenderer = new lab_MinimapRenderer(this.minimapWidth, this.minimapHeight);
+    this.minimap.appendChild(this.minimapRenderer.getDomElement());
     
     // SCENE
-    this.scene3D = new THREE.Scene();
+    this.scene3D        = new THREE.Scene();
+    this.sceneMinimap   = new THREE.Scene();
 
-    // CAMERA
-    this.camera = new THREE.PerspectiveCamera(45, this.screenWidth / this.screenHeight, 0.0001, 1000);
+    var aspectRatio = this.screenWidth / this.screenHeight;
     
-    // LIGHTS
-    this.ambientLights = new THREE.AmbientLight(0xffffff);
-    this.scene3D.add(this.ambientLights);    
+    // CAMERA
+    this.camera = new THREE.PerspectiveCamera(45, aspectRatio, 0.0001, 1000);
 
+    // MINIMAP
+    this.cameraMap  = new THREE.OrthographicCamera(
+        -aspectRatio * 20,  // Left
+        aspectRatio * 20,   // Right
+        20,                 // Top
+        -20,                // Bottom
+        -20,                // Near 
+        200 );              // Far 
+    this.cameraMap.up = new THREE.Vector3(0,0,-1);
+    this.cameraMap.lookAt( new THREE.Vector3(0,-1,0) );
+    this.sceneMinimap.add(this.cameraMap);
+
+    // LIGHTS
+    this.scene3D.add(new THREE.AmbientLight(0xffffff));
+    this.sceneMinimap.add(new THREE.AmbientLight(0xffffff));
+   
     this.overlayController = new lab_OverlayController();
 };
 
@@ -85,7 +110,7 @@ lab_GameController.prototype.initView = function(){
  */
 lab_GameController.prototype.initLevel = function(){
     
-    this.levelController    = new lab_LevelController(this.gameModel,this.scene3D);
+    this.levelController    = new lab_LevelController(this.gameModel,this.scene3D,this.sceneMinimap);
     
     // init level
     this.levelController.init();
@@ -137,6 +162,9 @@ lab_GameController.prototype.update = function(){
     this.overlayController.update();
 
     // update the player position according to the position of the controls object
+    // this.cameraMap.position.x = this.gameModel.player.position.x = this.controls.getObject().position.x;
+    // this.cameraMap.position.y = this.gameModel.player.position.y = this.controls.getObject().position.y;
+    // this.cameraMap.position.z = this.gameModel.player.position.z = this.controls.getObject().position.z;
     this.gameModel.player.position.x = this.controls.getObject().position.x;
     this.gameModel.player.position.y = this.controls.getObject().position.y;
     this.gameModel.player.position.z = this.controls.getObject().position.z;

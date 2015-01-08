@@ -13,6 +13,8 @@ function lab_PlayerModel(gameModel){
     this.passiveItem;
 
     this.isDead = false;
+
+    this.positionUpdate = true;
 }
 
 // inherit from lab_EntityModel
