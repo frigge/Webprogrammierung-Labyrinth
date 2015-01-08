@@ -16,6 +16,27 @@ body {
     user-select: none;
 }
 
+#wrapper{
+    position: relative;
+}
+
+#crosshair{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+#minimapWrapper, #minimap{
+    width: 320px;
+    height: 240px;
+    position: absolute;
+}
+
+#minimapWrapper{
+    border: 5px solid #cccccc;
+    right: 10px;
+    top: 10px;
+}
 
 #crosshair{
     position: absolute;
@@ -30,7 +51,7 @@ body {
     width: 600px;
     text-align: center;
     cursor: pointer;
-}   
+}
 
 #debugoverlay{
     margin-left: 10px;
