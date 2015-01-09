@@ -2,6 +2,8 @@ function lab_PlayerModel(gameModel){
     
     lab_EntityModel.call(this, gameModel);
     
+    this.type = "player";
+
     this.health = 100;
 
     this.inventory = {};
@@ -14,7 +16,7 @@ function lab_PlayerModel(gameModel){
 
     this.isDead = false;
 
-    this.positionUpdate = true;
+    this.collidable = false;
 }
 
 // inherit from lab_EntityModel

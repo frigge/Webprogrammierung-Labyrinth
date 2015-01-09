@@ -10,14 +10,11 @@ function lab_ModelLoader(gameModel){
 }
 
 lab_ModelLoader.prototype.createModelByName = function(name){
-    var model = this.models[name];
-    
     if(!name){
         return false;
     }
-    
     // return new instance of the "class" of the specific model
-    return new window[model.class]();
+    return new window[this.modelDescription[name].className](this.gameModel);
 };
 
 lab_ModelLoader.prototype.tokenExists = function(mapToken){

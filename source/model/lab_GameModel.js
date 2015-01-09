@@ -6,8 +6,6 @@ function lab_GameModel(){
 
     this.models = {};
 
-    this.collidables = [];
-
     // if a state of a model changes, it will be added here which
     // is then processed in the gameController to update the 
     // view accordingly
@@ -17,7 +15,6 @@ function lab_GameModel(){
 }
 
 lab_GameModel.prototype.init = function(){
-    this.player = new lab_PlayerModel(this);
 };
 
 lab_GameModel.prototype.update = function(){

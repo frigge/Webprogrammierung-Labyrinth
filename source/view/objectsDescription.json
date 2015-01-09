@@ -5,7 +5,7 @@
         },
         "View2D": {
             "category":     "sprite",
-            "textureUrl":   "resources/images/medikit.gif",
+            "textureUrl":   "resources/images/player.gif",
             "scaleX":       2,
             "scaleY":       2
         }
@@ -21,10 +21,6 @@
             "textureUrl": "resources/images/tutorialsforblender3d.com_BrownStainedBoards-ColorMap_4x.png"
         },
         "View2D": {
-            "category":     "sprite",
-            "textureUrl":   "resources/images/medikit.gif",
-            "scaleX":       1,
-            "scaleY":       1
         }
     },
     "ceiling": {
@@ -38,10 +34,6 @@
             "textureUrl": "resources/images/tutorialsforblender3d.com_PlasterCeiling.png"
         },
         "View2D": {
-            "category":     "sprite",
-            "textureUrl":   "resources/images/medikit.gif",
-            "scaleX":       1,
-            "scaleY":       1
         }
     },
     "wall": {
@@ -55,7 +47,7 @@
         },
         "View2D": {
             "category":     "sprite",
-            "textureUrl":   "resources/images/medikit.gif",
+            "textureUrl":   "resources/images/wall.gif",
             "scaleX":       1,
             "scaleY":       1
         }
@@ -63,81 +55,106 @@
     "mediKit":  {
         "name":       "Medikit",
         "View3D": { 
-            "category":   "cube",
-            "width":      1,
-            "height":     1,
-            "depth":      1,
-            "textureUrl": "resources/images/medikit.gif"
+            "category":     "sprite",
+            "textureUrl":   "resources/images/medikit.png",
+            "scaleX":       1,
+            "scaleY":       1
         },
         "View2D": {
             "category":     "sprite",
-            "textureUrl":   "resources/images/medikit.gif",
-            "scaleX":       1,
-            "scaleY":       1
+            "textureUrl":   "resources/images/medikit.png",
+            "scaleX":       3,
+            "scaleY":       3
         }      
     },
     "axe":  {
         "name":       "Axe",
-        "category":   "cube",
-        "width":      1,
-        "height":     1,
-        "depth":      1,
-        "textureUrl": "resources/images/medikit.gif"
+        "View3D": { 
+            "category":     "sprite",
+            "textureUrl":   "resources/images/medikit.png",
+            "scaleX":       1,
+            "scaleY":       1
+        },
+        "View2D": {
+            "category":     "sprite",
+            "textureUrl":   "resources/images/medikit.png",
+            "scaleX":       1,
+            "scaleY":       1
+        }
     },
     "fireExtinguisher":  {
         "name":       "Fire Extinguisher",
         "View3D": { 
-            "category":   "cube",
-            "width":      1,
-            "height":     1,
-            "depth":      1,
-            "textureUrl": "resources/images/extinguisher.gif"
+            "category":     "sprite",
+            "textureUrl":   "resources/images/extinguisher.png",
+            "scaleX":       1,
+            "scaleY":       1
         },
         "View2D": {
             "category":     "sprite",
-            "textureUrl":   "resources/images/extinguisher.gif",
+            "textureUrl":   "resources/images/extinguisher.png",
+            "scaleX":       3,
+            "scaleY":       3
+        }
+    },
+    "gasMask":  {
+        "name":       "Gasmask",
+        "View3D": { 
+            "category":     "sprite",
+            "textureUrl":   "resources/images/medikit.png",
+            "scaleX":       1,
+            "scaleY":       1
+        },
+        "View2D": {
+            "category":     "sprite",
+            "textureUrl":   "resources/images/medikit.png",
             "scaleX":       1,
             "scaleY":       1
         }
     },
-    "gasMask":  {
-        "name":       "Medikit",
-        "category":   "cube",
-        "width":      1,
-        "height":     1,
-        "depth":      1,
-        "textureUrl": "resources/images/medikit.gif"
-    },
     "resident":  {
         "name":       "Resident",
-        "category":   "cube",
-        "width":      1,
-        "height":     1,
-        "depth":      1,
-        "textureUrl": "resources/images/medikit.gif"
+        "View3D": { 
+            "category":     "sprite",
+            "textureUrl":   "resources/images/medikit.png",
+            "scaleX":       1,
+            "scaleY":       1
+        },
+        "View2D": {
+            "category":     "sprite",
+            "textureUrl":   "resources/images/medikit.png",
+            "scaleX":       1,
+            "scaleY":       1
+        }
     },
     "fire":  {
         "name":       "Fire",
         "View3D": { 
-            "category":   "cube",
-            "width":      1,
-            "height":     1,
-            "depth":      1,
-            "textureUrl": "resources/images/fire.png"
+            "category":     "sprite",
+            "textureUrl":   "resources/images/fire.png",
+            "scaleX":       1,
+            "scaleY":       1
         },
         "View2D": {
             "category":     "sprite",
-            "textureUrl":   "resources/images/medikit.gif",
-            "scaleX":       1,
-            "scaleY":       1
+            "textureUrl":   "resources/images/fire.png",
+            "scaleX":       3,
+            "scaleY":       3
         }
     },
     "smoke":  {
         "name":       "Smoke",
-        "category":   "cube",
-        "width":      1,
-        "height":     1,
-        "depth":      1,
-        "textureUrl": "resources/images/medikit.gif"
+        "View3D": { 
+            "category":     "sprite",
+            "textureUrl":   "resources/images/medikit.png",
+            "scaleX":       1,
+            "scaleY":       1
+        },
+        "View2D": {
+            "category":     "sprite",
+            "textureUrl":   "resources/images/medikit.png",
+            "scaleX":       1,
+            "scaleY":       1
+        }
     }
 }

@@ -138,7 +138,7 @@ lab_GameController.prototype.initControls = function(){
     this.controls = new FpsControls({
         camera: this.camera, // add the game camera
         debug: false, // setting debug mode
-        collidables: this.gameModel.collidables, // setting the list ob objects for collision detection
+        collidables: this.levelController.collidables, // setting the list ob objects for collision detection
         fly: false, // enable flying (for debug)
         xCollisionHeights: [1.8, 1.3, 0.8, 0.5, 0.3], // setting vertical intervall for detection rays
         xCollisionCrouchHeights: [0.8, 0.4, 0.3], // setting vertical intervall for detection rays for crouching
@@ -146,7 +146,7 @@ lab_GameController.prototype.initControls = function(){
         normalSpeed: 80,
         sprintSpeed: 150,
         cameraHeight: 1.8, // the player eyes height
-        cameraStartPosition: {y: 1.8, x: 0, z:0}
+        cameraStartPosition: {y: 1.8, x: this.gameModel.player.position.x, z:this.gameModel.player.position.z}
     });
     this.scene3D.add( this.controls.getObject() );
 

@@ -1,4 +1,13 @@
 {
+    "player": {
+        "name":       "Player",
+        "className":  "lab_PlayerModel",
+        "mapToken":   "P"
+    },
+    "floor": {
+        "name":       "Floor",
+        "className":  "lab_FloorModel"
+    },
     "wall": {
         "name":       "Wall",
         "className":  "lab_WallModel",
