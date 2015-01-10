@@ -8,6 +8,10 @@
         "name":       "Floor",
         "className":  "lab_FloorModel"
     },
+    "ceiling": {
+        "name":       "Ceiling",
+        "className":  "lab_CeilingModel"
+    },
     "wall": {
         "name":       "Wall",
         "className":  "lab_WallModel",

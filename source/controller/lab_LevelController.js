@@ -51,6 +51,12 @@ lab_LevelController.prototype.initModels = function(){
 	this.gameModel.models[id].id = id;
 	this.gameModel.models[id].setPosition(0,0,0);
 
+	// ceiling is not defined in level file, set it here
+	id = generateUUID();
+	this.gameModel.models[id] = this.modelLoader.createModelByName('ceiling');
+	this.gameModel.models[id].id = id;
+	this.gameModel.models[id].setPosition(0,3,0);
+
 	// the level file is translated
 	for (i=0; i<levelSizeY; i++) {
 		var str = level.levelData[i].line;
