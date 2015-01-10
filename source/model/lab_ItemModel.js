@@ -42,5 +42,4 @@ lab_ItemModel.prototype.reduceUses = function(){
 
 lab_ItemModel.prototype.areaEvent = function(){
 	this.gameModel.player.collectItem(this);
-	this.isCollected = true;
 }

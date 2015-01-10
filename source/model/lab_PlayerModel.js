@@ -27,7 +27,12 @@ lab_PlayerModel.prototype.constructor = lab_PlayerModel;
 
 
 lab_PlayerModel.prototype.addToInventory = function(item){
-    this.inventory[item.inventoryPosition] = item;
+    // only add to inventory if item is not already in it
+    if (this.inventory[item.inventoryPosition] == undefined) {
+        this.inventory[item.inventoryPosition] = item;
+        return true;
+    }
+    return false;
 };
 
 lab_PlayerModel.prototype.removeFromInventory = function(key){
@@ -42,7 +47,7 @@ lab_PlayerModel.prototype.removeFromInventory = function(key){
 };
 
 lab_PlayerModel.prototype.useActiveItem = function(){
-	if(this.activeItem !== undefined)
+	if(this.activeItem !== undefined) 
         this.activeItem.use();
 };
 
@@ -52,10 +57,11 @@ lab_PlayerModel.prototype.setActiveItem = function(item){
 
 lab_PlayerModel.prototype.collectItem = function(item) {
 	// add to inventory
-	this.addToInventory(item);
-    console.log("New Item in Inventory");
-	item.isCollected = true;
-    this.gameModel.removeModelFromAreaEventList(item);
+	if (this.addToInventory(item)) {
+        console.log("New Item in Inventory");
+        item.isCollected = true;
+        this.gameModel.removeModelFromAreaEventList(item);
+    }
 }
 
 lab_PlayerModel.prototype.reduceHealth = function(minusHealthAmount) {
