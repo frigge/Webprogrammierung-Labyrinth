@@ -71,15 +71,15 @@
         "name":       "Axe",
         "View3D": { 
             "category":     "sprite",
-            "textureUrl":   "resources/images/medikit.png",
+            "textureUrl":   "resources/images/axe.png",
             "scaleX":       1,
             "scaleY":       1
         },
         "View2D": {
             "category":     "sprite",
-            "textureUrl":   "resources/images/medikit.png",
-            "scaleX":       1,
-            "scaleY":       1
+            "textureUrl":   "resources/images/axe.png",
+            "scaleX":       3,
+            "scaleY":       3
         }
     },
     "fireExtinguisher":  {
@@ -101,15 +101,15 @@
         "name":       "Gasmask",
         "View3D": { 
             "category":     "sprite",
-            "textureUrl":   "resources/images/medikit.png",
+            "textureUrl":   "resources/images/gasmask.png",
             "scaleX":       1,
             "scaleY":       1
         },
         "View2D": {
             "category":     "sprite",
-            "textureUrl":   "resources/images/medikit.png",
-            "scaleX":       1,
-            "scaleY":       1
+            "textureUrl":   "resources/images/gasmask.png",
+            "scaleX":       3,
+            "scaleY":       3
         }
     },
     "resident":  {

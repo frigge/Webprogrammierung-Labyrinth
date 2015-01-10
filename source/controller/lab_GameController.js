@@ -30,11 +30,7 @@ function lab_GameController(screenElement, minimapElement){
 
     // level handler
     this.levelController;
-    
-    // object collection for collision detection
-    // all objects within this list will be checked for collision
-    // this.collidables = new Array();
-    
+       
     // the game model holding the entire model
     this.gameModel;
 }
@@ -48,6 +44,7 @@ lab_GameController.prototype.initGame = function(){
     this.initView();
     this.initLevel();
     this.initEvents();
+    this.initCameras();
     this.initControls();
 };
 
@@ -64,9 +61,9 @@ lab_GameController.prototype.initModel = function(){
 };
 
 /**
- * This method will initialize a basic view. It will set up the camera, 
- * the scene, the renderers and everything else needed to draw the game 
- * and its components. Further drawing will be done in the levelController
+ * This method will initialize a basic view. It will set up the scene 
+ * the renderers and everything else needed to draw the game and its
+ * its components. Further drawing will be done in the levelController
  */
 lab_GameController.prototype.initView = function(){
     // LABYRINTH RENDERER
@@ -81,28 +78,37 @@ lab_GameController.prototype.initView = function(){
     this.scene3D        = new THREE.Scene();
     this.sceneMinimap   = new THREE.Scene();
 
-    var aspectRatio = this.screenWidth / this.screenHeight;
-    
-    // CAMERA
-    this.camera = new THREE.PerspectiveCamera(45, aspectRatio, 0.0001, 1000);
-
-    // MINIMAP
-    this.cameraMap  = new THREE.OrthographicCamera(
-        -aspectRatio * 20,  // Left
-        aspectRatio * 20,   // Right
-        20,                 // Top
-        -20,                // Bottom
-        -20,                // Near 
-        200 );              // Far 
-    this.cameraMap.up = new THREE.Vector3(0,0,-1);
-    this.cameraMap.lookAt( new THREE.Vector3(0,-1,0) );
-    this.sceneMinimap.add(this.cameraMap);
-
     // LIGHTS
     this.scene3D.add(new THREE.AmbientLight(0xffffff));
     this.sceneMinimap.add(new THREE.AmbientLight(0xffffff));
    
     this.overlayController = new lab_OverlayController();
+};
+
+/**
+ * This method will initialize the cameras for the scenes.
+ */
+lab_GameController.prototype.initCameras = function(){
+     // CAMERA
+    var aspectRatioScreen = this.screenWidth / this.screenHeight;
+    this.camera = new THREE.PerspectiveCamera(45, aspectRatioScreen, 0.0001, 1000);
+
+    // MINIMAP
+    var aspectRatioMinimap = this.minimapWidth / this.minimapHeight;
+
+    // the size of the level is used to determine the cameras position for the minimap
+    var viewSize = this.levelController.levelSize;
+    this.cameraMap  = new THREE.OrthographicCamera(
+        -aspectRatioMinimap * viewSize / 2,  // Left
+        aspectRatioMinimap * viewSize / 2,   // Right
+        viewSize / 2,                        // Top
+        -viewSize / 2,                       // Bottom
+        -20,                                 // Near 
+        20 );                                // Far 
+    // set the camera to look top down
+    this.cameraMap.up = new THREE.Vector3(0,0,-1);
+    this.cameraMap.lookAt( new THREE.Vector3(0,-1,0) );
+    this.sceneMinimap.add(this.cameraMap);
 };
 
 /**

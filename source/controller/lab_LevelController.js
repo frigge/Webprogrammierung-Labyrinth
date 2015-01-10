@@ -13,6 +13,10 @@ function lab_LevelController(gameModel,scene,minimap){
 
     // the 3D objects which have collision according to the model are collected here
     this.collidables = [];
+
+    // the side of the level which is the largest, can be used to define the image section
+    // of the minimap (done in GameController)
+    this.levelSize;
 }
 
 /**
@@ -33,8 +37,11 @@ lab_LevelController.prototype.initModels = function(){
 	// load level data from JSON file
 
 	var level = lab_ajaxGetJson('resources/level-01.json');
-	var levelSizeX = level.levelData.length;
-	var levelSizeY = level.levelData[0].line.length;
+	var levelSizeX = level.levelData[0].line.length;
+	var levelSizeY = level.levelData.length;
+	
+	this.levelSize = Math.max(levelSizeX, levelSizeY);
+
 	var rangeX = levelSizeX/2-0.5;
 	var rangeY = levelSizeY/2-0.5;
 
@@ -54,7 +61,7 @@ lab_LevelController.prototype.initModels = function(){
 				this.gameModel.models[id].id = id;
 				this.gameModel.models[id].setPosition(j-rangeX,0.5,i-rangeY);
 				if (this.gameModel.models[id].type == "player") {
-					// create reference for better accesibility
+					// create reference for better accessibility
 					this.gameModel.player = this.gameModel.models[id];
 					this.gameModel.addModelToUpdateList(this.gameModel.models[id]);
 				}
@@ -141,4 +148,3 @@ lab_LevelController.prototype.updateSceneObject = function(scene, modelId){
 		}
     }
 }
-
