@@ -113,7 +113,6 @@ function FpsControls(configurationObject){
     var initInteraction = function(){
         console.log("init interactions");
         document.addEventListener("mouseup", function(event) {
-            console.log("lala");
             player = gameController.gameModel.player;
             player.useActiveItem();
         }, false);
@@ -179,8 +178,7 @@ function FpsControls(configurationObject){
     /* #################### */
     
     var onMouseMove = function ( event ) {
-        
-        if(!activated) return;
+        if(!activated || gameController.pause) return;
 
         var invertFactor = configuration.invertMouse ? -1 : 1 ;
 
@@ -197,6 +195,8 @@ function FpsControls(configurationObject){
 
     var onKeyDown = function ( event ) {
         
+        if(!activated || gameController.pause) return;
+
         var movement = configuration.movement;
         
         switch ( event.keyCode ) {
@@ -222,6 +222,11 @@ function FpsControls(configurationObject){
 
     var onKeyUp = function ( event ) {
 
+        if(!activated || gameController.pause) {
+            gameController.pause = false;
+            return;
+        }
+
         var movement = configuration.movement;
         var inventorySelection = configuration.inventorySelection;
         var player = gameController.gameModel.player;
@@ -243,6 +248,7 @@ function FpsControls(configurationObject){
             case inventorySelection.medikit:         player.setActiveItem(3); break;
             case inventorySelection.gasmask:         player.setActiveItem(4); break;
             case inventorySelection.resident:        player.setActiveItem(5); break;
+            case 80:        gameController.pause = true; break;
         }
         
         debug('Key up: '+event.key+' ('+event.keyCode+')');

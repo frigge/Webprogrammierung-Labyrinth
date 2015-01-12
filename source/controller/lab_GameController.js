@@ -179,9 +179,5 @@ lab_GameController.prototype.update = function(){
         this.gameModel.player.position.z = this.controls.getObject().position.z;
 
         this.eventController.update();
-    } else {
-        document.addEventListener("keyPress" function (event) {
-            pause = false;
-        });
     }
 };
