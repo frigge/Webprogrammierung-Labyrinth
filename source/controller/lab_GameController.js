@@ -33,6 +33,8 @@ function lab_GameController(screenElement, minimapElement){
        
     // the game model holding the entire model
     this.gameModel;
+
+    this.pause = false;
 }
 
 /**
@@ -162,18 +164,24 @@ lab_GameController.prototype.initControls = function(){
 // iteration of the game loop. Giving the controller the possibility 
 // to update the modell and the controls
 lab_GameController.prototype.update = function(){
-    this.controls.update();
-    this.gameModel.update();
-    this.levelController.update();
-    this.overlayController.update();
+    if (!this.pause) {
+        this.controls.update();
+        this.gameModel.update();
+        this.levelController.update();
+        this.overlayController.update();
 
-    // update the player position according to the position of the controls object
-    // this.cameraMap.position.x = this.gameModel.player.position.x = this.controls.getObject().position.x;
-    // this.cameraMap.position.y = this.gameModel.player.position.y = this.controls.getObject().position.y;
-    // this.cameraMap.position.z = this.gameModel.player.position.z = this.controls.getObject().position.z;
-    this.gameModel.player.position.x = this.controls.getObject().position.x;
-    this.gameModel.player.position.y = this.controls.getObject().position.y;
-    this.gameModel.player.position.z = this.controls.getObject().position.z;
+        // update the player position according to the position of the controls object
+        // this.cameraMap.position.x = this.gameModel.player.position.x = this.controls.getObject().position.x;
+        // this.cameraMap.position.y = this.gameModel.player.position.y = this.controls.getObject().position.y;
+        // this.cameraMap.position.z = this.gameModel.player.position.z = this.controls.getObject().position.z;
+        this.gameModel.player.position.x = this.controls.getObject().position.x;
+        this.gameModel.player.position.y = this.controls.getObject().position.y;
+        this.gameModel.player.position.z = this.controls.getObject().position.z;
 
-    this.eventController.update();
+        this.eventController.update();
+    } else {
+        document.addEventListener("keyPress" function (event) {
+            pause = false;
+        });
+    }
 };

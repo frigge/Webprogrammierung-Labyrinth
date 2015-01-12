@@ -82,7 +82,6 @@
                 
         // creating new game controller and initialize game
         var gameController = new lab_GameController('wrapper', 'minimap');
-        var pause = false;
         gameController.initGame();
         
         run();
@@ -91,20 +90,12 @@
         function run(){
             
             requestAnimationFrame(run);
-                        
-            if (!pause) {
-                // update model over game controller
-                gameController.update();
 
-                // do rendering
-                render();
-            }
-            else {
-                document.addEventListener("keyPress" function (event) {
-                      pause = false;
-                  });
-            }
-            
+            // update model over game controller
+            gameController.update();
+
+            // do rendering
+            render();
         }
         
         // rendering within the game loop happens here
