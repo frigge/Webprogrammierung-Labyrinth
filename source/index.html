@@ -82,6 +82,7 @@
                 
         // creating new game controller and initialize game
         var gameController = new lab_GameController('wrapper', 'minimap');
+        var pause = false;
         gameController.initGame();
         
         run();
@@ -91,11 +92,13 @@
             
             requestAnimationFrame(run);
                         
-            // update model over game controller
-            gameController.update();
-            
-            // do rendering
-            render();
+            if (!pause) {
+                // update model over game controller
+                gameController.update();
+
+                // do rendering
+                render();
+            }
             
         }
         
