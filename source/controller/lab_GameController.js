@@ -163,7 +163,6 @@ lab_GameController.prototype.initControls = function(){
 // to update the modell and the controls
 lab_GameController.prototype.update = function(){
     this.controls.update();
-    this.gameModel.update();
     this.levelController.update();
     this.overlayController.update();
     this.eventController.update();
