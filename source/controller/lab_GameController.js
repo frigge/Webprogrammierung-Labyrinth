@@ -166,10 +166,5 @@ lab_GameController.prototype.update = function(){
     this.gameModel.update();
     this.levelController.update();
     this.overlayController.update();
-
-    this.gameModel.player.setPosition(this.controls.getObject().position.x);
-    this.gameModel.player.setPosition(this.controls.getObject().position.y);
-    this.gameModel.player.setPosition(this.controls.getObject().position.z);
-
     this.eventController.update();
 };
