@@ -91,9 +91,9 @@ lab_LevelController.prototype.initView = function(scene, representationType){
 			// set the id of the view to the same unique id of the model to glue them together
 			objectView.id = modelId;
 
-			objectView.position.x = model.position.x;
-			objectView.position.y = model.position.y;
-			objectView.position.z = model.position.z;
+			objectView.position.x = model.getPosition().x;
+			objectView.position.y = model.getPosition().y;
+			objectView.position.z = model.getPosition().z;
 
 			viewElements.push(objectView);
 		}
@@ -139,9 +139,9 @@ lab_LevelController.prototype.updateSceneObject = function(scene, modelId){
   	if(!view){
     	return false;
 	}
-	view.position.x = model.position.x;
-    view.position.y = model.position.y;
-    view.position.z = model.position.z;
+	view.position.x = model.getPosition().x;
+    view.position.y = model.getPosition().y;
+    view.position.z = model.getPosition().z;
 
     if (this.gameModel.updateList[modelId].isDeleted || this.gameModel.updateList[modelId].isCollected) {
 		scene.remove(view);
