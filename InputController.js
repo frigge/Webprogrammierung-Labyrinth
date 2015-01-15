@@ -26,8 +26,6 @@ function FpsControls(configurationObject){
     
     var currentHeight       = 0;
     
-    var velocity        = new THREE.Vector3();
-    
     /* VIEW */
     var yawObject   = new THREE.Object3D();
     var pitchObject = new THREE.Object3D();
@@ -251,7 +249,7 @@ function FpsControls(configurationObject){
     
     var detectXCollisions = function( delta ){
         
-        var direction = getDirection( delta );
+        var direction = getDirection();
         var positions = getPositions( direction );
         
         var collisionObjects = [];
@@ -325,6 +323,7 @@ function FpsControls(configurationObject){
     var getDirection = function() {
         return gameModel.player.getAxisZ();
     }
+
     var getPositions = function( direction ){
         
         var centerPosition  = yawObject.position.clone();
@@ -479,22 +478,6 @@ function FpsControls(configurationObject){
         this.gameModel.player.setPosition(this.controls.getObject().position.x);
         this.gameModel.player.setPosition(this.controls.getObject().position.y);
         this.gameModel.player.setPosition(this.controls.getObject().position.z);
-    };
-    
-    this.moveForward = function(){
-        return moveForward;
-    };
-    
-    this.moveBackward = function(){
-        return moveBackward;
-    };
-    
-    this.moveLeft = function(){
-        return moveLeft;
-    };
-    
-    this.moveRight = function(){
-        return moveRight;
     };
     
     this.getObject = function () {
