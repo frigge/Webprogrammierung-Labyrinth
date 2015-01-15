@@ -17,15 +17,12 @@ function FpsControls(configurationObject){
 
     var sprint              = false;
     var crouch              = false;
-    var crouching           = false;
     var jump                = false;
-    var jumping             = false;
-
-    var currentHeight       = 0;
 
     /* VIEW */
     var yawObject   = new THREE.Object3D();
     var pitchObject = new THREE.Object3D();
+    var groundPosObject = new THREE.Object3D();
     var PI_2        = Math.PI / 2;
 
     /* COLLISION DETECTION */
@@ -36,8 +33,6 @@ function FpsControls(configurationObject){
 
     var leftDirection   = new THREE.Vector3();
     var rightDirection  = new THREE.Vector3();
-
-    var upDetection     = false;
 
 
     /* CONFIGURATION */
@@ -108,7 +103,6 @@ function FpsControls(configurationObject){
     var initInteraction = function(){
         console.log("init interactions");
         document.addEventListener("mouseup", function(event) {
-            console.log("lala");
             player = gameController.gameModel.player;
             player.useActiveItem();
         }, false);
@@ -138,25 +132,10 @@ function FpsControls(configurationObject){
 
         debug('Initializing camera ...');
 
-        configuration.camera.position.set( 0, 0, 0 );
-
-        debug('Initializing camera with x=0 y=0 z=0');
-
-        configuration.camera.rotation.set( 0, 0, 0 );
-
-        debug('Camera rotation set to x=0 y=0 z=0');
-
         pitchObject.add(configuration.camera);
         yawObject.add(pitchObject);
-
-        var x = configuration.cameraStartPosition.x,
-            y = configuration.cameraStartPosition.y,
-            z = configuration.cameraStartPosition.z;
-
-        yawObject.position.set(x, y, z);
-
-        debug('Initial view point set to x='+x+' y='+y+' z='+z);
-
+        yawObject.position.set(0, gameController.gameModel.player.height, 0);
+        groundPosObject.add(yawObject);
     };
 
     var initMovement = function (){
@@ -166,9 +145,6 @@ function FpsControls(configurationObject){
         document.addEventListener( 'mousemove', onMouseMove);
         document.addEventListener( 'keydown',   onKeyDown);
         document.addEventListener( 'keyup',     onKeyUp);
-
-        currentHeight = configuration.cameraHeight;
-
     };
 
     /* #################### */
@@ -187,7 +163,16 @@ function FpsControls(configurationObject){
         pitchObject.rotateX(invertFactor * movementY * -0.002);
         pitchObject.rotation.x  = Math.max( -1 * (PI_2 - 0.5), Math.min( PI_2, pitchObject.rotation.x ) );
 
+        transform = gameController.gameModel.player.transformation;
+        rot =  new THREE.Matrix4();
 
+        //rot order x -> y -> z
+        rot.makeRotationX(pitchObject.rotation.x);
+        transform.multiplyMatrices(transform, rot);
+        rot.makeRotationY(pitchObject.rotation.y);
+        transform.multiplyMatrices(transform, rot);
+        rot.makeRotationZ(pitchObject.rotation.z);
+        transform.multiplyMatrices(transform, rot);
     };
 
     var onKeyDown = function ( event ) {
@@ -334,48 +319,42 @@ function FpsControls(configurationObject){
             return;
         }
 
-        var position        = yawObject.position.clone();
+        player = gameController.gameModel.player;
+        pos = player.getPosition();
+        position = new THREE.Vector3(pos.x, pos.y, pos.z);
         var collisionObject = false;
 
-        velocity = gameModel.player.velocity;
+        velocity = player.velocity;
+        ypart = new THREE.Vector3(0, velocity.y, 0);
 
-        /* PROCESSING COLLISION DETECTION: DOWN */
-        collisionObject = getNearestCollisionObject(position, directionDown);
-        if(collisionObject){
-            if(collisionObject.distance < currentHeight){
-                velocity.y = 0;
-                yawObject.position.y += currentHeight - collisionObject.distance;
-                jumping = false;
-                debug('Y collision detected (DOWN).');
-            } else if(collisionObject.distance > currentHeight){
-                velocity.y -= 0.5;
-            }
-        } else {
-            velocity.y -= 0.5;
+        //test 2 times at ground level and at head level
+        groundCollision = getNearestCollisionObject(pos, ypart);
+        head = position.clone();
+        head = head.addVectors(head, ypart);
+
+        headCollision = getNearestCollisionObject(head, velocity.y);
+
+        test = function(collisionObject, limitDistance) {
+            return collisionObject && collisionObject.distance < limitDistance
+        };
+
+        //if ground level slips but head level doesnt
+        //(while falling downwards => velocity.y < 0), it means
+        //we are already inside the floor
+        groundTest = test(groundCollision, .1);
+        headTest = test(headCollision, player.height);
+        if(groundTest || (headTest && velocity.y < 0)) {
+            player.setPosition(pos.x, 0, pos.z);
+            velocity.y = 0;
+            return true;
         }
 
-        /* PROCESSING COLLISION DETECTION: UP */
-        collisionObject = getNearestCollisionObject( position, directionUp );
-        if(collisionObject){
-            //ToDo: CROUCH CONTROL if gap to big
-            if(collisionObject.distance < 0.3){
-                upDetection = true;
-                if(velocity.y > collisionObject.distance){
-                    velocity.y = collisionObject.distance - 0.05;
-                    debug('Y collision detected (UP).');
-                }
-            } else {
-                upDetection = false;
-            }
-        } else {
-            upDetection = false;
-        }
-
-
+        velocity.y -= 0.5;
+        return false;
     };
 
     var getDirection = function() {
-        return gameModel.player.getAxisZ();
+        return gameController.gameModel.player.getAxisZ();
     }
 
     var getPositions = function( direction ){
@@ -400,6 +379,8 @@ function FpsControls(configurationObject){
         var positions       = [];
         var heights         = configuration.xCollisionHeights;
         var crouchHeights   = configuration.xCollisionCrouchHeights;
+
+        currentHeight = gameController.gameModel.player.height;
 
         if(crouch){
             heights = crouchHeights;
@@ -454,11 +435,12 @@ function FpsControls(configurationObject){
 
         if( crouch && !configuration.fly ){
             speed = configuration.crouchSpeed;
+            player.height = configuration.crouchHeight;
         } else if( sprint && moveForward && !configuration.fly ){
             speed = configuration.sprintSpeed;
         }
 
-        vel = gameModel.player.velocity;
+        vel = gameController.gameModel.player.velocity;
         velocity = new THREE.Vector3(vel.x, vel.y, vel.z);
 
         accel = velocity.clone();
@@ -475,7 +457,7 @@ function FpsControls(configurationObject){
 
         velocity.addVectors(velocity, movement);
 
-        if( jump && jumping === false && crouching === false && !configuration.fly ){
+        if( jump && crouching === false && !configuration.fly ){
             jumping = true;
             velocity.y = configuration.jumpHeight;
             if(sprint && moveForward){
@@ -484,32 +466,18 @@ function FpsControls(configurationObject){
             debug('Jumping ...');
         }
 
-        if(crouch && !crouching && !configuration.fly){
-            yawObject.position.y    = yawObject.position.y - currentHeight + configuration.crouchHeight;
-            currentHeight           = configuration.crouchHeight;
-            crouching               = true;
-        } else if(!crouch && crouching && !upDetection){
-            yawObject.position.y    = yawObject.position.y - currentHeight + configuration.cameraHeight;
-            currentHeight           = configuration.cameraHeight;
-            crouching               = false;
-        }
-
-        if(!detectXCollisions( delta ) || configuration.fly){
-            yawObject.translateX( velocity.x * delta );
-            yawObject.translateY( velocity.y * delta );
-            yawObject.translateZ( velocity.z * delta );
-        } else {
-            yawObject.translateY( velocity.y * delta );
-            debug('X collision detected.');
-        }
-
         if(!configuration.fly){
             detectYCollisions();
         }
 
-        pos = yawObject.position;
-        gameModel.player.setPosition(pos.x, pos.y, pos.z);
-        gameModel.player.velocity = {x : velocity.x, y : velocity.y, z : velocity.z};
+        if(!detectXCollisions( delta ) || configuration.fly){
+            position.addVectors(position, velocity);
+        }
+
+        groundPosObject.position = position;
+
+        gameController.gameModel.player.setPosition(position.x, position.y, position.z);
+        gameController.gameModel.player.velocity = {x : velocity.x, y : velocity.y, z : velocity.z};
     };
 
     this.getObject = function () {
