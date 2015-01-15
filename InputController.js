@@ -322,25 +322,9 @@ function FpsControls(configurationObject){
         
     };
     
-    var getDirection = function( delta ){
-        
-        var tmp = yawObject.clone();
-        tmp.translateX( velocity.x * delta );
-        tmp.translateY( velocity.y * delta ); 
-        tmp.translateZ( velocity.z * delta );
-        
-        var currentPosition = yawObject.position.clone();
-        currentPosition.y   = 0;
-        tmp.position.y      = 0;
-        
-        var direction = new THREE.Vector3();
-        direction.subVectors(tmp.position, currentPosition);
-        direction.normalize();
-        
-        return direction;
-        
-    };
-    
+    var getDirection = function() {
+        return gameModel.player.getAxisZ();
+    }
     var getPositions = function( direction ){
         
         var centerPosition  = yawObject.position.clone();
