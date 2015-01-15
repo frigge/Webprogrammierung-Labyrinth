@@ -14,6 +14,7 @@ function lab_PlayerModel(gameModel){
     this.isDead = false;
     this.collidable = false;
     this.velocity = {x: 0.0, y: 0.0, z: 0.0};
+    this.height = 1.8;
 }
 
 // inherit from lab_EntityModel
