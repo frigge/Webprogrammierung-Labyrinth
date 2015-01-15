@@ -27,14 +27,17 @@ lab_EventController.prototype.initAreaEvents = function(){
 
 // if player is in area of entity the corresponding area event is fired
 lab_EventController.prototype.checkForAreaEvent = function(){
+    position = this.gameModel.player.getPosition();
+
     for(var modelId in this.gameModel.areaEventList){
-    	if ((this.gameModel.player.position.x >= this.gameModel.areaEventList[modelId].position.x - 1) &&
-	    	(this.gameModel.player.position.x <= this.gameModel.areaEventList[modelId].position.x + 1) &&
-			(this.gameModel.player.position.z >= this.gameModel.areaEventList[modelId].position.z - 1) &&
-			(this.gameModel.player.position.z <= this.gameModel.areaEventList[modelId].position.z + 1)) {
-	    	console.log("Area event is fired");
-	    	this.gameModel.addModelToUpdateList(this.gameModel.areaEventList[modelId]);
-	    	this.gameModel.areaEventList[modelId].areaEvent();
+        model = this.gameModel.areaEventList[modelId];
+        modelposition = model.getPosition();
+    	if ((position.x >= modelposition.x - 1) &&
+	    	(position.x <= modelposition.x + 1) &&
+			(position.z >= modelposition.z - 1) &&
+			(position.z <= modelposition.z + 1)) {
+	    	this.gameModel.addModelToUpdateList(model);
+	    	model.areaEvent();
 	    }
     }
 };

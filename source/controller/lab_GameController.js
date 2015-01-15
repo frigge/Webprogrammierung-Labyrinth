@@ -152,7 +152,7 @@ lab_GameController.prototype.initControls = function(){
         normalSpeed: 60,
         sprintSpeed: 100,
         cameraHeight: 1.8, // the player eyes height
-        cameraStartPosition: {y: 1.8, x: this.gameModel.player.position.x, z:this.gameModel.player.position.z}
+        cameraStartPosition: {y: 1.8, x: this.gameModel.player.getPosition().x, z:this.gameModel.player.getPosition().z}
     });
     this.scene3D.add( this.controls.getObject() );
 
@@ -167,13 +167,9 @@ lab_GameController.prototype.update = function(){
     this.levelController.update();
     this.overlayController.update();
 
-    // update the player position according to the position of the controls object
-    // this.cameraMap.position.x = this.gameModel.player.position.x = this.controls.getObject().position.x;
-    // this.cameraMap.position.y = this.gameModel.player.position.y = this.controls.getObject().position.y;
-    // this.cameraMap.position.z = this.gameModel.player.position.z = this.controls.getObject().position.z;
-    this.gameModel.player.position.x = this.controls.getObject().position.x;
-    this.gameModel.player.position.y = this.controls.getObject().position.y;
-    this.gameModel.player.position.z = this.controls.getObject().position.z;
+    this.gameModel.player.setPosition(this.controls.getObject().position.x);
+    this.gameModel.player.setPosition(this.controls.getObject().position.y);
+    this.gameModel.player.setPosition(this.controls.getObject().position.z);
 
     this.eventController.update();
 };
