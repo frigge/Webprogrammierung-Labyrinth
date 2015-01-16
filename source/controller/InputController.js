@@ -480,11 +480,6 @@ function FpsControls(configurationObject){
         gameController.gameModel.player.velocity = {x : velocity.x, y : velocity.y, z : velocity.z};
     };
 
-    this.getObject = function () {
-        return yawObject;
-    };
-
-
     function initPointerLock(){
 
         var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
