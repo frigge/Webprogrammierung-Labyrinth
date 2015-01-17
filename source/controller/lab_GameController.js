@@ -154,6 +154,7 @@ lab_GameController.prototype.initControls = function(){
         cameraHeight: 1.8, // the player eyes height
         cameraStartPosition: {y: 1.8, x: this.gameModel.player.getPosition().x, z:this.gameModel.player.getPosition().z}
     });
+    this.scene3D.add(this.controls.getObject());
 };
 
 // This method is getting called every frame, so within every 

@@ -87,6 +87,8 @@ function FpsControls(configurationObject){
         console.warn(message);
     };
 
+    this.getObject = function() { return groundPosObject; };
+
     var error = function(message){
         console.error(message);
     };
@@ -209,15 +211,15 @@ function FpsControls(configurationObject){
             case movement.right:
                moveX -= 1;
                break;
-
-            clamp = function(down, up, val) {
-                return Math.max(down, Math.min(up, val));
-            }
-            
-            moveX = clamp(-1, 1, moveX);
-            moveY = clamp(-1, 1, moveY);
-            moveZ = clamp(-1, 1, moveZ);
         }
+
+        var clamp = function(down, up, val) {
+            return Math.max(down, Math.min(up, val));
+        }
+
+        moveX = clamp(-1, 1, moveX);
+        moveY = clamp(-1, 1, moveY);
+        moveZ = clamp(-1, 1, moveZ);
 
         debug('Key down: '+event.key+' ('+event.keyCode+')');
 
@@ -279,6 +281,13 @@ function FpsControls(configurationObject){
                player.setActiveItem(5);
                break;
         }
+        var clamp = function(down, up, val) {
+            return Math.max(down, Math.min(up, val));
+        }
+
+        moveX = clamp(-1, 1, moveX);
+        moveY = clamp(-1, 1, moveY);
+        moveZ = clamp(-1, 1, moveZ);
 
         debug('Key up: '+event.key+' ('+event.keyCode+')');
 
@@ -319,37 +328,41 @@ function FpsControls(configurationObject){
             return;
         }
 
-        player = gameController.gameModel.player;
-        pos = player.getPosition();
-        position = new THREE.Vector3(pos.x, pos.y, pos.z);
+        var player = gameController.gameModel.player;
+        var pos = player.getPosition();
+        var position = new THREE.Vector3(pos.x, pos.y, pos.z);
         var collisionObject = false;
 
-        velocity = player.velocity;
-        ypart = new THREE.Vector3(0, velocity.y, 0);
+        var vel = player.velocity;
+        var ypart = new THREE.Vector3(0, vel.y, 0);
+        ypart.normalize();
 
+        var offset = .1;
+        var velVec = new THREE.Vector3(vel.x, vel.y, vel.z);
+        var velDir = velVec.clone();
+        velDir.normalize();
+        velDir.multiplyScalar(-offset);
+
+        position.addVectors(position, velDir);
         //test 2 times at ground level and at head level
-        groundCollision = getNearestCollisionObject(pos, ypart);
-        head = position.clone();
-        head = head.addVectors(head, ypart);
+        var groundCollision = getNearestCollisionObject(position, ypart);
+        var head = position.clone();
+        head.y = head.y + player.height;
 
-        headCollision = getNearestCollisionObject(head, velocity.y);
+        var headCollision = getNearestCollisionObject(head, ypart);
 
-        test = function(collisionObject, limitDistance) {
-            return collisionObject && collisionObject.distance < limitDistance
+        var test = function(collisionObject, limitDistance) {
+            return collisionObject && collisionObject.distance < limitDistance;
         };
 
         //if ground level slips but head level doesnt
         //(while falling downwards => velocity.y < 0), it means
         //we are already inside the floor
-        groundTest = test(groundCollision, .1);
-        headTest = test(headCollision, player.height);
-        if(groundTest || (headTest && velocity.y < 0)) {
-            player.setPosition(pos.x, 0, pos.z);
-            velocity.y = 0;
+        var groundTest = test(groundCollision, offset + 0.01);
+        var headTest = test(headCollision, player.height + 0.1);
+        if(groundTest || (headTest && vel.y < 0))
             return true;
-        }
 
-        velocity.y -= 0.5;
         return false;
     };
 
@@ -400,26 +413,20 @@ function FpsControls(configurationObject){
     };
 
     var getNearestCollisionObject = function( position, direction ){
-
-        var intersectionObjects = [];
-
-        raycaster.near = 0;
-        raycaster.far  = configuration.cameraHeight + 2;
+        raycaster.near = -1;
+        raycaster.far  = 1000;
         raycaster.set(position, direction);
 
         var collisions = raycaster.intersectObjects( configuration.collidables );
 
-        if(collisions.length > 0){
-            intersectionObjects.push(collisions[0]);
-        } else {
+        if(collisions.length == 0) 
             return false;
-        }
 
-        intersectionObjects.sort(function(a,b){
+        collisions.sort(function(a,b){
             return a.distance-b.distance;
         });
 
-        return intersectionObjects[0];
+        return collisions[0];
 
     };
 
@@ -427,7 +434,6 @@ function FpsControls(configurationObject){
     /* ########################## */
 
     this.update = function(){
-
         if( !activated ) return;
 
         var delta   = configuration.clock.getDelta(),
@@ -440,10 +446,13 @@ function FpsControls(configurationObject){
             speed = configuration.sprintSpeed;
         }
 
-        vel = gameController.gameModel.player.velocity;
-        velocity = new THREE.Vector3(vel.x, vel.y, vel.z);
+        var player = gameController.gameModel.player;
+        var vel = player.velocity;
+        var pos = player.getPosition();
+        position = new THREE.Vector3(position.x, position.y, position.z);
+        var velocity = new THREE.Vector3(vel.x, vel.y, vel.z);
 
-        accel = velocity.clone();
+        var accel = velocity.clone();
         accel.multiplyScalar(-10 * delta);
 
         if( !configuration.fly ){
@@ -452,7 +461,7 @@ function FpsControls(configurationObject){
 
         velocity.addVectors(velocity, accel);
 
-        movement = new THREE.Vector3(moveX, configuration.fly ? moveY : 0, moveZ);
+        var movement = new THREE.Vector3(moveX, configuration.fly ? moveY : 0, moveZ);
         movement.multiplyScalar(speed * delta);
 
         velocity.addVectors(velocity, movement);
@@ -467,14 +476,18 @@ function FpsControls(configurationObject){
         }
 
         if(!configuration.fly){
-            detectYCollisions();
+            if (detectYCollisions() && velocity.y < 0) {
+                velocity.y = 0;
+                position.y = 0;
+            } else {
+                velocity.y -= 0.5;
+            }
         }
 
-        if(!detectXCollisions( delta ) || configuration.fly){
-            position.addVectors(position, velocity);
-        }
-
-        groundPosObject.position = position;
+        //if(!detectXCollisions( delta ) || configuration.fly){
+        //    position.addVectors(position, velocity);
+        //}
+        groundPosObject.position.set(position.x, position.y, position.z);
 
         gameController.gameModel.player.setPosition(position.x, position.y, position.z);
         gameController.gameModel.player.velocity = {x : velocity.x, y : velocity.y, z : velocity.z};
