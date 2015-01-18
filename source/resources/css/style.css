@@ -54,7 +54,7 @@ body {
 }
 
 #debugoverlay{
-    margin-left: 10px;
+    bottom: 10px;
     position: fixed;
     background-color: white;
     float: left;
