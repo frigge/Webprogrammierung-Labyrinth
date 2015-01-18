@@ -141,7 +141,7 @@ lab_GameController.prototype.initEvents = function(){
  */
 lab_GameController.prototype.initControls = function(){
     // CONTROLS
-    this.controls = new FpsControls({
+    this.controls = new InputController({
         camera: this.camera, // add the game camera
         debug: false, // setting debug mode
         collidables: this.levelController.collidables, // setting the list ob objects for collision detection

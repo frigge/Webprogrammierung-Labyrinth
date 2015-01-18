@@ -1,9 +1,9 @@
-var FpsControls = FpsControls || {};
+var InputController = InputController || {};
 
-function FpsControls(configurationObject){
+function InputController(configurationObject){
 
-    if (!(this instanceof FpsControls)){
-        return new FpsControls(configurationObject);
+    if (!(this instanceof InputController)){
+        return new InputController(configurationObject);
     }
 
     /* GENERAL VARIABLES */
