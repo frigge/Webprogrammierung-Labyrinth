@@ -37,11 +37,11 @@ function InputController(configurationObject){
 
     /* CONFIGURATION */
     var configuration = {
-        acceleration:   1,
+        acceleration:   7,
         normalSpeed:    2,
-        sprintSpeed:    4,
+        sprintSpeed:    5,
         crouchSpeed:    1,
-        jumpHeight:     1,
+        jumpAcceleration:     10,
         crouchHeight:   0.9,
         debug:          false,
         camera:         {},
@@ -294,20 +294,24 @@ function InputController(configurationObject){
 
     };
 
-    var detectXCollisions = function( delta ){
+    var detectXCollisions = function(){
 
         var direction = getDirection();
         var positions = getPositions( direction );
 
+        var player = gameController.gameModel.player;
+        var vel = player.velocity;
+        var velocity = new THREE.Vector3(vel.x, vel.y, vel.z);
+
         var collisionObjects = [];
         for(var i = 0 ; i < positions.length; i++){
-            collisionObject = getNearestCollisionObject(positions[i], direction);
+            collisionObject = getNearestCollisionObject(positions[i], velocity);
             if(collisionObject){
                 collisionObjects.push(collisionObject);
             }
         }
 
-        if(collisionObjects.length === 0){
+        if(collisionObjects.length == 0){
             return false;
         }
 
@@ -315,7 +319,7 @@ function InputController(configurationObject){
             return a.distance-b.distance;
         });
 
-        if(collisionObjects[0].distance < 0.3){
+        if(collisionObjects[0].distance < velocity.length()){
             return true;
         }
 
@@ -370,7 +374,7 @@ function InputController(configurationObject){
 
     var getPositions = function( direction ){
 
-        var centerPosition  = yawObject.position.clone();
+        var centerPosition  = groundPosObject.position.clone();
 
         leftDirection.z = -1 * direction.x,
         leftDirection.x = direction.z;
@@ -441,7 +445,7 @@ function InputController(configurationObject){
         if( crouch && !configuration.fly ){
             speed = configuration.crouchSpeed;
             player.height = configuration.crouchHeight;
-        } else if( sprint && moveForward && !configuration.fly ){
+        } else if( sprint && !configuration.fly ){
             speed = configuration.sprintSpeed;
         }
 
@@ -452,7 +456,7 @@ function InputController(configurationObject){
         var velocity = new THREE.Vector3(vel.x, vel.y, vel.z);
 
         var slowdown = velocity.clone();
-        slowdown.multiplyScalar(-10 * delta);
+        slowdown.multiplyScalar(-5 * delta);
 
         if( !configuration.fly ){
             slowdown.setY(0);
@@ -461,7 +465,6 @@ function InputController(configurationObject){
         velocity.addVectors(velocity, slowdown);
 
         var xAxis = player.getAxisX();
-        console.log(xAxis);
         var yAxis = new THREE.Vector3(0, 1, 0);
         var zAxis = new THREE.Vector3(0, 0, 0);
         xAxis.normalize();
@@ -473,11 +476,20 @@ function InputController(configurationObject){
         var movement = xAxis.clone();
         movement.addVectors(movement, yAxis);
         movement.addVectors(movement, zAxis);
+        movement.normalize();
 
-        var deltaAccel = Math.min(accel * delta, speed);
+        var deltaAccel = accel * delta;
         movement.multiplyScalar(deltaAccel);
 
         velocity.addVectors(velocity, movement);
+        var groundVelocity = velocity.clone();
+        groundVelocity.y = 0;
+        if(groundVelocity.length() > speed * delta) {
+            groundVelocity.normalize();
+            groundVelocity.multiplyScalar(speed * delta);
+        }
+        velocity.x = groundVelocity.x;
+        velocity.z = groundVelocity.z;
 
         //gravity
         var gravity = new THREE.Vector3(0, -9.81 * delta, 0);
@@ -485,24 +497,18 @@ function InputController(configurationObject){
 
         player.velocity = {x : velocity.x, y : velocity.y, z : velocity.z};
 
-        if( jump && crouching === false && !configuration.fly ){
-            jumping = true;
-            velocity.y = configuration.jumpHeight;
-            if(sprint && moveForward){
-                velocity.y += ( configuration.jumpHeight / 100 ) * 10;
-            }
-            debug('Jumping ...');
-        }
-
-        if(!configuration.fly){
-            if (detectYCollisions() && velocity.y < 0) {
+        var floor_collision = detectYCollisions();
+        if(!configuration.fly && floor_collision && velocity.y < 0) {
                 player.velocity.y = 0;
                 velocity.y = 0;
                 position.y = 0;
-            }
         }
 
-        if(!detectXCollisions( delta ) || configuration.fly){
+        if( jump && !configuration.fly  && floor_collision){
+            velocity.y = configuration.jumpAcceleration * (sprint ? 2 : 1) * delta;
+        }
+
+        if(!detectXCollisions() || configuration.fly){
             position.addVectors(position, velocity);
         }
         groundPosObject.position.set(position.x, position.y, position.z);

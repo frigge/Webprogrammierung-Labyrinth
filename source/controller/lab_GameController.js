@@ -149,8 +149,9 @@ lab_GameController.prototype.initControls = function(){
         xCollisionHeights: [1.8, 1.3, 0.8, 0.5, 0.3], // setting vertical intervall for detection rays
         xCollisionCrouchHeights: [0.8, 0.4, 0.3], // setting vertical intervall for detection rays for crouching
         crouchHeight: 0.8,
-        normalSpeed: 60,
-        sprintSpeed: 100,
+        acceleration: 7,
+        normalSpeed: 4,
+        sprintSpeed: 10,
         cameraHeight: 1.8, // the player eyes height
         cameraStartPosition: {y: 1.8, x: this.gameModel.player.getPosition().x, z:this.gameModel.player.getPosition().z}
     });
