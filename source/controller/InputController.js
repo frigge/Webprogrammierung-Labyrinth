@@ -37,10 +37,11 @@ function FpsControls(configurationObject){
 
     /* CONFIGURATION */
     var configuration = {
-        normalSpeed:    40,
-        sprintSpeed:    80,
-        crouchSpeed:    10,
-        jumpHeight:     8,
+        acceleration:   1,
+        normalSpeed:    2,
+        sprintSpeed:    4,
+        crouchSpeed:    1,
+        jumpHeight:     1,
         crouchHeight:   0.9,
         debug:          false,
         camera:         {},
@@ -165,16 +166,16 @@ function FpsControls(configurationObject){
         pitchObject.rotateX(invertFactor * movementY * -0.002);
         pitchObject.rotation.x  = Math.max( -1 * (PI_2 - 0.5), Math.min( PI_2, pitchObject.rotation.x ) );
 
-        transform = gameController.gameModel.player.transformation;
-        rot =  new THREE.Matrix4();
+        var rot =  new THREE.Matrix4();
+        var pos = gameController.gameModel.player.getPosition();
 
-        //rot order x -> y -> z
-        rot.makeRotationX(pitchObject.rotation.x);
-        transform.multiplyMatrices(transform, rot);
-        rot.makeRotationY(pitchObject.rotation.y);
-        transform.multiplyMatrices(transform, rot);
-        rot.makeRotationZ(pitchObject.rotation.z);
-        transform.multiplyMatrices(transform, rot);
+        pitchObject.updateMatrix();
+        yawObject.updateMatrix();
+        rot.multiplyMatrices(rot, pitchObject.matrix);
+        rot.multiplyMatrices(rot, yawObject.matrix);
+
+        gameController.gameModel.player.transformation = rot;
+        gameController.gameModel.player.setPosition(pos.x, pos.y, pos.z);
     };
 
     var onKeyDown = function ( event ) {
@@ -200,16 +201,16 @@ function FpsControls(configurationObject){
                moveY -= 1;
                break;
             case movement.forward:
-               moveZ += 1;
-               break;
-            case movement.left:
-               moveX += 1;
-               break;
-            case movement.backward:
                moveZ -= 1;
                break;
-            case movement.right:
+            case movement.left:
                moveX -= 1;
+               break;
+            case movement.backward:
+               moveZ += 1;
+               break;
+            case movement.right:
+               moveX += 1;
                break;
         }
 
@@ -253,16 +254,16 @@ function FpsControls(configurationObject){
                crouch = false;
                break;
             case movement.forward:
-               moveZ -= 1;
-               break;
-            case movement.left:
-               moveX -= 1;
-               break;
-            case movement.backward:
                moveZ += 1;
                break;
-            case movement.right:
+            case movement.left:
                moveX += 1;
+               break;
+            case movement.backward:
+               moveZ -= 1;
+               break;
+            case movement.right:
+               moveX -= 1;
                break;
 
             case inventorySelection.axe:
@@ -338,12 +339,9 @@ function FpsControls(configurationObject){
         ypart.normalize();
 
         var offset = .1;
-        var velVec = new THREE.Vector3(vel.x, vel.y, vel.z);
-        var velDir = velVec.clone();
-        velDir.normalize();
-        velDir.multiplyScalar(-offset);
+        ypartoffset = ypart.clone();
 
-        position.addVectors(position, velDir);
+        position.addVectors(position, ypartoffset);
         //test 2 times at ground level and at head level
         var groundCollision = getNearestCollisionObject(position, ypart);
         var head = position.clone();
@@ -358,8 +356,8 @@ function FpsControls(configurationObject){
         //if ground level slips but head level doesnt
         //(while falling downwards => velocity.y < 0), it means
         //we are already inside the floor
-        var groundTest = test(groundCollision, offset + 0.01);
-        var headTest = test(headCollision, player.height + 0.1);
+        var groundTest = test(groundCollision, offset);
+        var headTest = test(headCollision, player.height);
         if(groundTest || (headTest && vel.y < 0))
             return true;
 
@@ -438,6 +436,7 @@ function FpsControls(configurationObject){
 
         var delta   = configuration.clock.getDelta(),
             speed   = configuration.normalSpeed;
+            accel   = configuration.acceleration;
 
         if( crouch && !configuration.fly ){
             speed = configuration.crouchSpeed;
@@ -452,19 +451,39 @@ function FpsControls(configurationObject){
         position = new THREE.Vector3(position.x, position.y, position.z);
         var velocity = new THREE.Vector3(vel.x, vel.y, vel.z);
 
-        var accel = velocity.clone();
-        accel.multiplyScalar(-10 * delta);
+        var slowdown = velocity.clone();
+        slowdown.multiplyScalar(-10 * delta);
 
         if( !configuration.fly ){
-            accel.setY(0);
+            slowdown.setY(0);
         }
 
-        velocity.addVectors(velocity, accel);
+        velocity.addVectors(velocity, slowdown);
 
-        var movement = new THREE.Vector3(moveX, configuration.fly ? moveY : 0, moveZ);
-        movement.multiplyScalar(speed * delta);
+        var xAxis = player.getAxisX();
+        console.log(xAxis);
+        var yAxis = new THREE.Vector3(0, 1, 0);
+        var zAxis = new THREE.Vector3(0, 0, 0);
+        xAxis.normalize();
+        zAxis.crossVectors(xAxis, yAxis);
+        zAxis.normalize();
+        xAxis.multiplyScalar(moveX);
+        yAxis.multiplyScalar(configuration.fly ? moveY : 0);
+        zAxis.multiplyScalar(moveZ);
+        var movement = xAxis.clone();
+        movement.addVectors(movement, yAxis);
+        movement.addVectors(movement, zAxis);
+
+        var deltaAccel = Math.min(accel * delta, speed);
+        movement.multiplyScalar(deltaAccel);
 
         velocity.addVectors(velocity, movement);
+
+        //gravity
+        var gravity = new THREE.Vector3(0, -9.81 * delta, 0);
+        velocity.addVectors(velocity, gravity);
+
+        player.velocity = {x : velocity.x, y : velocity.y, z : velocity.z};
 
         if( jump && crouching === false && !configuration.fly ){
             jumping = true;
@@ -477,20 +496,19 @@ function FpsControls(configurationObject){
 
         if(!configuration.fly){
             if (detectYCollisions() && velocity.y < 0) {
+                player.velocity.y = 0;
                 velocity.y = 0;
                 position.y = 0;
-            } else {
-                velocity.y -= 0.5;
             }
         }
 
-        //if(!detectXCollisions( delta ) || configuration.fly){
-        //    position.addVectors(position, velocity);
-        //}
+        if(!detectXCollisions( delta ) || configuration.fly){
+            position.addVectors(position, velocity);
+        }
         groundPosObject.position.set(position.x, position.y, position.z);
 
-        gameController.gameModel.player.setPosition(position.x, position.y, position.z);
-        gameController.gameModel.player.velocity = {x : velocity.x, y : velocity.y, z : velocity.z};
+        player.setPosition(position.x, position.y, position.z);
+        player.velocity = {x : velocity.x, y : velocity.y, z : velocity.z};
     };
 
     function initPointerLock(){
