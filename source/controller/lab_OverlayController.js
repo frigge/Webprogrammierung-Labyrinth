@@ -6,7 +6,10 @@ lab_OverlayController.prototype.update = function() {
     inventory = document.getElementById("inventory");
     passiveitem = document.getElementById("passiveitem");
 
+	axe = document.getElementById("axe");
+	
     player = gameController.gameModel.player;
+	
     var text = "";
     text += "Health: " + player.health + " %<br>";
     if(player.activeItem !== undefined)
@@ -21,6 +24,8 @@ lab_OverlayController.prototype.update = function() {
     for (var  slot in player.inventory) {
         text += slot + ": " + player.inventory[slot].type;
         text += ", ";
+		// If axe is in inventory show active image in HUD
+		if (slot = 1) axe.innerHTML = '<img src="resources/images/axe.png" width="15%" height="15%" />';
     }
     text += "]<br>";
 
