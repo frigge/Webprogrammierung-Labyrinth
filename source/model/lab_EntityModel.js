@@ -11,8 +11,8 @@ function lab_EntityModel(gameModel){
     // each entity has a collision or not
     this.collidable = true;
     
-    // each entity has a position in the game world
-    this.position = {x: 0, y: 0, z: 0};
+    // Transformation of the Entity
+    this.transformation = new THREE.Matrix4();
 
     // entities can be destroyed/deleted
     this.isDeleted = false;
@@ -20,7 +20,28 @@ function lab_EntityModel(gameModel){
 
 // sets the position on x,y and z dimension
 lab_EntityModel.prototype.setPosition = function(x,y,z){
-    this.position.x = x;
-    this.position.y = y;
-    this.position.z = z;
+    elem = this.transformation.elements;
+    elem[12] = x;
+    elem[13] = y;
+    elem[14] = z;
 };
+
+lab_EntityModel.prototype.getPosition = function() {
+    elem = this.transformation.elements;
+    return {x : elem[12], y : elem[13], z : elem[14]};
+}
+
+lab_EntityModel.prototype.getAxisX = function() {
+    elem = this.transformation.elements;
+    return new THREE.Vector3(elem[0], elem[1], elem[2]);
+}
+
+lab_EntityModel.prototype.getAxisY = function() {
+    elem = this.transformation.elements;
+    return new THREE.Vector3(elem[4], elem[5], elem[6]);
+}
+
+lab_EntityModel.prototype.getAxisZ = function() {
+    elem = this.transformation.elements;
+    return new THREE.Vector3(elem[8], elem[9], elem[10]);
+}

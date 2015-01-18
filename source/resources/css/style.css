@@ -54,9 +54,15 @@ body {
 }
 
 #debugoverlay{
-    margin-left: 10px;
+    bottom: 10px;
     position: fixed;
     background-color: white;
     float: left;
     color: black;
+}
+
+#hud-items{
+	position: absolute;
+	margin-left: 10px;
+	top: 50%;
 }

@@ -6,7 +6,37 @@ lab_OverlayController.prototype.update = function() {
     inventory = document.getElementById("inventory");
     passiveitem = document.getElementById("passiveitem");
 
+	hudAxe = document.getElementById("axe");
+	hudExtinguisher = document.getElementById("extinguisher");
+	hudGasmask = document.getElementById("gasmask");
+	hudMedikit = document.getElementById("medikit");
+	
     player = gameController.gameModel.player;
+
+	// Clear HUD items
+	hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_off.png" width="15%" height="15%" />';
+	hudAxe.innerHTML = '<img src="resources/images/axe_off.png" width="15%" height="15%" />';
+	hudMedikit.innerHTML = '<img src="resources/images/medikit_off.png" width="15%" height="15%" />';
+	hudGasmask.innerHTML = '<img src="resources/images/gasmask_off.png" width="15%" height="15%" />';
+	
+	// Show items in inventory on HUD	
+    for (var  slot in player.inventory) {
+		if (player.inventory[slot].type == 'axe') hudAxe.innerHTML = '<img src="resources/images/axe_on.png" width="15%" height="15%" />';
+		if (player.inventory[slot].type == 'fireExtinguisher') hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_on.png" width="15%" height="15%" />';
+		if (player.inventory[slot].type == 'mediKit') hudMedikit.innerHTML = '<img src="resources/images/medikit_on.png" width="15%" height="15%" />';
+		if (player.inventory[slot].type == 'gasMask') hudGasmask.innerHTML = '<img src="resources/images/gasmask_on.png" width="15%" height="15%" />';
+    }
+	
+	// Show active items
+    if(player.activeItem !== undefined) {
+		if (player.activeItem.type == 'axe') hudAxe.innerHTML = '<img src="resources/images/axe_active.png" width="15%" height="15%" />';
+		if (player.activeItem.type == 'fireExtinguisher') hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_active.png" width="15%" height="15%" />';
+		if (player.activeItem.type == 'mediKit') hudMedikit.innerHTML = '<img src="resources/images/medikit_active.png" width="15%" height="15%" />';
+		if (player.activeItem.type == 'gasMask') hudGasmask.innerHTML = '<img src="resources/images/gasmask_active.png" width="15%" height="15%" />';
+	}
+
+	
+	// Show inventory and health as text - only for debugging
     var text = "";
     text += "Health: " + player.health + " %<br>";
     if(player.activeItem !== undefined)

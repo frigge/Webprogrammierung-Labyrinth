@@ -154,7 +154,7 @@ lab_GameController.prototype.initControls = function(){
         normalSpeed: 60,
         sprintSpeed: 100,
         cameraHeight: 1.8, // the player eyes height
-        cameraStartPosition: {y: 1.8, x: this.gameModel.player.position.x, z:this.gameModel.player.position.z}
+        cameraStartPosition: {y: 1.8, x: this.gameModel.player.getPosition().x, z:this.gameModel.player.getPosition().z}
     });
     this.scene3D.add( this.controls.getObject() );
 
