@@ -68,13 +68,23 @@
         </div>
 
         <div id="debugoverlay">
-            <div id="health"> </div>
-            <div id="activeitem"> </div>
-            <div id="inventory"> </div>
-            <div id="passiveitem"> </div>
+            <div id="debug-hud"> </div>
         </div>
         
-        <div id="hud-items">
+        <!-- HUD-Health -->
+		<div id="hud-health-off">
+			<div id="healthoff"> 
+            	<img src="resources/images/health_off.png" width="70px" height="70px" />
+            </div>
+        </div>
+		<div id="hud-health-on">
+			<div id="healthon"> 
+            	<img src="resources/images/health_on.png" width="70px" height="70px" />
+            </div>
+        </div>
+            
+        <!-- HUD-Inventory -->
+        <div id="hud-inventory">
 			<div id="axe"> 
             	<img src="resources/images/axe_off.png" width="15%" height="15%" />
             </div>
@@ -87,12 +97,10 @@
 			<div id="gasmask"> 
             	<img src="resources/images/gasmask_off.png" width="15%" height="15%" />
             </div>
-            
         </div>
 
+	</div>
 </div>
-        
-    </div>
 
     <script>
                 
@@ -119,7 +127,6 @@
         function render(){
             gameController.labyrinthRenderer.render(gameController.scene3D, gameController.camera);
             gameController.minimapRenderer.render(gameController.sceneMinimap, gameController.cameraMap);
-
         }
         
     </script>

@@ -1,15 +1,15 @@
 lab_OverlayController = function(){ }
 
 lab_OverlayController.prototype.update = function() {
-    health = document.getElementById("health");
-    activeitem = document.getElementById("activeitem");
-    inventory = document.getElementById("inventory");
-    passiveitem = document.getElementById("passiveitem");
 
+	// Load HUD elements from CSS to var
+	debugHud = document.getElementById("debug-hud");
 	hudAxe = document.getElementById("axe");
 	hudExtinguisher = document.getElementById("extinguisher");
 	hudGasmask = document.getElementById("gasmask");
 	hudMedikit = document.getElementById("medikit");
+	hudHealthOn = document.getElementById("healthon");
+	hudHealthOff = document.getElementById("healthoff");
 	
     player = gameController.gameModel.player;
 
@@ -35,6 +35,13 @@ lab_OverlayController.prototype.update = function() {
 		if (player.activeItem.type == 'gasMask') hudGasmask.innerHTML = '<img src="resources/images/gasmask_active.png" width="15%" height="15%" />';
 	}
 
+	// Show current health
+	var healthNum = Math.round(70 * (player.health * 0.01));
+	var healthStr = healthNum + "px"
+//	console.log(healthStr);	
+	document.getElementById("hud-health-on").style.height = healthStr;
+	hudHealthOn.innerHTML = '<img src="resources/images/health_on.png" width="70px" height="70px" />';
+	hudHealthOff.innerHTML = '<img src="resources/images/health_off.png" width="70px" height="70px" />';
 	
 	// Show inventory and health as text - only for debugging
     var text = "";
@@ -54,5 +61,5 @@ lab_OverlayController.prototype.update = function() {
     }
     text += "]<br>";
 
-    health.innerHTML = text;
+    debugHud.innerHTML = text;
 }
