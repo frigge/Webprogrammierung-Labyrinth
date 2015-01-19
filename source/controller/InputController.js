@@ -320,6 +320,7 @@ function InputController(configurationObject){
         });
 
         if(collisionObjects[0].distance < velocity.length()){
+            console.log(collisionObjects[0]);
             return true;
         }
 
@@ -396,11 +397,11 @@ function InputController(configurationObject){
             heights = crouchHeights;
         }
 
-        for(var typeIndex = 0; typeIndex < positionTypes.length; typeIndex++){
+        for(var i = 0; i < positionTypes.length; i++){
             for(var heightIndex = 0; heightIndex < heights.length; heightIndex++){
-                var x = positionTypes[typeIndex].x;
-                var y = (positionTypes[typeIndex].y - currentHeight) + heights[heightIndex];
-                var z = positionTypes[typeIndex].z;
+                var x = positionTypes[i].x;
+                var y = (positionTypes[i].y) + heights[heightIndex];
+                var z = positionTypes[i].z;
                 positions.push(new THREE.Vector3(x, y, z));
             }
         }
