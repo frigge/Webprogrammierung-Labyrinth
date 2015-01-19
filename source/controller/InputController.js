@@ -27,6 +27,8 @@ function InputController(configurationObject){
 
     /* COLLISION DETECTION */
     var raycaster       = new THREE.Raycaster();
+    raycaster.near = -1;
+    raycaster.far  = 1000;
 
     var directionDown   = new THREE.Vector3(0, -1, 0);
     var directionUp     = new THREE.Vector3(0, 1, 0);
@@ -73,7 +75,6 @@ function InputController(configurationObject){
 
         invertMouse:                false,
         fly:                        false,
-        collidables:                [],
         xCollisionHeights:          [1.8, 1.5, 1.2, 0.9, 0.6, 0.3, 0.1],
         xCollisionCrouchHeights:    [0.9, 0.6, 0.3, 0.1]
     };
@@ -295,7 +296,6 @@ function InputController(configurationObject){
     };
 
     var detectXCollisions = function(){
-
         var direction = getDirection();
         var positions = getPositions( direction );
 
@@ -328,11 +328,6 @@ function InputController(configurationObject){
     };
 
     var detectYCollisions = function() {
-
-        if(configuration.collidables.length === 0){
-            return;
-        }
-
         var player = gameController.gameModel.player;
         var pos = player.getPosition();
         var position = new THREE.Vector3(pos.x, pos.y, pos.z);
@@ -415,11 +410,10 @@ function InputController(configurationObject){
     };
 
     var getNearestCollisionObject = function( position, direction ){
-        raycaster.near = -1;
-        raycaster.far  = 1000;
         raycaster.set(position, direction);
 
-        var collisions = raycaster.intersectObjects( configuration.collidables );
+        var collidables = gameController.levelController.collidables;
+        var collisions = raycaster.intersectObjects( collidables );
 
         if(collisions.length == 0) 
             return false;
