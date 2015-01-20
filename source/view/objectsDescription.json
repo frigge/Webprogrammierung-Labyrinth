@@ -52,6 +52,22 @@
             "scaleY":       1
         }
     },
+    "door": {
+        "name":       "Door",
+        "View3D": { 
+            "category":   "cube",
+            "width":      1.0,
+            "height":     5.0,
+            "depth":      1.0,
+            "textureUrl": "resources/images/bildburg_de_tuerc0042_512.png"
+        },
+        "View2D": {
+            "category":     "sprite",
+            "textureUrl":   "resources/images/door.gif",
+            "scaleX":       1,
+            "scaleY":       1
+        }
+    },
     "mediKit":  {
         "name":       "Medikit",
         "View3D": { 
