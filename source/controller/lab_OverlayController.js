@@ -1,4 +1,6 @@
-lab_OverlayController = function(){ }
+lab_OverlayController = function(){
+    this.debugoutput = "";
+}
 
 lab_OverlayController.prototype.update = function() {
     health = document.getElementById("health");
@@ -53,6 +55,7 @@ lab_OverlayController.prototype.update = function() {
         text += ", ";
     }
     text += "]<br>";
+    text += "Debug: " + this.debugoutput + "<br>";
 
     health.innerHTML = text;
 }
