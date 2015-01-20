@@ -41,7 +41,7 @@
         "View3D": { 
             "category":   "cube",
             "width":      1.0,
-            "height":     5.0,
+            "height":     3.0,
             "depth":      1.0,
             "textureUrl": "resources/images/tutorialsforblender3d.com_OldConcrete.png"
         },
@@ -57,7 +57,7 @@
         "View3D": { 
             "category":   "cube",
             "width":      1.0,
-            "height":     5.0,
+            "height":     3.0,
             "depth":      1.0,
             "textureUrl": "resources/images/bildburg_de_tuerc0042_512.png"
         },
