@@ -36,10 +36,9 @@ lab_OverlayController.prototype.update = function() {
 	}
 
 	// Show current health
-	var healthNum = Math.round(70 * (player.health * 0.01));
-	var healthStr = healthNum + "px"
-//	console.log(healthStr);	
-	document.getElementById("hud-health-on").style.height = healthStr;
+	var healthNum = 70 - Math.round(70 * (player.health * 0.01));
+	var healthStr = "rect(" + healthNum + "px, 70px, 70px, 0px)";
+	document.getElementById("hud-health-on").style.clip = healthStr;
 	hudHealthOn.innerHTML = '<img src="resources/images/health_on.png" width="70px" height="70px" />';
 	hudHealthOff.innerHTML = '<img src="resources/images/health_off.png" width="70px" height="70px" />';
 	
