@@ -34,7 +34,7 @@ function lab_GameController(screenElement, minimapElement){
     // the game model holding the entire model
     this.gameModel;
 
-    this.pause = false;
+    this.pause = true;
 }
 
 /**
