@@ -1,13 +1,13 @@
 /**
  * This "class" is intended to be the game flow controler
- * and will guide the initialization process towards the 
+ * and will guide the initialization process towards the
  * game loop. Furthermore it will be responsible for the updating within the
  * model.
- * 
+ *
  * @param HTML tag - screenElement
  */
 function lab_GameController(screenElement, minimapElement){
-    
+
     // setting screen properties
     this.screen          = document.getElementById(screenElement);
     this.screenWidth     = screen.width;
@@ -17,7 +17,7 @@ function lab_GameController(screenElement, minimapElement){
     this.minimap          = document.getElementById(minimapElement);
     this.minimapWidth     = this.minimap.offsetWidth;
     this.minimapHeight    = this.minimap.offsetHeight;
-    
+
     // defining stage properties
     this.labyrinthRenderer;
     this.minimapRenderer;
@@ -30,7 +30,7 @@ function lab_GameController(screenElement, minimapElement){
 
     // level handler
     this.levelController;
-       
+
     // the game model holding the entire model
     this.gameModel;
 
@@ -38,7 +38,7 @@ function lab_GameController(screenElement, minimapElement){
 }
 
 /**
- * This method will initialize the game. Tha will include 
+ * This method will initialize the game. Tha will include
  * initilaizing the stage and the model.
  */
 lab_GameController.prototype.initGame = function(){
@@ -53,17 +53,17 @@ lab_GameController.prototype.initGame = function(){
 
 /**
  * This method will initialize the model. It will start the
- * model and will retrieve tgether with the level controller 
+ * model and will retrieve tgether with the level controller
  */
 lab_GameController.prototype.initModel = function(){
-    
+
     this.gameModel = new lab_GameModel();
     this.gameModel.init();
-    
+
 };
 
 /**
- * This method will initialize a basic view. It will set up the scene 
+ * This method will initialize a basic view. It will set up the scene
  * the renderers and everything else needed to draw the game and its
  * its components. Further drawing will be done in the levelController
  */
@@ -75,7 +75,7 @@ lab_GameController.prototype.initView = function(){
     // MINIMAP RENDERER
     this.minimapRenderer = new lab_MinimapRenderer(this.minimapWidth, this.minimapHeight);
     this.minimap.appendChild(this.minimapRenderer.getDomElement());
-    
+
     // SCENE
     this.scene3D        = new THREE.Scene();
     this.sceneMinimap   = new THREE.Scene();
@@ -83,7 +83,7 @@ lab_GameController.prototype.initView = function(){
     // LIGHTS
     this.scene3D.add(new THREE.AmbientLight(0xffffff));
     this.sceneMinimap.add(new THREE.AmbientLight(0xffffff));
-   
+
     this.overlayController = new lab_OverlayController();
 };
 
@@ -105,8 +105,8 @@ lab_GameController.prototype.initCameras = function(){
         aspectRatioMinimap * viewSize / 2,   // Right
         viewSize / 2,                        // Top
         -viewSize / 2,                       // Bottom
-        -20,                                 // Near 
-        20 );                                // Far 
+        -20,                                 // Near
+        20 );                                // Far
     // set the camera to look top down
     this.cameraMap.up = new THREE.Vector3(0,0,-1);
     this.cameraMap.lookAt( new THREE.Vector3(0,-1,0) );
@@ -117,9 +117,9 @@ lab_GameController.prototype.initCameras = function(){
  * This method will initialize the level (model and view)
  */
 lab_GameController.prototype.initLevel = function(){
-    
+
     this.levelController    = new lab_LevelController(this.gameModel,this.scene3D,this.sceneMinimap);
-    
+
     // init level
     this.levelController.init();
 };
@@ -128,17 +128,17 @@ lab_GameController.prototype.initLevel = function(){
  * This method will initialize the events
  */
 lab_GameController.prototype.initEvents = function(){
-    
+
     this.eventController    = new lab_EventController(this.gameModel);
-    
+
     // init events
     this.eventController.init();
 };
 
 
 /**
- * This method will initialize the controls. This will instantiate 
- * a new controls object and configure it with the apropriaet 
+ * This method will initialize the controls. This will instantiate
+ * a new controls object and configure it with the apropriaet
  * settings for this game.
  */
 lab_GameController.prototype.initControls = function(){
@@ -160,24 +160,18 @@ lab_GameController.prototype.initControls = function(){
 
 };
 
-// This method is getting called every frame, so within every 
-// iteration of the game loop. Giving the controller the possibility 
+// This method is getting called every frame, so within every
+// iteration of the game loop. Giving the controller the possibility
 // to update the modell and the controls
 lab_GameController.prototype.update = function(){
-    if (!this.pause) {
-        this.controls.update();
-        this.gameModel.update();
-        this.levelController.update();
-        this.overlayController.update();
+    this.controls.update();
+    this.gameModel.update();
+    this.levelController.update();
+    this.overlayController.update();
 
-        // update the player position according to the position of the controls object
-        // this.cameraMap.position.x = this.gameModel.player.position.x = this.controls.getObject().position.x;
-        // this.cameraMap.position.y = this.gameModel.player.position.y = this.controls.getObject().position.y;
-        // this.cameraMap.position.z = this.gameModel.player.position.z = this.controls.getObject().position.z;
-        this.gameModel.player.position.x = this.controls.getObject().position.x;
-        this.gameModel.player.position.y = this.controls.getObject().position.y;
-        this.gameModel.player.position.z = this.controls.getObject().position.z;
+    this.gameModel.player.setPosition(this.controls.getObject().position.x,
+        this.controls.getObject().position.y,
+        this.controls.getObject().position.z);
 
-        this.eventController.update();
-    }
+    this.eventController.update();
 };

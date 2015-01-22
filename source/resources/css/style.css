@@ -61,8 +61,24 @@ body {
     color: black;
 }
 
-#hud-items{
+#hud-inventory{
 	position: absolute;
 	margin-left: 10px;
-	top: 50%;
+	bottom: 20%;
+}
+
+#hud-health-on{
+	position: fixed;
+	margin-left: 10px;
+	top: 10px;
+	width:70px;
+	height:70px;
+	overflow:hidden;
+}
+
+#hud-health-off{
+	position: fixed;
+	margin-left: 10px;
+	top: 10px;
+	overflow:hidden;
 }
