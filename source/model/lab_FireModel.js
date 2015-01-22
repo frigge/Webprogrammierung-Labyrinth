@@ -6,7 +6,7 @@ function lab_FireModel(gameModel){
 
     this.hasAreaEvent = true;
 
-    this.collidable = false;
+    this.collidable = true;
     this.heat = 2;
 }
 
