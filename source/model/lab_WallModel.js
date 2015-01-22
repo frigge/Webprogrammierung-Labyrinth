@@ -3,6 +3,7 @@ function lab_WallModel(gameModel){
     lab_EntityModel.call(this,gameModel);
 
     this.type = 'wall';
+    this.stability = 5;
 }
 
 // inherit from lab_EntityModel
