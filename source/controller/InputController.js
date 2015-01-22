@@ -5,11 +5,6 @@ function InputController(configurationObject){
     if (!(this instanceof InputController)){
         return new InputController(configurationObject);
     }
-
-    /* GENERAL VARIABLES */
-    var activated       = false;
-
-
     /* MOVEMENT */
     var moveX = 0;
     var moveY = 0;
@@ -149,8 +144,7 @@ function InputController(configurationObject){
     /* #################### */
 
     var onMouseMove = function ( event ) {
-
-        if(!activated) return;
+        if(gameController.pause) return;
 
         var invertFactor = configuration.invertMouse ? -1 : 1 ;
 
@@ -406,8 +400,6 @@ function InputController(configurationObject){
     /* ########################## */
 
     this.update = function(){
-        if( !activated ) return;
-
         var delta   = configuration.clock.getDelta(),
             speed   = configuration.normalSpeed;
             accel   = configuration.acceleration;
@@ -422,7 +414,7 @@ function InputController(configurationObject){
         var player = gameController.gameModel.player;
         var vel = player.velocity;
         var pos = player.getPosition();
-        position = new THREE.Vector3(position.x, position.y, position.z);
+        position = new THREE.Vector3(pos.x, pos.y, pos.z);
         var velocity = new THREE.Vector3(vel.x, vel.y, vel.z);
 
         var slowdown = velocity.clone();
@@ -489,16 +481,19 @@ function InputController(configurationObject){
 
     function initPointerLock(){
 
-        var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
+        var hasPointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
 
-        if ( havePointerLock ) {
+        if ( hasPointerLock ) {
             var element = document.body;
 
             var pointerlockchange = function ( event ) {
                 if ( document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element ) {
-                    activated = true;
+                    gameController.pause = false;
+                    instructions.style.display = 'none';
                 } else {
-                    activated = false;
+                    gameController.pause = true;
+                    instructions.style.display = 'inline';
+                    instructions.innterHTML = "click here to continue";
                 }
             };
 
@@ -514,8 +509,6 @@ function InputController(configurationObject){
             document.addEventListener( 'webkitpointerlockerror', pointerlockerror, false );
 
             document.getElementById("instructions").addEventListener( 'click', function ( event ) {
-                instructions.style.display = 'none';
-
                 // Ask the browser to lock the pointer
                 element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
 

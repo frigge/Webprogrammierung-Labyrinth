@@ -33,6 +33,8 @@ function lab_GameController(screenElement, minimapElement){
 
     // the game model holding the entire model
     this.gameModel;
+
+    this.pause = true;
 }
 
 /**
@@ -161,13 +163,10 @@ lab_GameController.prototype.initControls = function(){
 // iteration of the game loop. Giving the controller the possibility
 // to update the modell and the controls
 lab_GameController.prototype.update = function(){
-    this.controls.update();
-    this.levelController.update();
-    this.overlayController.update();
-
-    this.gameModel.player.setPosition(this.controls.getObject().position.x,
-        this.controls.getObject().position.y,
-        this.controls.getObject().position.z);
-
-    this.eventController.update();
+    if(!this.pause) {
+        this.controls.update();
+        this.levelController.update();
+        this.overlayController.update();
+        this.eventController.update();
+    }
 };
