@@ -160,7 +160,6 @@ function InputController(configurationObject){
         yawObject.rotateY(movementX * -0.002);
 
         pitchObject.rotateX(invertFactor * movementY * -0.002);
-        pitchObject.rotation.x  = Math.max( -1 * (PI_2 - 0.5), Math.min( PI_2, pitchObject.rotation.x ) );
 
         var rot =  new THREE.Matrix4();
         var pos = gameController.gameModel.player.getPosition();
@@ -315,7 +314,6 @@ function InputController(configurationObject){
         });
 
         if(collisionObjects[0].distance < velocity.length()){
-            console.log(collisionObjects[0]);
             return true;
         }
 
