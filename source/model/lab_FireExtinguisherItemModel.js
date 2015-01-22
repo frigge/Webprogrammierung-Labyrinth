@@ -8,7 +8,7 @@ function lab_FireExtinguisherItemModel(gameModel){
     this.inventoryPosition = 2;
     // the amount of uses for the item
     this.amountUses = 3;
-    this.range = 2;
+    this.range = 3;
 }
 
 // inherit from lab_EntityModel
@@ -35,7 +35,7 @@ lab_FireExtinguisherItemModel.prototype.use = function(){
         }
 
         if(model.type == "fire" && collisionObject.distance < this.range) {
-            //hack the wall incredibly boringly
+            //extinguish the wall incredibly boringly
             model.heat -= 1;
             gameController.overlayController.debugoutput = model.stability;
 
