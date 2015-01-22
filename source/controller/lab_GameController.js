@@ -143,21 +143,20 @@ lab_GameController.prototype.initEvents = function(){
  */
 lab_GameController.prototype.initControls = function(){
     // CONTROLS
-    this.controls = new FpsControls({
+    this.controls = new InputController({
         camera: this.camera, // add the game camera
         debug: false, // setting debug mode
-        collidables: this.levelController.collidables, // setting the list ob objects for collision detection
         fly: false, // enable flying (for debug)
         xCollisionHeights: [1.8, 1.3, 0.8, 0.5, 0.3], // setting vertical intervall for detection rays
         xCollisionCrouchHeights: [0.8, 0.4, 0.3], // setting vertical intervall for detection rays for crouching
         crouchHeight: 0.8,
-        normalSpeed: 60,
-        sprintSpeed: 100,
+        acceleration: 7,
+        normalSpeed: 4,
+        sprintSpeed: 10,
         cameraHeight: 1.8, // the player eyes height
         cameraStartPosition: {y: 1.8, x: this.gameModel.player.getPosition().x, z:this.gameModel.player.getPosition().z}
     });
-    this.scene3D.add( this.controls.getObject() );
-
+    this.scene3D.add(this.controls.getObject());
 };
 
 // This method is getting called every frame, so within every
@@ -165,7 +164,6 @@ lab_GameController.prototype.initControls = function(){
 // to update the modell and the controls
 lab_GameController.prototype.update = function(){
     this.controls.update();
-    this.gameModel.update();
     this.levelController.update();
     this.overlayController.update();
 
