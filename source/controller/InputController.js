@@ -161,16 +161,16 @@ function InputController(configurationObject){
 
         pitchObject.rotateX(invertFactor * movementY * -0.002);
 
-        var rot =  new THREE.Matrix4();
-        var pos = gameController.gameModel.player.getPosition();
+        var player = gameController.gameModel.player;
+
+        var pos = player.getPosition();
 
         pitchObject.updateMatrix();
         yawObject.updateMatrix();
-        rot.multiplyMatrices(rot, pitchObject.matrix);
-        rot.multiplyMatrices(rot, yawObject.matrix);
+        var rot =  pitchObject.matrixWorld.clone();
 
-        gameController.gameModel.player.transformation = rot;
-        gameController.gameModel.player.setPosition(pos.x, pos.y, pos.z);
+        player.transformation = rot;
+        player.setPosition(pos.x, pos.y, pos.z);
     };
 
     var onKeyDown = function ( event ) {
