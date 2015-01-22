@@ -38,7 +38,6 @@ lab_AxeItemModel.prototype.use = function(){
         if(model.type == "wall" && collisionObject.distance < this.range) {
             //hack the wall incredibly boringly
             model.stability -= 1;
-            gameController.overlayController.debugoutput = model.stability;
 
             if(model.stability == 0) {
                 model.isDeleted = true;

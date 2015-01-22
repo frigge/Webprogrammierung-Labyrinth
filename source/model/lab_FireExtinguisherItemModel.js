@@ -37,7 +37,6 @@ lab_FireExtinguisherItemModel.prototype.use = function(){
         if(model.type == "fire" && collisionObject.distance < this.range) {
             //extinguish the wall incredibly boringly
             model.heat -= 1;
-            gameController.overlayController.debugoutput = model.stability;
 
             if(model.heat == 0) {
                 model.isDeleted = true;

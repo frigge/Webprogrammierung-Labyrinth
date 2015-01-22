@@ -1,5 +1,4 @@
 lab_OverlayController = function(){
-    this.debugoutput = "";
 }
 
 lab_OverlayController.prototype.update = function() {
@@ -60,8 +59,6 @@ lab_OverlayController.prototype.update = function() {
         text += slot + ": " + player.inventory[slot].type;
         text += ", ";
     }
-    text += "]<br>";
-    text += "Debug: " + this.debugoutput + "<br>";
 
     debugHud.innerHTML = text;
 }
