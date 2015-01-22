@@ -25,11 +25,6 @@ function InputController(configurationObject){
     var groundPosObject = new THREE.Object3D();
     var PI_2        = Math.PI / 2;
 
-    /* COLLISION DETECTION */
-    var raycaster       = new THREE.Raycaster();
-    raycaster.near = -1;
-    raycaster.far  = 1000;
-
     var directionDown   = new THREE.Vector3(0, -1, 0);
     var directionUp     = new THREE.Vector3(0, 1, 0);
 
@@ -305,7 +300,7 @@ function InputController(configurationObject){
 
         var collisionObjects = [];
         for(var i = 0 ; i < positions.length; i++){
-            collisionObject = getNearestCollisionObject(positions[i], velocity);
+            collisionObject = player.checkCollision(positions[i], velocity);
             if(collisionObject){
                 collisionObjects.push(collisionObject);
             }
@@ -343,11 +338,11 @@ function InputController(configurationObject){
 
         position.addVectors(position, ypartoffset);
         //test 2 times at ground level and at head level
-        var groundCollision = getNearestCollisionObject(position, ypart);
+        var groundCollision = player.checkCollision(position, ypart);
         var head = position.clone();
         head.y = head.y + player.height;
 
-        var headCollision = getNearestCollisionObject(head, ypart);
+        var headCollision = player.checkCollision(head, ypart);
 
         var test = function(collisionObject, limitDistance) {
             return collisionObject && collisionObject.distance < limitDistance;
@@ -409,24 +404,6 @@ function InputController(configurationObject){
         return positions;
 
     };
-
-    var getNearestCollisionObject = function( position, direction ){
-        raycaster.set(position, direction);
-
-        var collidables = gameController.levelController.collidables;
-        var collisions = raycaster.intersectObjects( collidables );
-
-        if(collisions.length == 0) 
-            return false;
-
-        collisions.sort(function(a,b){
-            return a.distance-b.distance;
-        });
-
-        return collisions[0];
-
-    };
-
 
     /* ########################## */
 
