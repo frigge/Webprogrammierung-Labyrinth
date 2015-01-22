@@ -489,9 +489,9 @@ function InputController(configurationObject){
 
     function initPointerLock(){
 
-        var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
+        var hasPointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
 
-        if ( havePointerLock ) {
+        if ( hasPointerLock ) {
             var element = document.body;
 
             var pointerlockchange = function ( event ) {
