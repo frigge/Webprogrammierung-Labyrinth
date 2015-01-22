@@ -3,9 +3,7 @@ function lab_PlayerModel(gameModel){
     lab_EntityModel.call(this, gameModel);
     
     this.type = "player";
-
     this.health = 100;
-
     this.inventory = {};
 
     // the item currently chosen for use in the inventory
@@ -13,10 +11,10 @@ function lab_PlayerModel(gameModel){
 
     // the item which is currently in passive use
     this.passiveItem;
-
     this.isDead = false;
-
     this.collidable = false;
+    this.velocity = {x: 0.0, y: 0.0, z: 0.0};
+    this.height = 1.8;
 }
 
 // inherit from lab_EntityModel

@@ -1,4 +1,5 @@
-lab_OverlayController = function(){ }
+lab_OverlayController = function(){
+}
 
 lab_OverlayController.prototype.update = function() {
 
@@ -58,7 +59,6 @@ lab_OverlayController.prototype.update = function() {
         text += slot + ": " + player.inventory[slot].type;
         text += ", ";
     }
-    text += "]<br>";
 
     debugHud.innerHTML = text;
 }

@@ -8,6 +8,7 @@ function lab_FireExtinguisherItemModel(gameModel){
     this.inventoryPosition = 2;
     // the amount of uses for the item
     this.amountUses = 3;
+    this.range = 3;
 }
 
 // inherit from lab_EntityModel
@@ -17,8 +18,32 @@ lab_FireExtinguisherItemModel.prototype = Object.create(lab_ItemModel.prototype)
 lab_FireExtinguisherItemModel.prototype.constructor = lab_FireExtinguisherItemModel;
 
 lab_FireExtinguisherItemModel.prototype.use = function(){
-	// TODO: Feuerlöschungbenutzung
+    var player = gameController.gameModel.player;
+    var pos = player.getPosition();
+    var tjspos = new THREE.Vector3(pos.x, pos.y + player.height, pos.z);
 
+    var direction = player.getAxisZ();
+    direction.multiplyScalar(-1);
+    direction.normalize();
+    collisionObject = this.checkCollision(tjspos, direction);
+
+    if(collisionObject) {
+        var model = gameController.gameModel.models[collisionObject.object.id];
+
+        if(!model) {
+            console.error("missing model for object id: " + collisionObject.object.id);
+        }
+
+        if(model.type == "fire" && collisionObject.distance < this.range) {
+            //extinguish the wall incredibly boringly
+            model.heat -= 1;
+
+            if(model.heat == 0) {
+                model.isDeleted = true;
+                this.gameModel.addModelToUpdateList(model);
+            }
+        }
+    }
 	// reduce amount of uses
 	this.reduceUses();
 }

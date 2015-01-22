@@ -17,10 +17,6 @@ function lab_GameModel(){
 lab_GameModel.prototype.init = function(){
 };
 
-lab_GameModel.prototype.update = function(){
-    
-};
-
 lab_GameModel.prototype.addModelToUpdateList = function(model){
     this.updateList[model.id] = model;
 };
