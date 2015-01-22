@@ -5,11 +5,6 @@ function InputController(configurationObject){
     if (!(this instanceof InputController)){
         return new InputController(configurationObject);
     }
-
-    /* GENERAL VARIABLES */
-    var activated       = false;
-
-
     /* MOVEMENT */
     var moveX = 0;
     var moveY = 0;
@@ -149,8 +144,7 @@ function InputController(configurationObject){
     /* #################### */
 
     var onMouseMove = function ( event ) {
-
-        if(!activated) return;
+        if(gameController.pause) return;
 
         var invertFactor = configuration.invertMouse ? -1 : 1 ;
 
@@ -406,8 +400,6 @@ function InputController(configurationObject){
     /* ########################## */
 
     this.update = function(){
-        if( !activated ) return;
-
         var delta   = configuration.clock.getDelta(),
             speed   = configuration.normalSpeed;
             accel   = configuration.acceleration;
@@ -496,9 +488,12 @@ function InputController(configurationObject){
 
             var pointerlockchange = function ( event ) {
                 if ( document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element ) {
-                    activated = true;
+                    pause = false;
+                    instructions.style.display = 'none';
                 } else {
-                    activated = false;
+                    pause = true;
+                    instructions.style.display = 'inline';
+                    instructions.innterHTML = "click here to continue";
                 }
             };
 
@@ -514,8 +509,6 @@ function InputController(configurationObject){
             document.addEventListener( 'webkitpointerlockerror', pointerlockerror, false );
 
             document.getElementById("instructions").addEventListener( 'click', function ( event ) {
-                instructions.style.display = 'none';
-
                 // Ask the browser to lock the pointer
                 element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
 
