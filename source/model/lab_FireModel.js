@@ -7,6 +7,7 @@ function lab_FireModel(gameModel){
     this.hasAreaEvent = true;
 
     this.collidable = false;
+    this.heat = 2;
 }
 
 // inherit from lab_EntityModel
