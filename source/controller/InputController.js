@@ -414,7 +414,7 @@ function InputController(configurationObject){
         var player = gameController.gameModel.player;
         var vel = player.velocity;
         var pos = player.getPosition();
-        position = new THREE.Vector3(position.x, position.y, position.z);
+        position = new THREE.Vector3(pos.x, pos.y, pos.z);
         var velocity = new THREE.Vector3(vel.x, vel.y, vel.z);
 
         var slowdown = velocity.clone();
@@ -488,10 +488,10 @@ function InputController(configurationObject){
 
             var pointerlockchange = function ( event ) {
                 if ( document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element ) {
-                    pause = false;
+                    gameController.pause = false;
                     instructions.style.display = 'none';
                 } else {
-                    pause = true;
+                    gameController.pause = true;
                     instructions.style.display = 'inline';
                     instructions.innterHTML = "click here to continue";
                 }
