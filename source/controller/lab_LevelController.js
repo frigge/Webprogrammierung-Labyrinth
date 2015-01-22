@@ -42,8 +42,10 @@ lab_LevelController.prototype.initModels = function(){
 	
 	this.levelSize = Math.max(levelSizeX, levelSizeY);
 
-	var rangeX = levelSizeX/2-0.5;
-	var rangeY = levelSizeY/2-0.5;
+
+	var defaultOffset = 0.5;
+	var rangeX = levelSizeX/2-defaultOffset;
+	var rangeY = levelSizeY/2-defaultOffset;
 
 	// floor is not defined in level file, set it here
 	id = generateUUID();
@@ -53,9 +55,10 @@ lab_LevelController.prototype.initModels = function(){
 
 	// ceiling is not defined in level file, set it here
 	id = generateUUID();
+	var wallHeight = this.representationLoader.representations['wall'].View3D.height;
 	this.gameModel.models[id] = this.modelLoader.createModelByName('ceiling');
 	this.gameModel.models[id].id = id;
-	this.gameModel.models[id].setPosition(0,3,0);
+	this.gameModel.models[id].setPosition(0,wallHeight,0);
 
 	// the level file is translated
 	for (i=0; i<levelSizeY; i++) {
@@ -65,7 +68,10 @@ lab_LevelController.prototype.initModels = function(){
 				id = generateUUID();
 				this.gameModel.models[id] = this.modelLoader.createModelByToken(str[j]);
 				this.gameModel.models[id].id = id;
-				this.gameModel.models[id].setPosition(j-rangeX,0.5,i-rangeY);
+				
+				var posY = this.setObjectYPosition(this.gameModel.models[id].type,defaultOffset);
+				this.gameModel.models[id].setPosition(j-rangeX,posY,i-rangeY);
+
 				if (this.gameModel.models[id].type == "player") {
 					// create reference for better accessibility
 					this.gameModel.player = this.gameModel.models[id];
@@ -153,4 +159,18 @@ lab_LevelController.prototype.updateSceneObject = function(scene, modelId){
 	      	}
 		}
     }
+}
+
+/**
+ * Sets the Y position according to the height definition in the representation loader
+ * The position will be set to middle of the height of an object to align to the floor level
+ */
+lab_LevelController.prototype.setObjectYPosition = function(type, defaultOffset){
+	var objectHeight = this.representationLoader.representations[type].View3D.height;			
+	if (objectHeight!=undefined) {
+		return objectHeight/2;
+	} else {
+		// falls back to default offset if no height is specified
+		return defaultOffset;
+	}
 }

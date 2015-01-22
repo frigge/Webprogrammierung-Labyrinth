@@ -17,6 +17,11 @@
         "className":  "lab_WallModel",
         "mapToken":   "#"
     },
+    "door": {
+        "name":       "Door",
+        "className":  "lab_DoorModel",
+        "mapToken":   "D"
+    },
     "axe":  {
         "name":       "Axe",
         "className":  "lab_AxeItemModel",
