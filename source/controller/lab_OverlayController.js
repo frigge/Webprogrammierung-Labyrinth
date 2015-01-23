@@ -25,7 +25,9 @@ lab_OverlayController.prototype.update = function() {
 	// Show items in inventory on HUD	
     for (var  slot in player.inventory) {
 		if (player.inventory[slot].type == 'axe') hudAxe.innerHTML = '<img src="resources/images/axe_on.png" width="70px" height="70px" />';
-		if (player.inventory[slot].type == 'fireExtinguisher') hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_on.png" width="70px" height="70px" />';
+		if (player.inventory[slot].type == 'fireExtinguisher') {
+			hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_on.png" width="70px" height="70px" />';
+		}
 		if (player.inventory[slot].type == 'mediKit') hudMedikit.innerHTML = '<img src="resources/images/medikit_on.png" width="70px" height="70px" />';
 		if (player.inventory[slot].type == 'gasMask') hudGasmask.innerHTML = '<img src="resources/images/gasmask_on.png" width="70px" height="70px" />';
 		if (player.inventory[slot].type == 'resident') hudResident.innerHTML = '<img src="resources/images/resident_on.png" width="70px" height="70px" />';
@@ -34,7 +36,11 @@ lab_OverlayController.prototype.update = function() {
 	// Show active items
     if(player.activeItem !== undefined) {
 		if (player.activeItem.type == 'axe') hudAxe.innerHTML = '<img src="resources/images/axe_active.png" width="70px" height="70px" />';
-		if (player.activeItem.type == 'fireExtinguisher') hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_active.png" width="70px" height="70px" />';
+		if (player.activeItem.type == 'fireExtinguisher') {
+			if (player.activeItem.amountUses == 3) hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_active.png" width="70px" height="70px" />';
+			if (player.activeItem.amountUses == 2) hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_active_2-3.png" width="70px" height="70px" />';	
+			if (player.activeItem.amountUses == 1) hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_active_1-3.png" width="70px" height="70px" />';			
+		}
 		if (player.activeItem.type == 'mediKit') hudMedikit.innerHTML = '<img src="resources/images/medikit_active.png" width="70px" height="70px" />';
 		if (player.activeItem.type == 'gasMask') hudGasmask.innerHTML = '<img src="resources/images/gasmask_active.png" width="70px" height="70px" />';
 	}
