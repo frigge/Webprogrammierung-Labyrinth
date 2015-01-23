@@ -11,32 +11,29 @@ lab_OverlayController.prototype.update = function() {
 	hudMedikit = document.getElementById("medikit");
 	hudHealthOn = document.getElementById("healthon");
 	hudHealthOff = document.getElementById("healthoff");
-	hudResident = document.getElementById("resident");	
 	
     player = gameController.gameModel.player;
 
 	// Clear HUD items
-	hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_off.png" width="70px" height="70px" />';
-	hudAxe.innerHTML = '<img src="resources/images/axe_off.png" width="70px" height="70px" />';
-	hudMedikit.innerHTML = '<img src="resources/images/medikit_off.png" width="70px" height="70px" />';
-	hudGasmask.innerHTML = '<img src="resources/images/gasmask_off.png" width="70px" height="70px" />';
-	hudResident.innerHTML = '<img src="resources/images/resident_off.png" width="70px" height="70px" />';
+	hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_off.png" width="15%" height="15%" />';
+	hudAxe.innerHTML = '<img src="resources/images/axe_off.png" width="15%" height="15%" />';
+	hudMedikit.innerHTML = '<img src="resources/images/medikit_off.png" width="15%" height="15%" />';
+	hudGasmask.innerHTML = '<img src="resources/images/gasmask_off.png" width="15%" height="15%" />';
 	
 	// Show items in inventory on HUD	
     for (var  slot in player.inventory) {
-		if (player.inventory[slot].type == 'axe') hudAxe.innerHTML = '<img src="resources/images/axe_on.png" width="70px" height="70px" />';
-		if (player.inventory[slot].type == 'fireExtinguisher') hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_on.png" width="70px" height="70px" />';
-		if (player.inventory[slot].type == 'mediKit') hudMedikit.innerHTML = '<img src="resources/images/medikit_on.png" width="70px" height="70px" />';
-		if (player.inventory[slot].type == 'gasMask') hudGasmask.innerHTML = '<img src="resources/images/gasmask_on.png" width="70px" height="70px" />';
-		if (player.inventory[slot].type == 'resident') hudResident.innerHTML = '<img src="resources/images/resident_on.png" width="70px" height="70px" />';
+		if (player.inventory[slot].type == 'axe') hudAxe.innerHTML = '<img src="resources/images/axe_on.png" width="15%" height="15%" />';
+		if (player.inventory[slot].type == 'fireExtinguisher') hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_on.png" width="15%" height="15%" />';
+		if (player.inventory[slot].type == 'mediKit') hudMedikit.innerHTML = '<img src="resources/images/medikit_on.png" width="15%" height="15%" />';
+		if (player.inventory[slot].type == 'gasMask') hudGasmask.innerHTML = '<img src="resources/images/gasmask_on.png" width="15%" height="15%" />';
     }
 	
 	// Show active items
     if(player.activeItem !== undefined) {
-		if (player.activeItem.type == 'axe') hudAxe.innerHTML = '<img src="resources/images/axe_active.png" width="70px" height="70px" />';
-		if (player.activeItem.type == 'fireExtinguisher') hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_active.png" width="70px" height="70px" />';
-		if (player.activeItem.type == 'mediKit') hudMedikit.innerHTML = '<img src="resources/images/medikit_active.png" width="70px" height="70px" />';
-		if (player.activeItem.type == 'gasMask') hudGasmask.innerHTML = '<img src="resources/images/gasmask_active.png" width="70px" height="70px" />';
+		if (player.activeItem.type == 'axe') hudAxe.innerHTML = '<img src="resources/images/axe_active.png" width="15%" height="15%" />';
+		if (player.activeItem.type == 'fireExtinguisher') hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_active.png" width="15%" height="15%" />';
+		if (player.activeItem.type == 'mediKit') hudMedikit.innerHTML = '<img src="resources/images/medikit_active.png" width="15%" height="15%" />';
+		if (player.activeItem.type == 'gasMask') hudGasmask.innerHTML = '<img src="resources/images/gasmask_active.png" width="15%" height="15%" />';
 	}
 
 	// Show current health

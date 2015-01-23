@@ -85,9 +85,3 @@ body {
 	top: 10px;
 	overflow:hidden;
 }
-
-#hud-resident{
-	position: fixed;
-	margin-left: 90px;
-	top: 10px;
-}
