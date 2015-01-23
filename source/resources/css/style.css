@@ -4,9 +4,6 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 body {
     background-color: #000000;
     overflow: hidden;
-    font-family: monospace;
-    color: #9fffae;
-    font-size: 14px;
     /* we do not want to get highlighting */
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -21,9 +18,11 @@ body {
 }
 
 #crosshair{
-    position: absolute;
+    position: fixed;
     left: 50%;
     top: 50%;
+    margin-top: -12px;
+    margin-left: -12px;
 }
 
 #minimapWrapper, #minimap{
@@ -38,21 +37,25 @@ body {
     top: 10px;
 }
 
-#crosshair{
-    position: absolute;
-    left: 50%;
-    top: 50%;
-}
-
 #instructions{
     position: absolute;
     top: 35%;
     left: 40%;
-    width: 600px;
-    text-align: center;
     cursor: pointer;
+    font-family: monospace;
+    color: #505050;
+    font-size: 40px;
 }
 
+#instructions:hover{
+    position: absolute;
+    top: 35%;
+    left: 40%;
+    cursor: pointer;
+    font-family: monospace;
+    color: #050505;
+    font-size: 40px;
+}
 #debugoverlay{
     bottom: 10px;
     position: fixed;

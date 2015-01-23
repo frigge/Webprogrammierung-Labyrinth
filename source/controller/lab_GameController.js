@@ -62,6 +62,14 @@ lab_GameController.prototype.initModel = function(){
 
 };
 
+lab_GameController.prototype.resize = function(event) {
+    this.screenWidth = this.screen.width;
+    this.screenWidth = this.screen.height;
+    this.labyrinthRenderer.setSize(this.screenWidth, this.screenHeight);
+    var aspectRatio = this.screen.width / this.screen.height;
+    this.camera.aspect = aspectRatio;
+}
+
 /**
  * This method will initialize a basic view. It will set up the scene
  * the renderers and everything else needed to draw the game and its
@@ -71,6 +79,8 @@ lab_GameController.prototype.initView = function(){
     // LABYRINTH RENDERER
     this.labyrinthRenderer = new lab_LabyrinthRenderer(this.screenWidth, this.screenHeight);
     this.screen.appendChild(this.labyrinthRenderer.getDomElement());
+
+    this.screen.addEventListener("resize", this.resize, false);
 
     // MINIMAP RENDERER
     this.minimapRenderer = new lab_MinimapRenderer(this.minimapWidth, this.minimapHeight);
