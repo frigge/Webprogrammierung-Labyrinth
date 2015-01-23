@@ -36,16 +36,24 @@ body {
 }
 
 #instructions{
-    position: relative;
-    vertical-align: bottom;
-    text-align: center;
-    background: none;
+    position: absolute;
+    top: 35%;
+    left: 40%;
     cursor: pointer;
     font-family: monospace;
-    color: #9fffae;
-    font-size: 14px;
+    color: #505050;
+    font-size: 40px;
 }
 
+#instructions:hover{
+    position: absolute;
+    top: 35%;
+    left: 40%;
+    cursor: pointer;
+    font-family: monospace;
+    color: #050505;
+    font-size: 40px;
+}
 #debugoverlay{
     bottom: 10px;
     position: fixed;
