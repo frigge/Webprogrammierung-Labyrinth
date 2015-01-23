@@ -185,6 +185,55 @@ lab_GameController.prototype.update = function(){
 
 };
 
+
+
+// Timerfunction  !!! Erläuterung muss noch ergänzt werden!!!
+
+lab_GameController.prototype.renderClock = function(){
+
+                var maximumSeconds = 60;
+
+                var clockElement = document.getElementById("clock");
+                var timeLeft = maximumSeconds - clock.getElapsedTime();
+
+                document.getElementById("clock").innerHTML  = parseInt(timeLeft);
+
+                clockElement.textContent = parseInt(timeLeft);
+
+                if(timeLeft < 1){
+                    clockElement.style.color = "blue";
+                    clock.stop();
+
+                }
+                else if(timeLeft < 10)
+                {
+                    clockElement.style.color = "red";
+                    if(parseInt(timeLeft * 2) % 2 === 0)
+                    {
+                        clockElement.style.fontSize = "350%";
+                    }
+                    else
+                    {
+                        clockElement.style.fontSize = "200%";
+                    }
+                }
+                else if(timeLeft < 20)
+                {
+                    clockElement.style.color = "orange";
+                    if(parseInt(timeLeft) % 2 === 0)
+                    {
+                        clockElement.style.fontSize = "280%";
+                    }
+                    else
+                    {
+                        clockElement.style.fontSize = "200%";
+                    }
+                }
+
+                
+
+};
+
 /**
  * Notifies that the game is lost and restarts if wanted
  */

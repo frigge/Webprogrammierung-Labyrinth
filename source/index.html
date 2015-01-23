@@ -64,6 +64,7 @@
 
         <div id="debugoverlay">
             <div id="debug-hud"> </div>
+            <div id="clock"> </div>
         </div>
         
         <!-- HUD-Resident -->
@@ -118,6 +119,9 @@
         // creating new game controller and initialize game
         var gameController = new lab_GameController('wrapper', 'minimap');
         gameController.initGame();
+
+        // Instanz Timer
+        var clock = new THREE.Clock(false);
         
         run();
         
@@ -130,13 +134,15 @@
             gameController.update();
 
             // do rendering
-            render();
+            render(clock);
         }
         
         // rendering within the game loop happens here
         function render(){
             gameController.labyrinthRenderer.render(gameController.scene3D, gameController.camera);
             gameController.minimapRenderer.render(gameController.sceneMinimap, gameController.cameraMap);
+
+            lab_GameController.prototype.renderClock();
         }
         
     </script>
