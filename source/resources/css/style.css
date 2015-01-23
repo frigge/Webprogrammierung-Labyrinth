@@ -85,3 +85,11 @@ body {
 	top: 10px;
 	overflow:hidden;
 }
+
+#clock{
+    font-size: 240%;
+    font-weight: bold;
+    text-align: center;
+    color: #666;
+    padding: 10px;
+}
