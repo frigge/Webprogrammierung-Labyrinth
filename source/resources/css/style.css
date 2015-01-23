@@ -86,17 +86,16 @@ body {
 	overflow:hidden;
 }
 
-<<<<<<< HEAD
 #clock{
     font-size: 240%;
     font-weight: bold;
     text-align: center;
     color: #666;
     padding: 10px;
-=======
+}
+
 #hud-resident{
 	position: fixed;
 	margin-left: 90px;
 	top: 10px;
->>>>>>> origin/master
 }
