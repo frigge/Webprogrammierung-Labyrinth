@@ -132,14 +132,14 @@
         "name":       "Resident",
         "View3D": { 
             "category":     "sprite",
-            "textureUrl":   "resources/images/medikit.png",
-            "scaleX":       1,
+            "textureUrl":   "resources/images/victim.png",
+            "scaleX":       3,
             "scaleY":       1
         },
         "View2D": {
             "category":     "sprite",
-            "textureUrl":   "resources/images/medikit.png",
-            "scaleX":       1,
+            "textureUrl":   "resources/images/victim.png",
+            "scaleX":       3,
             "scaleY":       1
         }
     },
@@ -162,15 +162,15 @@
         "name":       "Smoke",
         "View3D": { 
             "category":     "sprite",
-            "textureUrl":   "resources/images/medikit.png",
-            "scaleX":       1,
-            "scaleY":       1
+            "textureUrl":   "resources/images/smoke.png",
+            "scaleX":       3,
+            "scaleY":       3
         },
         "View2D": {
             "category":     "sprite",
-            "textureUrl":   "resources/images/medikit.png",
-            "scaleX":       1,
-            "scaleY":       1
+            "textureUrl":   "resources/images/smoke.png",
+            "scaleX":       3,
+            "scaleY":       3
         }
     }
 }
