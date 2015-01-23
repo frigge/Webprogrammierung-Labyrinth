@@ -66,7 +66,6 @@ lab_PlayerModel.prototype.reduceHealth = function(minusHealthAmount) {
     this.health -= minusHealthAmount;
     if (this.health <= 0) {
         this.isDead = true;
-        alert("Player is dead");
     }
 }
 

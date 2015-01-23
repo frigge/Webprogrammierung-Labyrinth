@@ -493,7 +493,7 @@ function InputController(configurationObject){
                 } else {
                     gameController.pause = true;
                     instructions.style.display = 'inline';
-                    instructions.innterHTML = "click here to continue";
+                    instructions.innerHTML = "Click here to continue";
                 }
             };
 

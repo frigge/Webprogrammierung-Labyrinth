@@ -174,9 +174,23 @@ lab_GameController.prototype.initControls = function(){
 // to update the modell and the controls
 lab_GameController.prototype.update = function(){
     if(!this.pause) {
+        if(this.gameModel.player.isDead) {
+            this.gameLost();
+        }
         this.controls.update();
         this.levelController.update();
         this.overlayController.update();
         this.eventController.update();
     }
+
 };
+
+/**
+ * Notifies that the game is lost and restarts if wanted
+ */
+lab_GameController.prototype.gameLost = function(){
+    this.pause = true;
+    instructions.style.display = 'inline';
+    instructions.innerHTML = "You lost! Any key to restart!";
+    document.addEventListener( 'keyup', function() {window.location.reload();});
+}
