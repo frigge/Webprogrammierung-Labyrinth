@@ -38,14 +38,13 @@
     <script src="view/lab_AbstractRenderer.js"></script>
     <script src="view/lab_LabyrinthRenderer.js"></script>
     <script src="view/lab_MinimapRenderer.js"></script>
-    
+    <script src="view/lab_OverlayRenderer.js"></script>
     <script src="view/lab_RepresentationLoader.js"></script>
     
     <!--controller (MVC)-->
     <script src="controller/lab_GameController.js"></script>
     <script src="controller/lab_LevelController.js"></script>
     <script src="controller/lab_EventController.js"></script>
-    <script src="controller/lab_OverlayController.js"></script>
     <script src="controller/InputController.js"></script>
     
 </head>
@@ -54,8 +53,12 @@
     <!--wrapper for the game drawings-->
     <div id="wrapper">
         <!--crosshair overlay-->
+
+        <div id="gasmaskoverlay">
+            <img class="fullscreen" src="resources/images/gas-mask-overlay.png"/>
+        </div>
         <div id="crosshair">
-            <img src="resources/images/crosshair.png" alt="crosshair"/>
+            <img src="resources/images/crosshair.png"/>
         </div>
 
         <div id="minimapWrapper">
@@ -120,9 +123,6 @@
         var gameController = new lab_GameController('wrapper', 'minimap');
         gameController.initGame();
 
-        // Instanz Timer
-        var clock = new THREE.Clock(false);
-        
         run();
         
         // starting game and make this funtion the game loop
@@ -134,15 +134,14 @@
             gameController.update();
 
             // do rendering
-            render(clock);
+            render();
         }
         
         // rendering within the game loop happens here
         function render(){
             gameController.labyrinthRenderer.render(gameController.scene3D, gameController.camera);
             gameController.minimapRenderer.render(gameController.sceneMinimap, gameController.cameraMap);
-
-            lab_GameController.prototype.renderClock();
+            gameController.overlayRenderer.render();
         }
         
     </script>

@@ -22,10 +22,10 @@ lab_GasMaskItemModel.prototype.constructor = lab_GasMaskItemModel;
 
 lab_GasMaskItemModel.prototype.use = function(){
 	// activate or deactivate the gasmask as passive Item
-	if (gameModel.player.passiveItem) {
-		gameModel.player.passiveItem = null;	
+	if (this.gameModel.player.passiveItem) {
+		this.gameModel.player.passiveItem = undefined;	
 	} else {
-		gameModel.player.passiveItem = this;
+		this.gameModel.player.passiveItem = this;
 	}
 }
 

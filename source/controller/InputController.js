@@ -512,8 +512,8 @@ function InputController(configurationObject){
                 // Ask the browser to lock the pointer
                 element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
 
-			// Start Timer
-				clock.start();
+			    // Start Timer
+				gameController.clock.start();
 				
                 if ( /Firefox/i.test( navigator.userAgent ) ) {
 

@@ -35,6 +35,10 @@ function lab_GameController(screenElement, minimapElement){
     this.gameModel;
 
     this.pause = true;
+
+    this.clock = new THREE.Clock(false);
+
+    this.gameDuration = 60;
 }
 
 /**
@@ -48,6 +52,7 @@ lab_GameController.prototype.initGame = function(){
     this.initEvents();
     this.initCameras();
     this.initControls();
+    // this.clock.start();
 };
 
 
@@ -94,7 +99,7 @@ lab_GameController.prototype.initView = function(){
     this.scene3D.add(new THREE.AmbientLight(0xffffff));
     this.sceneMinimap.add(new THREE.AmbientLight(0xffffff));
 
-    this.overlayController = new lab_OverlayController();
+    this.overlayRenderer = new lab_OverlayRenderer(this);
 };
 
 /**
@@ -179,7 +184,6 @@ lab_GameController.prototype.update = function(){
         }
         this.controls.update();
         this.levelController.update();
-        this.overlayController.update();
         this.eventController.update();
     }
 

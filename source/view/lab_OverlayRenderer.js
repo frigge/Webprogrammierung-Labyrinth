@@ -1,8 +1,71 @@
-lab_OverlayController = function(){
+function lab_OverlayRenderer(gameController){
+	this.gameController = gameController;
 }
 
-lab_OverlayController.prototype.update = function() {
+lab_OverlayRenderer.prototype.render = function() {
+	this.renderHud();
+	this.renderDebugHud();
+	this.renderClock();
+	this.renderGasMask();
+}
 
+lab_OverlayRenderer.prototype.renderGasMask = function() {
+    var gasmaskOverlay = document.getElementById('gasmaskoverlay');
+
+    if(this.gameController.gameModel.player.passiveItem == undefined) {
+    	if (gasmaskOverlay.style.display != 'none') {
+    		gasmaskOverlay.style.display = 'none';
+    	}
+    } else {
+    	if(this.gameController.gameModel.player.passiveItem.type == 'gasMask'){
+	    	if (gasmaskOverlay.style.display != 'block') {
+	    		gasmaskOverlay.style.display = 'block';
+	    	}
+    	}
+    }
+}
+
+lab_OverlayRenderer.prototype.renderClock = function () {
+
+    var clockElement = document.getElementById("clock");
+    var timeLeft = this.gameController.gameDuration - this.gameController.clock.getElapsedTime();
+
+    document.getElementById("clock").innerHTML  = parseInt(timeLeft);
+
+    clockElement.textContent = parseInt(timeLeft);
+
+    if(timeLeft < 1){
+        clockElement.style.color = "blue";
+        this.gameController.clock.stop();
+
+    }
+    else if(timeLeft < 10)
+    {
+        clockElement.style.color = "red";
+        if(parseInt(timeLeft * 2) % 2 === 0)
+        {
+            clockElement.style.fontSize = "350%";
+        }
+        else
+        {
+            clockElement.style.fontSize = "200%";
+        }
+    }
+    else if(timeLeft < 20)
+    {
+        clockElement.style.color = "orange";
+        if(parseInt(timeLeft) % 2 === 0)
+        {
+            clockElement.style.fontSize = "280%";
+        }
+        else
+        {
+            clockElement.style.fontSize = "200%";
+        }
+    }
+}
+
+lab_OverlayRenderer.prototype.renderHud = function() {
 	// Load HUD elements from CSS to var
 	debugHud = document.getElementById("debug-hud");
 	hudAxe = document.getElementById("axe");
@@ -51,8 +114,10 @@ lab_OverlayController.prototype.update = function() {
 	document.getElementById("hud-health-on").style.clip = healthStr;
 	hudHealthOn.innerHTML = '<img src="resources/images/health_on.png" width="70px" height="70px" />';
 	hudHealthOff.innerHTML = '<img src="resources/images/health_off.png" width="70px" height="70px" />';
-	
-	// Show inventory and health as text - only for debugging
+}
+
+// Show inventory and health as text - only for debugging
+lab_OverlayRenderer.prototype.renderDebugHud = function () {
     var text = "";
     text += "Health: " + player.health + " %<br>";
     if(player.activeItem !== undefined)
