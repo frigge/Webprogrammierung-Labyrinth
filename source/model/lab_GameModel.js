@@ -12,6 +12,8 @@ function lab_GameModel(){
     this.updateList = {};
 
     this.areaEventList = {};
+
+    this.won = false;
 }
 
 lab_GameModel.prototype.init = function(){

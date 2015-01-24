@@ -62,6 +62,15 @@ lab_PlayerModel.prototype.collectItem = function(item) {
     }
 }
 
+lab_PlayerModel.prototype.hasItem = function(itemType) {
+    for (var slot in this.inventory) {
+        if (this.inventory[slot].type == itemType){
+            return true;
+        }
+    }
+    return false;
+}
+
 lab_PlayerModel.prototype.reduceHealth = function(minusHealthAmount) {
     this.health -= minusHealthAmount;
     if (this.health <= 0) {

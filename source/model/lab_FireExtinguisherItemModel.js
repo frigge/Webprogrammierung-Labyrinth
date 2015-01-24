@@ -40,6 +40,7 @@ lab_FireExtinguisherItemModel.prototype.use = function(){
 
             if(model.heat == 0) {
                 model.isDeleted = true;
+                model.dispose();
                 this.gameModel.addModelToUpdateList(model);
             }
         }

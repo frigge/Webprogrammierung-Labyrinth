@@ -185,6 +185,10 @@ lab_GameController.prototype.update = function(){
             this.clock.stop();
             this.gameLost();
         }
+        if(this.gameModel.won) {
+            this.clock.stop();
+            this.gameWon();
+        }
         this.controls.update();
         this.levelController.update();
         this.eventController.update();
@@ -199,5 +203,15 @@ lab_GameController.prototype.gameLost = function(){
     this.pause = true;
     instructions.style.display = 'inline';
     instructions.innerHTML = "You lost! Any key to restart!";
-    document.addEventListener( 'keyup', function() {window.location.reload();});
+    document.addEventListener( 'keydown', function() {window.location.reload();});
+}
+
+/**
+ * Notifies that the game is won and restarts if wanted
+ */
+lab_GameController.prototype.gameWon = function(){
+    this.pause = true;
+    instructions.style.display = 'inline';
+    instructions.innerHTML = "You won!!! Any key to restart!";
+    document.addEventListener( 'keydown', function() {window.location.reload();});
 }
