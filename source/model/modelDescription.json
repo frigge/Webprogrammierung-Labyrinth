@@ -12,6 +12,11 @@
         "name":       "Ceiling",
         "className":  "lab_CeilingModel"
     },
+    "levelend": {
+        "name":       "Levelend",
+        "className":  "lab_LevelendModel",
+        "mapToken":   "X"
+    },
     "wall": {
         "name":       "Wall",
         "className":  "lab_WallModel",

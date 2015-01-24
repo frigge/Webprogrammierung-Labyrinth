@@ -35,8 +35,8 @@ lab_AxeItemModel.prototype.use = function(){
             console.error("missing model for object id: " + collisionObject.object.id);
         }
 
-        if(model.type == "wall" && collisionObject.distance < this.range) {
-            //hack the wall incredibly boringly
+        if(model.type == "door" && collisionObject.distance < this.range) {
+            //hack the door incredibly boringly
             model.stability -= 1;
 
             if(model.stability == 0) {

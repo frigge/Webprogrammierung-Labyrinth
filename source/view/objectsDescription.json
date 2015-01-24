@@ -36,6 +36,22 @@
         "View2D": {
         }
     },
+    "levelend": {
+        "name": "Levelend",
+        "View3D": { 
+            "category":   "cube",
+            "width":      1.0,
+            "height":     3.0,
+            "depth":      1.0,
+            "textureUrl": "resources/images/bildburg_de_tuerc0042_512.png"
+        },
+        "View2D": {
+            "category":     "sprite",
+            "textureUrl":   "resources/images/bildburg_de_tuerc0042_512.png",
+            "scaleX":       1,
+            "scaleY":       1
+        }
+    },
     "wall": {
         "name":       "Wall",
         "View3D": { 
@@ -63,7 +79,7 @@
         },
         "View2D": {
             "category":     "sprite",
-            "textureUrl":   "resources/images/door.gif",
+            "textureUrl":   "resources/images/bildburg_de_tuerc0042_512.png",
             "scaleX":       1,
             "scaleY":       1
         }
