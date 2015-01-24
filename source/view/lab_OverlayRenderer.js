@@ -98,9 +98,9 @@ lab_OverlayRenderer.prototype.renderHud = function() {
     if(player.activeItem !== undefined) {
 		if (player.activeItem.type == 'axe') hudAxe.innerHTML = '<img src="resources/images/axe_active.png" width="70px" height="70px" />';
 		if (player.activeItem.type == 'fireExtinguisher') {
-			if (player.activeItem.amountUses == 3) hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_active.png" width="70px" height="70px" />';
-			if (player.activeItem.amountUses == 2) hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_active_2-3.png" width="70px" height="70px" />';	
-			if (player.activeItem.amountUses == 1) hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_active_1-3.png" width="70px" height="70px" />';			
+			if (player.activeItem.amountUses > 4) hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_active.png" width="70px" height="70px" />';
+			if (player.activeItem.amountUses > 2 && player.activeItem.amountUses < 5 ) hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_active_2-3.png" width="70px" height="70px" />';	
+			if (player.activeItem.amountUses < 3) hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_active_1-3.png" width="70px" height="70px" />';			
 		}
 		if (player.activeItem.type == 'mediKit') hudMedikit.innerHTML = '<img src="resources/images/medikit_active.png" width="70px" height="70px" />';
 		if (player.activeItem.type == 'gasMask') hudGasmask.innerHTML = '<img src="resources/images/gasmask_active.png" width="70px" height="70px" />';
@@ -132,5 +132,5 @@ lab_OverlayRenderer.prototype.renderDebugHud = function () {
         text += ", ";
     }
 
-    debugHud.innerHTML = text;
+     //debugHud.innerHTML = text;
 }

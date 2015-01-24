@@ -37,11 +37,11 @@ lab_LevelController.prototype.initModels = function(){
 	// load level data from JSON file
 
 	var level = lab_ajaxGetJson('resources/level-01.json');
+	// get levelsize
 	var levelSizeX = level.levelData[0].line.length;
 	var levelSizeY = level.levelData.length;
 	
 	this.levelSize = Math.max(levelSizeX, levelSizeY);
-
 
 	var defaultOffset = 0.5;
 	var rangeX = levelSizeX/2-defaultOffset;
