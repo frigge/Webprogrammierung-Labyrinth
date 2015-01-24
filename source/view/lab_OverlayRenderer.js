@@ -87,13 +87,20 @@ lab_OverlayRenderer.prototype.renderHud = function() {
     for (var  slot in player.inventory) {
 		if (player.inventory[slot].type == 'axe') hudAxe.innerHTML = '<img src="resources/images/axe_on.png" width="70px" height="70px" />';
 		if (player.inventory[slot].type == 'fireExtinguisher') {
-			hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_on.png" width="70px" height="70px" />';
+			var extinguisherPos = 2;
+			var fireExtinguisher = player.inventory[extinguisherPos];
+			if(fireExtinguisher) {
+  				var uses = fireExtinguisher.amountUses;
+				if (uses > 4) hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_on.png" width="70px" height="70px" />';
+				if (uses > 2 && uses < 5) hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_on_2-3.png" width="70px" height="70px" />';
+				if (uses < 3) hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_on_1-3.png" width="70px" height="70px" />';
+			}
 		}
 		if (player.inventory[slot].type == 'mediKit') hudMedikit.innerHTML = '<img src="resources/images/medikit_on.png" width="70px" height="70px" />';
 		if (player.inventory[slot].type == 'gasMask') hudGasmask.innerHTML = '<img src="resources/images/gasmask_on.png" width="70px" height="70px" />';
 		if (player.inventory[slot].type == 'resident') hudResident.innerHTML = '<img src="resources/images/resident_on.png" width="70px" height="70px" />';
     }
-	
+
 	// Show active items
     if(player.activeItem !== undefined) {
 		if (player.activeItem.type == 'axe') hudAxe.innerHTML = '<img src="resources/images/axe_active.png" width="70px" height="70px" />';
