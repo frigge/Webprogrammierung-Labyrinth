@@ -16,5 +16,10 @@ lab_SmokeModel.prototype = Object.create(lab_EntityModel.prototype);
 lab_SmokeModel.prototype.constructor = lab_SmokeModel;
 
 lab_SmokeModel.prototype.areaEvent = function(){
-	this.gameModel.player.reduceHealth(1);
+	if (this.gameModel.player.passiveItem !== undefined) {
+		if (this.gameModel.player.passiveItem.type == "gasMask") {
+			return;
+		}
+	}
+	this.gameModel.player.reduceHealth(5);	
 }
