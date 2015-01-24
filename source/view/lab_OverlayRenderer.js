@@ -28,7 +28,7 @@ lab_OverlayRenderer.prototype.renderGasMask = function() {
 lab_OverlayRenderer.prototype.renderClock = function () {
 
     var clockElement = document.getElementById("clock");
-    var timeLeft = this.gameController.gameDuration - this.gameController.clock.getElapsedTime();
+    var timeLeft = this.gameController.timeLeft;
 
     document.getElementById("clock").innerHTML  = parseInt(timeLeft);
 
@@ -36,8 +36,6 @@ lab_OverlayRenderer.prototype.renderClock = function () {
 
     if(timeLeft < 1){
         clockElement.style.color = "blue";
-        this.gameController.clock.stop();
-
     }
     else if(timeLeft < 10)
     {
