@@ -11,7 +11,6 @@ function lab_PlayerModel(gameModel){
 
     // the item which is currently in passive use
     this.passiveItem;
-    this.isDead = false;
     this.collidable = false;
     this.velocity = {x: 0.0, y: 0.0, z: 0.0};
     this.height = 1.8;
@@ -75,7 +74,7 @@ lab_PlayerModel.prototype.reduceHealth = function(minusHealthAmount) {
     this.health -= minusHealthAmount;
     if (this.health <= 0) {
         this.health=0;
-        this.isDead = true;
+        this.gameModel.lost = true;
     }
 }
 

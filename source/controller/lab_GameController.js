@@ -180,8 +180,8 @@ lab_GameController.prototype.initControls = function(){
 // to update the modell and the controls
 lab_GameController.prototype.update = function(){
     if(!this.pause) {
-        this.timeLeft = this.gameDuration - this.clock.getElapsedTime();
-        if(this.gameModel.player.isDead || this.timeLeft <= 0) {
+        this.updateClock();
+        if(this.gameModel.lost) {
             this.clock.stop();
             this.gameLost();
         }
@@ -195,6 +195,14 @@ lab_GameController.prototype.update = function(){
     }
 
 };
+
+lab_GameController.prototype.updateClock = function(){
+    this.timeLeft = this.gameDuration - this.clock.getElapsedTime();
+    if (this.timeLeft <= 0) {
+        this.gameModel.lost = true;
+    }
+}
+
 
 /**
  * Notifies that the game is lost and restarts if wanted
