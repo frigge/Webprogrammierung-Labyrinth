@@ -126,10 +126,13 @@ function InputController(configurationObject){
 
         debug('Initializing camera ...');
 
+        var player = gameController.gameModel.player;
+        var pos = player.getPosition();
         pitchObject.add(configuration.camera);
         yawObject.add(pitchObject);
-        yawObject.position.set(0, gameController.gameModel.player.height, 0);
+        yawObject.position.set(0, player.height, 0);
         groundPosObject.add(yawObject);
+        groundPosObject.position.set(pos.x, pos.y, pos.z);
     };
 
     var initMovement = function (){
