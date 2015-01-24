@@ -154,6 +154,7 @@ function InputController(configurationObject){
         yawObject.rotateY(movementX * -0.002);
 
         pitchObject.rotateX(invertFactor * movementY * -0.002);
+        pitchObject.rotation.x  = Math.max( -1 * (PI_2 - 0.5), Math.min( PI_2, pitchObject.rotation.x ) );
 
         var player = gameController.gameModel.player;
 
