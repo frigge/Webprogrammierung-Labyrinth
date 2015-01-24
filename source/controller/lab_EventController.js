@@ -31,13 +31,18 @@ lab_EventController.prototype.checkForAreaEvent = function(){
 
     for(var modelId in this.gameModel.areaEventList){
         model = this.gameModel.areaEventList[modelId];
-        modelposition = model.getPosition();
-    	if ((position.x >= modelposition.x - 1) &&
-	    	(position.x <= modelposition.x + 1) &&
-			(position.z >= modelposition.z - 1) &&
-			(position.z <= modelposition.z + 1)) {
-	    	this.gameModel.addModelToUpdateList(model);
-	    	model.areaEvent();
-	    }
+        if (model.isDeleted) {
+        	this.gameModel.removeModelFromAreaEventList(model);
+        } else {
+        	modelposition = model.getPosition();
+	    	if ((position.x >= modelposition.x - 1) &&
+		    	(position.x <= modelposition.x + 1) &&
+				(position.z >= modelposition.z - 1) &&
+				(position.z <= modelposition.z + 1)) {
+		    	this.gameModel.addModelToUpdateList(model);
+		    	model.areaEvent();
+		    }
+        }
+
     }
 };
