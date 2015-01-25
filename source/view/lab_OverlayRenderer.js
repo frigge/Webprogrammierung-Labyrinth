@@ -65,60 +65,60 @@ lab_OverlayRenderer.prototype.renderClock = function () {
 
 lab_OverlayRenderer.prototype.renderHud = function() {
 	// Load HUD elements from CSS to var
-	debugHud = document.getElementById("debug-hud");
-	hudAxe = document.getElementById("axe");
-	hudExtinguisher = document.getElementById("extinguisher");
-	hudGasmask = document.getElementById("gasmask");
-	hudMedikit = document.getElementById("medikit");
-	hudHealthOn = document.getElementById("healthon");
-	hudHealthOff = document.getElementById("healthoff");
-	hudResident = document.getElementById("resident");	
+	var debugHud = document.getElementById("debug-hud");
+	var hudAxe = document.getElementById("axe");
+	var hudExtinguisher = document.getElementById("extinguisher");
+	var hudGasmask = document.getElementById("gasmask");
+	var hudMedikit = document.getElementById("medikit");
+	var hudHealthOn = document.getElementById("healthon");
+	var hudHealthOff = document.getElementById("healthoff");
+	var hudResident = document.getElementById("resident");	
 	
-    player = gameController.gameModel.player;
+    var player = gameController.gameModel.player;
 
 	// Clear HUD items
-	hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_off.png" width="70px" height="70px" />';
-	hudAxe.innerHTML = '<img src="resources/images/axe_off.png" width="70px" height="70px" />';
-	hudMedikit.innerHTML = '<img src="resources/images/medikit_off.png" width="70px" height="70px" />';
-	hudGasmask.innerHTML = '<img src="resources/images/gasmask_off.png" width="70px" height="70px" />';
-	hudResident.innerHTML = '<img src="resources/images/resident_off.png" width="70px" height="70px" />';
+	hudExtinguisher.innerHTML = '<img class="hudimage" src="resources/images/extinguisher_off.png" />';
+	hudAxe.innerHTML = '<img class="hudimage" src="resources/images/axe_off.png" />';
+	hudMedikit.innerHTML = '<img class="hudimage" src="resources/images/medikit_off.png" />';
+	hudGasmask.innerHTML = '<img class="hudimage" src="resources/images/gasmask_off.png" />';
+	hudResident.innerHTML = '<img class="hudimage" src="resources/images/resident_off.png" />';
 	
 	// Show items in inventory on HUD	
     for (var  slot in player.inventory) {
-		if (player.inventory[slot].type == 'axe') hudAxe.innerHTML = '<img src="resources/images/axe_on.png" width="70px" height="70px" />';
+		if (player.inventory[slot].type == 'axe') hudAxe.innerHTML = '<img class="hudimage" src="resources/images/axe_on.png" />';
 		if (player.inventory[slot].type == 'fireExtinguisher') {
 			var extinguisherPos = 2;
 			var fireExtinguisher = player.inventory[extinguisherPos];
 			if(fireExtinguisher) {
   				var uses = fireExtinguisher.amountUses;
-				if (uses > 4) hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_on.png" width="70px" height="70px" />';
-				if (uses > 2 && uses < 5) hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_on_2-3.png" width="70px" height="70px" />';
-				if (uses < 3) hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_on_1-3.png" width="70px" height="70px" />';
+				if (uses > 4) hudExtinguisher.innerHTML = '<img class="hudimage" src="resources/images/extinguisher_on.png" />';
+				if (uses > 2 && uses < 5) hudExtinguisher.innerHTML = '<img class="hudimage" src="resources/images/extinguisher_on_2-3.png" />';
+				if (uses < 3) hudExtinguisher.innerHTML = '<img class="hudimage" src="resources/images/extinguisher_on_1-3.png" />';
 			}
 		}
-		if (player.inventory[slot].type == 'mediKit') hudMedikit.innerHTML = '<img src="resources/images/medikit_on.png" width="70px" height="70px" />';
-		if (player.inventory[slot].type == 'gasMask') hudGasmask.innerHTML = '<img src="resources/images/gasmask_on.png" width="70px" height="70px" />';
-		if (player.inventory[slot].type == 'resident') hudResident.innerHTML = '<img src="resources/images/resident_on.png" width="70px" height="70px" />';
+		if (player.inventory[slot].type == 'mediKit') hudMedikit.innerHTML = '<img class="hudimage" src="resources/images/medikit_on.png" />';
+		if (player.inventory[slot].type == 'gasMask') hudGasmask.innerHTML = '<img class="hudimage" src="resources/images/gasmask_on.png" />';
+		if (player.inventory[slot].type == 'resident') hudResident.innerHTML = '<img class="hudimage" src="resources/images/resident_on.png" />';
     }
 
 	// Show active items
     if(player.activeItem !== undefined) {
 		if (player.activeItem.type == 'axe') hudAxe.innerHTML = '<img src="resources/images/axe_active.png" width="70px" height="70px" />';
 		if (player.activeItem.type == 'fireExtinguisher') {
-			if (player.activeItem.amountUses > 4) hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_active.png" width="70px" height="70px" />';
-			if (player.activeItem.amountUses > 2 && player.activeItem.amountUses < 5 ) hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_active_2-3.png" width="70px" height="70px" />';	
-			if (player.activeItem.amountUses < 3) hudExtinguisher.innerHTML = '<img src="resources/images/extinguisher_active_1-3.png" width="70px" height="70px" />';			
+			if (player.activeItem.amountUses > 4) hudExtinguisher.innerHTML = '<img class="hudimage" src="resources/images/extinguisher_active.png" />';
+			if (player.activeItem.amountUses > 2 && player.activeItem.amountUses < 5 ) hudExtinguisher.innerHTML = '<img class="hudimage" src="resources/images/extinguisher_active_2-3.png" />';	
+			if (player.activeItem.amountUses < 3) hudExtinguisher.innerHTML = '<img class="hudimage" src="resources/images/extinguisher_active_1-3.png" />';			
 		}
-		if (player.activeItem.type == 'mediKit') hudMedikit.innerHTML = '<img src="resources/images/medikit_active.png" width="70px" height="70px" />';
-		if (player.activeItem.type == 'gasMask') hudGasmask.innerHTML = '<img src="resources/images/gasmask_active.png" width="70px" height="70px" />';
+		if (player.activeItem.type == 'mediKit') hudMedikit.innerHTML = '<img class="hudimage" src="resources/images/medikit_active.png" />';
+		if (player.activeItem.type == 'gasMask') hudGasmask.innerHTML = '<img class="hudimage" src="resources/images/gasmask_active.png" />';
 	}
 
 	// Show current health
 	var healthNum = 70 - Math.round(70 * (player.health * 0.01));
 	var healthStr = "rect(" + healthNum + "px, 70px, 70px, 0px)";
 	document.getElementById("hud-health-on").style.clip = healthStr;
-	hudHealthOn.innerHTML = '<img src="resources/images/health_on.png" width="70px" height="70px" />';
-	hudHealthOff.innerHTML = '<img src="resources/images/health_off.png" width="70px" height="70px" />';
+	hudHealthOn.innerHTML = '<img class="hudimage" src="resources/images/health_on.png" />';
+	hudHealthOff.innerHTML = '<img class="hudimage" src="resources/images/health_off.png" />';
 }
 
 // Show inventory and health as text - only for debugging
@@ -138,6 +138,5 @@ lab_OverlayRenderer.prototype.renderDebugHud = function () {
         text += slot + ": " + player.inventory[slot].type;
         text += ", ";
     }
-
      //debugHud.innerHTML = text;
 }
