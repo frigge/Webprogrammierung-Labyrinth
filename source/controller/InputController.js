@@ -311,7 +311,8 @@ function InputController(configurationObject){
             return a.distance-b.distance;
         });
 
-        if(collisionObjects[0].distance < velocity.length()){
+        var collisionLimit = Math.max(velocity.length(), 0.1);
+        if(collisionObjects[0].distance < collisionLimit){
             return true;
         }
 
