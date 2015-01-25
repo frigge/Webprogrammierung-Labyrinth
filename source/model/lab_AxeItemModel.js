@@ -36,7 +36,7 @@ lab_AxeItemModel.prototype.use = function(){
     var direction = player.getAxisZ();
     direction.multiplyScalar(-1);
     direction.normalize();
-    collisionObject = this.checkCollision(ttrollerjspos, direction);
+    collisionObject = this.checkCollision(tjspos, direction);
 
     if(collisionObject) {
         var model = this.gameModel.models[collisionObject.object.id];

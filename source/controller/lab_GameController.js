@@ -75,7 +75,6 @@ lab_GameController.prototype.initGame = function(){
 lab_GameController.prototype.initModel = function(){
 
     this.gameModel = new lab_GameModel();
-    this.gameModel.init();
 
 };
 
