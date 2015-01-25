@@ -41,6 +41,11 @@ function lab_GameController(screenElement, minimapElement){
     this.gameDuration = 60;
 
     this.timeLeft = this.gameDuration;
+	
+	
+	
+	
+	
 }
 
 /**

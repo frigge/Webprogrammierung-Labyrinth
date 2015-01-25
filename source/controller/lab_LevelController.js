@@ -85,6 +85,8 @@ lab_LevelController.prototype.initModels = function(){
 	}
 }
 
+
+
 /**
  * Loads the corresponding views and adds them to the scene
  */
