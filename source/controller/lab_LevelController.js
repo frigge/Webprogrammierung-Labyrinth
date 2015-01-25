@@ -17,6 +17,9 @@ function lab_LevelController(gameModel,scene,minimap){
     // the side of the level which is the largest, can be used to define the image section
     // of the minimap (done in GameController)
     this.levelSize;
+
+    this.levelSizeX;
+	this.levelSizeY;
 }
 
 /**
@@ -38,14 +41,14 @@ lab_LevelController.prototype.initModels = function(){
 
 	var level = lab_ajaxGetJson('resources/level-01.json');
 	// get levelsize
-	var levelSizeX = level.levelData[0].line.length;
-	var levelSizeY = level.levelData.length;
+	this.levelSizeX = level.levelData[0].line.length;
+	this.levelSizeY = level.levelData.length;
 	
-	this.levelSize = Math.max(levelSizeX, levelSizeY);
+	this.levelSize = Math.max(this.levelSizeX, this.levelSizeY);
 
 	var defaultOffset = 0.5;
-	var rangeX = levelSizeX/2-defaultOffset;
-	var rangeY = levelSizeY/2-defaultOffset;
+	var rangeX = this.levelSizeX/2-defaultOffset;
+	var rangeY = this.levelSizeY/2-defaultOffset;
 
 	// floor is not defined in level file, set it here
 	id = generateUUID();
@@ -61,9 +64,9 @@ lab_LevelController.prototype.initModels = function(){
 	this.gameModel.models[id].setPosition(0,wallHeight,0);
 
 	// the level file is translated
-	for (i=0; i<levelSizeY; i++) {
+	for (i=0; i<this.levelSizeY; i++) {
 		var str = level.levelData[i].line;
-		for (j=0; j<levelSizeX; j++) {
+		for (j=0; j<this.levelSizeX; j++) {
 			if(this.modelLoader.tokenExists(str[j])) {
 				id = generateUUID();
 				this.gameModel.models[id] = this.modelLoader.createModelByToken(str[j]);
@@ -88,10 +91,18 @@ lab_LevelController.prototype.initModels = function(){
 lab_LevelController.prototype.initView = function(scene, representationType){
     // the view elements are collected before drawn in regard to performance
     var viewElements = [];
+	var objectView;
 
     for(var modelId in this.gameModel.models){
 		var model 		= this.gameModel.models[modelId];
-		var objectView 	= this.representationLoader.getRepresentation(representationType, model.type);
+
+		// if floor or ceiling set size dynamically from information about level size
+		if (model.type == 'floor' || model.type == 'ceiling') {
+			objectView 	= this.representationLoader.getRepresentation(representationType, model.type, this.levelSizeX, this.levelSizeY);
+		} else {
+			objectView 	= this.representationLoader.getRepresentation(representationType, model.type);
+		}
+		
 		// only add an object in the scene when it is defined via the representationLoader
 		if (objectView) {
 			// set the id of the view to the same unique id of the model to glue them together

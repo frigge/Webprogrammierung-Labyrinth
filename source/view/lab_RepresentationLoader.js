@@ -12,7 +12,7 @@ function lab_RepresentationLoader(){
     
 }
 
-lab_RepresentationLoader.prototype.getRepresentation = function(representationType, representationId){
+lab_RepresentationLoader.prototype.getRepresentation = function(representationType, representationId, width, height, depth, scaleX, scaleY){
     var representation = this.representations[representationId];  
     if(!representation){
         return false;
@@ -25,7 +25,12 @@ lab_RepresentationLoader.prototype.getRepresentation = function(representationTy
 
     switch(representation[representationType].category){
         case 'plane': 
-            var plane = this.getPlane3D(representation[representationType].width, representation[representationType].height, representation[representationType].scale, representation[representationType].textureUrl);
+            var plane = this.getPlane3D(
+                    width ? width : representation[representationType].width, 
+                    height ? height : representation[representationType].height, 
+                    representation[representationType].scale, 
+                    representation[representationType].textureUrl
+                    );
                 // we got the rotaion in degree so we have to convert to rad
                 rotationX = ((Math.PI * 2) / 360 ) * representation.View3D.rotation.x;
                 rotationY = ((Math.PI * 2) / 360 ) * representation.View3D.rotation.y;
@@ -33,10 +38,18 @@ lab_RepresentationLoader.prototype.getRepresentation = function(representationTy
                 plane.rotation.set(rotationX, rotationY, rotationZ);
                 return plane;
         case 'cube': 
-            var cube = this.getCube3D(representation[representationType].textureUrl, representation.View3D.width, representation.View3D.height, representation.View3D.depth);
+            var cube = this.getCube3D(
+                    representation[representationType].textureUrl, 
+                    width ? width : representation.View3D.width, 
+                    height ? height : representation.View3D.height,
+                    depth ? depth : representation.View3D.depth);
                 return cube;
         case 'sprite':
-            var sprite = this.getSprite(representation[representationType].textureUrl, 0xffffff, representation[representationType].scaleX, representation[representationType].scaleY);
+            var sprite = this.getSprite(
+                    representation[representationType].textureUrl, 
+                    0xffffff, 
+                    scaleX ? scaleX : representation[representationType].scaleX, 
+                    scaleY ? scaleY :  representation[representationType].scaleY);
                 return sprite;   
         default:
             break;
