@@ -1,0 +1,52 @@
+{
+    "pickupItem":       {
+        "id"      : "pickupItem",
+        "url"     : "resources/sounds/pickup-item.mp3",
+        "volume"  : 1,
+        "autoPlay": false
+    },
+    "equipItem": {
+        "id"      : "equipItem",
+        "url"     : "resources/sounds/equip-item.mp3",
+        "volume"  : 1,
+        "autoPlay": false
+    },
+    "useAxe": {
+        "id"      : "useAxe",
+        "url"     : "resources/sounds/use-axe.mp3",
+        "volume"  : 1,
+        "autoPlay": false
+    },
+    "useExtinguisher": {
+        "id"      : "useExtinguisher",
+        "url"     : "resources/sounds/use-extinguisher.mp3",
+        "volume"  : 1,
+        "autoPlay": false
+    },
+    "useHealthKit": {
+        "id"      : "useHealthKit",
+        "url"     : "resources/sounds/use-health-kit.mp3",
+        "volume"  : 1,
+        "autoPlay": false
+    },
+    "useGasMask": {
+        "id"      : "useGasMask",
+        "url"     : "resources/sounds/use-gas-mask.mp3",
+        "volume"  : 1,
+        "autoPlay": false
+    },
+    "fire": {
+        "id"      : "fire",
+        "url"     : "resources/sounds/fire.mp3",
+        "volume"  : 0.1,
+        "autoPlay": true
+    },
+	"background": {
+        "id"      : "background",
+        "url"     : "resources/sounds/376737_Skullbeatz___Bad_Cat_Maste.mp3",
+        "volume"  : 0.02,
+        "autoPlay": true
+    }
+	
+	
+}

@@ -6,7 +6,7 @@
  *
  * @param HTML tag - screenElement
  */
-function lab_GameController(screenElement, minimapElement){
+function lab_GameController(screenElement, minimapElement, soundsElement){
 
     // setting screen properties
     this.screen          = document.getElementById(screenElement);
@@ -17,6 +17,9 @@ function lab_GameController(screenElement, minimapElement){
     this.minimap          = document.getElementById(minimapElement);
     this.minimapWidth     = this.minimap.offsetWidth;
     this.minimapHeight    = this.minimap.offsetHeight;
+	
+	// setting sounds properties
+    this.sounds           = document.getElementById(soundsElement);	
 
     // defining stage properties
     this.labyrinthRenderer;
@@ -42,6 +45,8 @@ function lab_GameController(screenElement, minimapElement){
 
     this.timeLeft = this.gameDuration;
 	
+	// Sound System Controller
+    this.soundController;
 	
 	
 	
@@ -53,7 +58,8 @@ function lab_GameController(screenElement, minimapElement){
  * initilaizing the stage and the model.
  */
 lab_GameController.prototype.initGame = function(){
-    this.initModel();
+    this.initSounds();
+	this.initModel();
     this.initView();
     this.initLevel();
     this.initEvents();
@@ -72,6 +78,18 @@ lab_GameController.prototype.initModel = function(){
     this.gameModel.init();
 
 };
+
+
+
+lab_GameController.prototype.initSounds = function(){
+  
+  this.soundController = new lab_SoundController();
+  
+  this.sounds.appendChild(this.soundController.getDomElement());
+  
+};
+
+
 
 lab_GameController.prototype.resize = function(event) {
     this.screenWidth = this.screen.width;

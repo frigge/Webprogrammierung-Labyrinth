@@ -48,9 +48,10 @@
     <script src="controller/lab_LevelController.js"></script>
     <script src="controller/lab_EventController.js"></script>
     <script src="controller/InputController.js"></script>
+	<script src="controller/lab_SoundController.js"></script>
+	
     
 </head>
-
 <body>
         
     <!--wrapper for the game drawings-->
@@ -79,42 +80,45 @@
         <!-- HUD-Resident -->
 		<div id="hud-resident">
 			<div id="resident"> 
- 	          	<img class="hudimage" src="resources/images/resident_on.png"/>
+ 	          	<img src="resources/images/resident_on.png" width="70px" height="70px" />
             </div>
         </div>
         
         <!-- HUD-Health -->
 		<div id="hud-health-off">
 			<div id="healthoff"> 
-            	<img class="hudimage" src="resources/images/health_off.png"/>
+            	<img src="resources/images/health_off.png" width="70px" height="70px" />
             </div>
         </div>
 		<div id="hud-health-on">
 			<div id="healthon"> 
-            	<img class="hudimage" src="resources/images/health_on.png" />
+            	<img src="resources/images/health_on.png" width="70px" height="70px" />
             </div>
         </div>
 
         <!-- HUD-Inventory -->
         <div id="hud-inventory">
 			<div id="axe"> 
-            	<img class="hudimage" src="resources/images/axe_on.png" />
-            	<img class="hudimage" src="resources/images/axe_off.png" />
+            	<img src="resources/images/axe_on.png" width="70px" height="70px" />
+            	<img src="resources/images/axe_off.png" width="70px" height="70px" />
             </div>
 			<div id="extinguisher"> 
-            	<img class="hudimage" src="resources/images/extinguisher_on.png" />
-            	<img class="hudimage" src="resources/images/extinguisher_off.png" />
+            	<img src="resources/images/extinguisher_on.png" width="70px" height="70px" />
+            	<img src="resources/images/extinguisher_off.png" width="70px" height="70px" />
             </div>
 			<div id="medikit"> 
-            	<img class="hudimage" src="resources/images/medikit_on.png" />
-            	<img class="hudimage" src="resources/images/medikit_off.png" />
+            	<img src="resources/images/medikit_on.png" width="70px" height="70px" />
+            	<img src="resources/images/medikit_off.png" width="70px" height="70px" />
             </div>
 			<div id="gasmask"> 
-            	<img class="hudimage" src="resources/images/gasmask_on.png" />
-            	<img class="hudimage" src="resources/images/gasmask_off.png" />
+            	<img src="resources/images/gasmask_on.png" width="70px" height="70px" />
+            	<img src="resources/images/gasmask_off.png" width="70px" height="70px" />
             </div>
         </div>
         
+		
+		<div id="soundsWrapper"></div>
+		
         <!--instructions overlay-->
         <div id="instructions">
             Click to play!
@@ -126,10 +130,9 @@
     <script>
                 
         // creating new game controller and initialize game
-        var gameController = new lab_GameController('wrapper', 'minimap');
+        var gameController = new lab_GameController('wrapper', 'minimap', 'soundsWrapper');
         gameController.initGame();
-		
-		
+
         run();
         
         // starting game and make this funtion the game loop
