@@ -6,9 +6,12 @@ function lab_FireExtinguisherItemModel(gameModel){
 
     // set the fixed inventory position for the fire extinguisher
     this.inventoryPosition = 2;
-    // the amount of uses for the item
-    this.amountUses = 6;
-    this.range = 3;
+	// the amount of uses for the item
+	this.possibleAmountUses = 9;
+    // the amount of uses for the item (counter)
+    this.amountUses = this.possibleAmountUses;
+    // function range
+	this.range = 3;
 }
 
 // inherit from lab_EntityModel

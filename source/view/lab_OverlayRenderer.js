@@ -91,9 +91,12 @@ lab_OverlayRenderer.prototype.renderHud = function() {
 			var fireExtinguisher = player.inventory[extinguisherPos];
 			if(fireExtinguisher) {
   				var uses = fireExtinguisher.amountUses;
-				if (uses > 4) hudExtinguisher.innerHTML = '<img class="hudimage" src="resources/images/extinguisher_on.png" />';
-				if (uses > 2 && uses < 5) hudExtinguisher.innerHTML = '<img class="hudimage" src="resources/images/extinguisher_on_2-3.png" />';
-				if (uses < 3) hudExtinguisher.innerHTML = '<img class="hudimage" src="resources/images/extinguisher_on_1-3.png" />';
+				var size = fireExtinguisher.possibleAmountUses;
+				var usesPercent = uses / (size * 0.01);
+				//console.log(usesPercent);
+				if (usesPercent > 66) hudExtinguisher.innerHTML = '<img class="hudimage" src="resources/images/extinguisher_on.png" />';
+				if (usesPercent > 33 && usesPercent < 67) hudExtinguisher.innerHTML = '<img class="hudimage" src="resources/images/extinguisher_on_2-3.png" />';
+				if (usesPercent < 34) hudExtinguisher.innerHTML = '<img class="hudimage" src="resources/images/extinguisher_on_1-3.png" />';
 			}
 		}
 		if (player.inventory[slot].type == 'mediKit') hudMedikit.innerHTML = '<img class="hudimage" src="resources/images/medikit_on.png" />';
@@ -103,11 +106,14 @@ lab_OverlayRenderer.prototype.renderHud = function() {
 
 	// Show active items
     if(player.activeItem !== undefined) {
-		if (player.activeItem.type == 'axe') hudAxe.innerHTML = '<img src="resources/images/axe_active.png" width="70px" height="70px" />';
+		if (player.activeItem.type == 'axe') hudAxe.innerHTML = '<img class="hudimage" src="resources/images/axe_active.png" />';
 		if (player.activeItem.type == 'fireExtinguisher') {
-			if (player.activeItem.amountUses > 4) hudExtinguisher.innerHTML = '<img class="hudimage" src="resources/images/extinguisher_active.png" />';
-			if (player.activeItem.amountUses > 2 && player.activeItem.amountUses < 5 ) hudExtinguisher.innerHTML = '<img class="hudimage" src="resources/images/extinguisher_active_2-3.png" />';	
-			if (player.activeItem.amountUses < 3) hudExtinguisher.innerHTML = '<img class="hudimage" src="resources/images/extinguisher_active_1-3.png" />';			
+			var uses = player.activeItem.amountUses;
+			var size = player.activeItem.possibleAmountUses;
+			var usesPercent = uses / (size * 0.01);
+			if (usesPercent > 66) hudExtinguisher.innerHTML = '<img class="hudimage" src="resources/images/extinguisher_active.png" />';
+			if (usesPercent > 33 && usesPercent < 67) hudExtinguisher.innerHTML = '<img class="hudimage" src="resources/images/extinguisher_active_2-3.png" />';	
+			if (usesPercent < 34) hudExtinguisher.innerHTML = '<img class="hudimage" src="resources/images/extinguisher_active_1-3.png" />';			
 		}
 		if (player.activeItem.type == 'mediKit') hudMedikit.innerHTML = '<img class="hudimage" src="resources/images/medikit_active.png" />';
 		if (player.activeItem.type == 'gasMask') hudGasmask.innerHTML = '<img class="hudimage" src="resources/images/gasmask_active.png" />';
