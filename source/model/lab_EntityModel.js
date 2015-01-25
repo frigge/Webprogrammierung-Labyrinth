@@ -1,3 +1,9 @@
+/**
+ * Abstract entity model
+ * All game entities inherit from this class
+ * @param  gameModel
+ * @abstract
+ */
 function lab_EntityModel(gameModel){
     
     this.gameModel = gameModel;
