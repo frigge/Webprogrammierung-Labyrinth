@@ -179,8 +179,12 @@ lab_LevelController.prototype.updateSceneObject = function(scene, modelId){
  * The position will be set to middle of the height of an object to align to the floor level
  */
 lab_LevelController.prototype.setObjectYPosition = function(type, defaultOffset){
-	var objectHeight = this.representationLoader.representations[type].View3D.height;			
-	if (objectHeight!=undefined) {
+	var objectHeight = this.representationLoader.representations[type].View3D.height;
+	if (objectHeight == undefined) {
+		objectHeight = this.representationLoader.representations[type].View3D.scaleY;
+	}
+
+	if (objectHeight != undefined) {
 		return objectHeight/2;
 	} else {
 		// falls back to default offset if no height is specified
