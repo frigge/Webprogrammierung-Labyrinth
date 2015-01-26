@@ -13,6 +13,9 @@ function lab_SmokeModel(gameModel){
     // has an area event (damage)
     this.hasAreaEvent = true;
 
+    // the area event of fire is damage
+    this.areaEvent = 'damage';
+
     // smoke is not collidable
     this.collidable = false;
 }
