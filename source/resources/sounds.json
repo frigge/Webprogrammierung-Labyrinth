@@ -44,7 +44,7 @@
 	"background": {
         "id"      : "background",
         "url"     : "resources/sounds/376737_Skullbeatz___Bad_Cat_Maste.mp3",
-        "volume"  : 0.05,
+        "volume"  : 0.1,
         "autoPlay": true
     },
 	"test": {
