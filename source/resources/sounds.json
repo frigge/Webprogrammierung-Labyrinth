@@ -17,9 +17,9 @@
         "volume"  : 1,
         "autoPlay": false
     },
-    "useExtinguisher": {
-        "id"      : "useExtinguisher",
-        "url"     : "resources/sounds/use-extinguisher.mp3",
+    "fireExtinguisher": {
+        "id"      : "fireExtinguisher",
+        "url"     : "resources/sounds/fireExtinguisher.mp3",
         "volume"  : 1,
         "autoPlay": false
     },
