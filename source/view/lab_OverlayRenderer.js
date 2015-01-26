@@ -36,6 +36,7 @@ lab_OverlayRenderer.prototype.renderClock = function () {
 		var timeStr = timeMin + ':0' + timeSec;
 	} else var timeStr = timeMin + ':' + timeSec;
 
+	// show time on HUD
 	if (timeLeft >= 0 ) clockElement.textContent = timeStr;
 
     if(timeLeft < 1){
