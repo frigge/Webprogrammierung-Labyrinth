@@ -18,7 +18,7 @@
             "height":     40,
             "scale":      0.3,
             "rotation":   {"x": 90, "y": 0, "z": 0},
-            "textureUrl": "resources/images/tutorialsforblender3d.com_BrownStainedBoards-ColorMap_4x.png"
+            "textureUrl": "resources/images/floor.png"
         },
         "View2D": {
         }
@@ -31,7 +31,7 @@
             "height":     40,
             "scale":      1,
             "rotation":   {"x": 90, "y": 0, "z": 0},
-            "textureUrl": "resources/images/tutorialsforblender3d.com_PlasterCeiling.png"
+            "textureUrl": "resources/images/ceiling.png"
         },
         "View2D": {
         }
@@ -43,11 +43,11 @@
             "width":      1.0,
             "height":     3.0,
             "depth":      1.0,
-            "textureUrl": "resources/images/bildburg_de_tuerc0042_512.png"
+            "textureUrl": "resources/images/door.png"
         },
         "View2D": {
             "category":     "sprite",
-            "textureUrl":   "resources/images/bildburg_de_tuerc0042_512.png",
+            "textureUrl":   "resources/images/door.png",
             "scaleX":       1,
             "scaleY":       1
         }
@@ -59,7 +59,7 @@
             "width":      1.0,
             "height":     3.0,
             "depth":      1.0,
-            "textureUrl": "resources/images/tutorialsforblender3d.com_OldConcrete.png"
+            "textureUrl": "resources/images/wall.png"
         },
         "View2D": {
             "category":     "sprite",
@@ -75,11 +75,11 @@
             "width":      1.0,
             "height":     3.0,
             "depth":      1.0,
-            "textureUrl": "resources/images/bildburg_de_tuerc0042_512.png"
+            "textureUrl": "resources/images/door.png"
         },
         "View2D": {
             "category":     "sprite",
-            "textureUrl":   "resources/images/bildburg_de_tuerc0042_512.png",
+            "textureUrl":   "resources/images/door.png",
             "scaleX":       1,
             "scaleY":       1
         }
