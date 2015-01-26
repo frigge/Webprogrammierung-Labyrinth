@@ -43,7 +43,7 @@ lab_EventController.prototype.checkForAreaEvent = function(){
 					this.gameModel.addModelToUpdateList(model);
 					model.areaEvent();
 					if (model.areaEventType == 'collect') {
-   						document.getElementById('test').play();
+   						document.getElementById('collect').play();
 					}
 		    }
         }
