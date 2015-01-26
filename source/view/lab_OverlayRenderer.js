@@ -40,6 +40,7 @@ lab_OverlayRenderer.prototype.renderClock = function () {
     else if(timeLeft < 10)
     {
         clockElement.style.color = "red";
+		document.getElementById('clock-ticking').play();
         if(parseInt(timeLeft * 2) % 2 === 0)
         {
             clockElement.style.fontSize = "350%";

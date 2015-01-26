@@ -52,6 +52,12 @@
         "url"     : "resources/sounds/test.mp3",
         "volume"  : 1,
         "autoPlay": false
+	},
+	"clock-ticking": {
+        "id"      : "clock-ticking",
+        "url"     : "resources/sounds/clock-ticking.mp3",
+        "volume"  : 1,
+        "autoPlay": false
 	}
-	
+		
 }

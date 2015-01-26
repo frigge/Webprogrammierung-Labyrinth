@@ -99,6 +99,7 @@ function InputController(configurationObject){
         document.addEventListener("mouseup", function(event) {
             player = gameController.gameModel.player;
             player.useActiveItem();
+			document.getElementById('test').play();
         }, false);
     };
 
@@ -261,15 +262,19 @@ function InputController(configurationObject){
 
             case inventorySelection.axe:
                player.setActiveItem(1);
+			   document.getElementById('test').play();
                break;
             case inventorySelection.extinguisher:
                player.setActiveItem(2);
+			   document.getElementById('test').play();
                break;
             case inventorySelection.medikit:
                player.setActiveItem(3);
+			   document.getElementById('test').play();
                break;
             case inventorySelection.gasmask:
                player.setActiveItem(4);
+			   document.getElementById('test').play();
                break;
             case inventorySelection.resident:
                player.setActiveItem(5);
