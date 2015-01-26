@@ -130,6 +130,8 @@ lab_OverlayRenderer.prototype.renderHud = function() {
 // Show inventory and health as text - only for debugging
 lab_OverlayRenderer.prototype.renderDebugHud = function () {
     var text = "";
+    var player = gameController.gameModel.player;
+
     text += "Health: " + player.health + " %<br>";
     if(player.activeItem !== undefined)
         text += "Active Item: " + player.activeItem.type + " (" + player.activeItem.amountUses + ")<br>";

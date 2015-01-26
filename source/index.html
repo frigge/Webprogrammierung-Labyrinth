@@ -128,12 +128,27 @@
 </div>
 
     <script>
-                
-        // creating new game controller and initialize game
-        var gameController = new lab_GameController('wrapper', 'minimap', 'soundsWrapper');
-        gameController.initGame();
+        var isWebGL     = true;
+        var noWebGLText = "Your Browser does not support WebGL!"
 
-        run();
+        // detect if webgl is available (source: https://get.webgl.org/)
+        try { 
+            var canvas  = document.createElement('canvas');
+            isWebGL = !! window.WebGLRenderingContext && ( canvas.getContext( 'webgl' ) || canvas.getContext( 'experimental-webgl' ) ); 
+        } catch(e) { 
+            isWebGL = false;
+            instructions.innerHTML = noWebGLText;
+            throw error(noWebGLText);
+        }
+        
+        if (isWebGL) {      
+            // creating new game controller and initialize game
+            var gameController = new lab_GameController('wrapper', 'minimap', 'soundsWrapper');
+            gameController.initGame();
+
+            run();
+        }
+
         
         // starting game and make this funtion the game loop
         function run(){

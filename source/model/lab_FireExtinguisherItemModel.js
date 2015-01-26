@@ -1,27 +1,38 @@
-function lab_FireExtinguisherItemModel(gameModel){
-    
+/**
+ * Fire Extinguisher item model
+ * Fire Extinguishers can be used to put fires out
+ * @param  gameModel
+ */
+function lab_FireExtinguisherItemModel(gameModel){  
+    // calls parent contructor
     lab_ItemModel.call(this,gameModel);
 
     this.type = 'fireExtinguisher';
 
     // set the fixed inventory position for the fire extinguisher
     this.inventoryPosition = 2;
+
 	// the amount of uses for the item
 	this.possibleAmountUses = 9;
+
     // the amount of uses for the item (counter)
     this.amountUses = this.possibleAmountUses;
-    // function range
+
+    // the range of the extinguisher when used
 	this.range = 3;
 }
 
 // inherit from lab_EntityModel
 lab_FireExtinguisherItemModel.prototype = Object.create(lab_ItemModel.prototype);
 
-// Set the "constructor" property to refer to lab_FireExtinguisherItemModel
+// Set the "constructor" property to refer to this object
 lab_FireExtinguisherItemModel.prototype.constructor = lab_FireExtinguisherItemModel;
 
+/**
+ * When fire extinguisher is used it can put out fires if nearby
+ */
 lab_FireExtinguisherItemModel.prototype.use = function(){
-    var player = gameController.gameModel.player;
+    var player = this.gameModel.player;
     var pos = player.getPosition();
     var tjspos = new THREE.Vector3(pos.x, pos.y + player.height, pos.z);
 
@@ -31,17 +42,17 @@ lab_FireExtinguisherItemModel.prototype.use = function(){
     collisionObject = this.checkCollision(tjspos, direction);
 
     if(collisionObject) {
-        var model = gameController.gameModel.models[collisionObject.object.id];
+        var model = this.gameModel.models[collisionObject.object.id];
 
         if(!model) {
             console.error("missing model for object id: " + collisionObject.object.id);
         }
 
         if(model.type == "fire" && collisionObject.distance < this.range) {
-            //extinguish the wall incredibly boringly
-            model.heat -= 1;
+            //extinguish the fire incredibly boringly
+            model.stability -= 1;
 
-            if(model.heat == 0) {
+            if(model.stability == 0) {
                 model.isDeleted = true;
                 model.dispose();
                 this.gameModel.addModelToUpdateList(model);

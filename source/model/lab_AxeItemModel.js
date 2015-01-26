@@ -1,5 +1,10 @@
+/**
+ * Axe item model
+ * Axes can be used to destroy things
+ * @param  gameModel
+ */
 function lab_AxeItemModel(gameModel){
-    
+    // calls parent contructor
     lab_ItemModel.call(this,gameModel);
 
     this.type = 'axe';
@@ -9,17 +14,22 @@ function lab_AxeItemModel(gameModel){
 
     // the amount of uses for the item
     this.amountUses = 'unlimited';
+
+    // the range of the axe when used
     this.range = 2;
 }
 
-// inherit from lab_EntityModel
+// inherit from lab_ItemModel
 lab_AxeItemModel.prototype = Object.create(lab_ItemModel.prototype);
 
-// Set the "constructor" property to refer to lab_AxeItemModel
+// Set the "constructor" property to refer to this object
 lab_AxeItemModel.prototype.constructor = lab_AxeItemModel;
 
+/**
+ * When axe is used it can destroy doors if nearby
+ */
 lab_AxeItemModel.prototype.use = function(){
-    var player = gameController.gameModel.player;
+    var player = this.gameModel.player;
     var pos = player.getPosition();
     var tjspos = new THREE.Vector3(pos.x, pos.y + player.height, pos.z);
 
@@ -29,7 +39,7 @@ lab_AxeItemModel.prototype.use = function(){
     collisionObject = this.checkCollision(tjspos, direction);
 
     if(collisionObject) {
-        var model = gameController.gameModel.models[collisionObject.object.id];
+        var model = this.gameModel.models[collisionObject.object.id];
 
         if(!model) {
             console.error("missing model for object id: " + collisionObject.object.id);

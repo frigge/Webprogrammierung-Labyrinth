@@ -41,7 +41,7 @@ function lab_GameController(screenElement, minimapElement, soundsElement){
 
     this.clock = new THREE.Clock(false);
 
-    this.gameDuration = 60;
+    this.gameDuration = 300;
 
     this.timeLeft = this.gameDuration;
 	
@@ -75,7 +75,6 @@ lab_GameController.prototype.initGame = function(){
 lab_GameController.prototype.initModel = function(){
 
     this.gameModel = new lab_GameModel();
-    this.gameModel.init();
 
 };
 

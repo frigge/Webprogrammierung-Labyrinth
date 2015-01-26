@@ -1,5 +1,10 @@
+/**
+ * Gasmask item model
+ * Gas masks can be used as a passive item and protects from smoke
+ * @param  gameModel
+ */
 function lab_GasMaskItemModel(gameModel){
-    
+    // calls parent contructor
     lab_ItemModel.call(this,gameModel);
 
     this.type = 'gasMask';
@@ -17,9 +22,12 @@ function lab_GasMaskItemModel(gameModel){
 // inherit from lab_EntityModel
 lab_GasMaskItemModel.prototype = Object.create(lab_ItemModel.prototype);
 
-// Set the "constructor" property to refer to lab_GasMaskItemModel
+// Set the "constructor" property to refer to this object
 lab_GasMaskItemModel.prototype.constructor = lab_GasMaskItemModel;
 
+/**
+ * When used the gas mask is a passive item of the player until reuse
+ */
 lab_GasMaskItemModel.prototype.use = function(){
 	// activate or deactivate the gasmask as passive Item
 	if (this.gameModel.player.passiveItem) {
