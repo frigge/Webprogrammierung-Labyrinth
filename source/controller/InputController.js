@@ -99,6 +99,7 @@ function InputController(configurationObject){
         document.addEventListener("mouseup", function(event) {
             player = gameController.gameModel.player;
             player.useActiveItem();
+			document.getElementById('test').play();
         }, false);
     };
 

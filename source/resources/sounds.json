@@ -46,6 +46,12 @@
         "url"     : "resources/sounds/376737_Skullbeatz___Bad_Cat_Maste.mp3",
         "volume"  : 0.02,
         "autoPlay": true
+    },
+	"test": {
+        "id"      : "test",
+        "url"     : "resources/sounds/test.mp3",
+        "volume"  : 1,
+        "autoPlay": false
     }
 	
 	
