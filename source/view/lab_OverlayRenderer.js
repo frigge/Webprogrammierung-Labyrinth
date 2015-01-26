@@ -30,9 +30,11 @@ lab_OverlayRenderer.prototype.renderClock = function () {
     var clockElement = document.getElementById("clock");
     var timeLeft = this.gameController.timeLeft;
 
-    document.getElementById("clock").innerHTML  = parseInt(timeLeft);
+	var timeMin = Math.floor(timeLeft / 60);
+	var timeSec = parseInt(timeLeft - (timeMin * 60));
+	var timeStr = timeMin + ':' + timeSec;
 
-    clockElement.textContent = parseInt(timeLeft);
+	clockElement.textContent = timeStr;
 
     if(timeLeft < 1){
         clockElement.style.color = "blue";
