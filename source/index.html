@@ -131,7 +131,7 @@
         var isWebGL     = true;
         var noWebGLText = "Your Browser does not support WebGL!"
 
-        // detect if webgl is available
+        // detect if webgl is available (source: https://get.webgl.org/)
         try { 
             var canvas  = document.createElement('canvas');
             isWebGL = !! window.WebGLRenderingContext && ( canvas.getContext( 'webgl' ) || canvas.getContext( 'experimental-webgl' ) ); 
