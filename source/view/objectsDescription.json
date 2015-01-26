@@ -163,13 +163,13 @@
         "name":       "Fire",
         "View3D": { 
             "category":     "sprite",
-            "textureUrl":   "resources/images/fire-sprite.png",
+            "textureUrl":   "resources/images/fire.png",
             "scaleX":       1,
             "scaleY":       2
         },
         "View2D": {
             "category":     "sprite",
-            "textureUrl":   "resources/images/fire-sprite.png",
+            "textureUrl":   "resources/images/fire.png",
             "scaleX":       2,
             "scaleY":       2
         }
