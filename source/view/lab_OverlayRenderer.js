@@ -36,6 +36,7 @@ lab_OverlayRenderer.prototype.renderClock = function () {
 
     if(timeLeft < 1){
         clockElement.style.color = "blue";
+		document.getElementById('time_out').play();
     }
     else if(timeLeft < 10)
     {

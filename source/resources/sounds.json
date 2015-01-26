@@ -58,6 +58,12 @@
         "url"     : "resources/sounds/clock-ticking.mp3",
         "volume"  : 1,
         "autoPlay": false
+	},
+	"time_out": {
+        "id"      : "time_out",
+        "url"     : "resources/sounds/time_out.mp3",
+        "volume"  : 1,
+        "autoPlay": false
 	}
-		
+			
 }

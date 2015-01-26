@@ -41,7 +41,7 @@ function lab_GameController(screenElement, minimapElement, soundsElement){
 
     this.clock = new THREE.Clock(false);
 
-    this.gameDuration = 300;
+    this.gameDuration = 30;
 
     this.timeLeft = this.gameDuration;
 	
