@@ -32,6 +32,8 @@ lab_SoundController.prototype.init = function(){
     
 };
 
+
+/*
 lab_SoundController.prototype.playSound = function(key){
 
     var sound = document.getElementById(key);
@@ -67,7 +69,7 @@ lab_SoundController.prototype.startPlayback = function(key){
     }
     
 };
-
+*/
 lab_SoundController.prototype.getDomElement = function(){
     return this.domElement;
 };
