@@ -95,8 +95,8 @@
         "View2D": {
             "category":     "sprite",
             "textureUrl":   "resources/images/medikit.png",
-            "scaleX":       3,
-            "scaleY":       3
+            "scaleX":       2,
+            "scaleY":       2
         }      
     },
     "axe":  {
@@ -170,19 +170,13 @@
         "View2D": {
             "category":     "sprite",
             "textureUrl":   "resources/images/fire-sprite.png",
-            "scaleX":       3,
-            "scaleY":       3
+            "scaleX":       2,
+            "scaleY":       2
         }
     },
     "smoke":  {
         "name":       "Smoke",
         "View3D": { 
-            "category":     "sprite",
-            "textureUrl":   "resources/images/smoke.png",
-            "scaleX":       3,
-            "scaleY":       3
-        },
-        "View2D": {
             "category":     "sprite",
             "textureUrl":   "resources/images/smoke.png",
             "scaleX":       3,
