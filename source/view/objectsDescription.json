@@ -179,8 +179,8 @@
         "View3D": { 
             "category":     "sprite",
             "textureUrl":   "resources/images/smoke.png",
-            "scaleX":       3,
-            "scaleY":       3
+            "scaleX":       2,
+            "scaleY":       2
         }
     }
 }
