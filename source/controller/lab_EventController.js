@@ -42,6 +42,9 @@ lab_EventController.prototype.checkForAreaEvent = function(){
 				(position.z <= modelposition.z + eventRadius)) {
 					this.gameModel.addModelToUpdateList(model);
 					model.areaEvent();
+					if (model.areaEventType == 'collect') {
+   						document.getElementById('test').play();
+					}
 		    }
         }
     }

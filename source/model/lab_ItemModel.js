@@ -22,7 +22,7 @@ function lab_ItemModel(gameModel){
     this.hasAreaEvent = true;
 
     // the area event of items is collect
-    this.areaEvent = 'collect';
+    this.areaEventType = 'collect';
 
     // items do not have a collision
     this.collidable = false;

@@ -13,7 +13,7 @@ function lab_FireModel(gameModel){
     this.hasAreaEvent = true;
 
     // the area event of fire is damage
-    this.areaEvent = 'damage';
+    this.areaEventType = 'damage';
     
     // can be extinguised, this value defines how stable it is
     this.stability = 2;
