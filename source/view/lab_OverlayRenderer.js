@@ -32,7 +32,9 @@ lab_OverlayRenderer.prototype.renderClock = function () {
 
 	var timeMin = Math.floor(timeLeft / 60);
 	var timeSec = parseInt(timeLeft - (timeMin * 60));
-	var timeStr = timeMin + ':' + timeSec;
+	if (timeSec < 10) {
+		var timeStr = timeMin + ':0' + timeSec;
+	} else var timeStr = timeMin + ':' + timeSec;
 
 	clockElement.textContent = timeStr;
 
