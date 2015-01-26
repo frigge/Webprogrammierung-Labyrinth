@@ -69,8 +69,9 @@ lab_SoundController.prototype.startPlayback = function(key){
     }
     
 };
-*/
+
+
 lab_SoundController.prototype.getDomElement = function(){
     return this.domElement;
 };
-
+*/
