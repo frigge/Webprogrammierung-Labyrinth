@@ -31,9 +31,13 @@ lab_OverlayRenderer.prototype.renderGasMask = function() {
  */
 lab_OverlayRenderer.prototype.renderClock = function () {
 
-    var clockElement = document.getElementById("clock");
-    var timeLeft = this.gameController.timeLeft;
+    // load div for clock into variable
+	var clockElement = document.getElementById("clock");
 
+    // get rest time from gameController
+	var timeLeft = this.gameController.timeLeft;
+
+	// convert rest time to string (min:sec)
 	var timeMin = Math.floor(timeLeft / 60);
 	var timeSec = parseInt(timeLeft - (timeMin * 60));
 	if (timeSec < 10) {
@@ -43,6 +47,7 @@ lab_OverlayRenderer.prototype.renderClock = function () {
 	// show time on HUD
 	if (timeLeft >= 0 ) clockElement.textContent = timeStr;
 
+	// edit style of timer if only a few seconds are left
     if(timeLeft < 1){
         clockElement.style.color = "blue";
 		document.getElementById('time_out').play();
@@ -75,7 +80,7 @@ lab_OverlayRenderer.prototype.renderClock = function () {
 }
 
 lab_OverlayRenderer.prototype.renderHud = function() {
-	// Load HUD elements from CSS to var
+	// Load HUD div elements from CSS to var
 	var debugHud = document.getElementById("debug-hud");
 	var hudAxe = document.getElementById("hudAxe");
 	var hudExtinguisher = document.getElementById("hudExtinguisher");
