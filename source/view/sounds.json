@@ -58,6 +58,12 @@
         "url"     : "resources/sounds/time-out.mp3",
         "volume"  : 1,
         "autoPlay": false
+	},
+	"damage": {
+        "id"      : "damage",
+        "url"     : "resources/sounds/damage.ogg",
+        "volume"  : 1,
+        "autoPlay": false
 	}
 			
 }
