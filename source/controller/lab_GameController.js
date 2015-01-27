@@ -187,7 +187,7 @@ lab_GameController.prototype.initEvents = function(){
  */
 lab_GameController.prototype.initControls = function(){
     // CONTROLS
-    this.controls = new InputController({
+    this.controls = new lab_InputController({
         camera: this.camera, // add the game camera
         debug: false, // setting debug mode
         fly: false, // enable flying (for debug)

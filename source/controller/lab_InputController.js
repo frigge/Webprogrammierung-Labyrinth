@@ -1,11 +1,11 @@
-var InputController = InputController || {};
+var lab_InputController = lab_InputController || {};
 
 /**
  * The InputController handles mouse and keyboard input and alters the
  * state of the player.
  */
 
-function InputController(configurationObject){
+function lab_InputController(configurationObject){
 
     if (!(this instanceof InputController)){
         return new InputController(configurationObject);
