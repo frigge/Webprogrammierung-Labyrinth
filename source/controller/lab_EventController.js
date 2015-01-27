@@ -42,7 +42,7 @@ lab_EventController.prototype.checkForAreaEvent = function(){
 				(position.z <= modelposition.z + eventRadius)) {
 					this.gameModel.addModelToUpdateList(model);
 					model.areaEvent();
-					if (model.areaEventType == 'collect') {					// if the subject overrun spend Sound
+					if (model.areaEventType == 'collect' && model.isCollected) {				// if the subject overrun spend Sound
    						document.getElementById('collect').play();
 					}
 		    }
