@@ -51,7 +51,7 @@ function lab_GameController(screenElement, minimapElement, soundsElement){
     this.clock = new THREE.Clock(false);
 
     // game duration for completing the level
-    this.gameDuration = 300;
+    this.gameDuration = 360;
 
     // game duration which is left
     this.timeLeft = this.gameDuration;
