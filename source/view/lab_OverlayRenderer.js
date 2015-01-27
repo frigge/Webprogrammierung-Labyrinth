@@ -73,13 +73,13 @@ lab_OverlayRenderer.prototype.renderClock = function () {
 lab_OverlayRenderer.prototype.renderHud = function() {
 	// Load HUD elements from CSS to var
 	var debugHud = document.getElementById("debug-hud");
-	var hudAxe = document.getElementById("axe-icon");
-	var hudExtinguisher = document.getElementById("extinguisher-icon");
-	var hudGasmask = document.getElementById("gasmask-icon");
-	var hudMedikit = document.getElementById("medikit-icon");
+	var hudAxe = document.getElementById("axe");
+	var hudExtinguisher = document.getElementById("extinguisher");
+	var hudGasmask = document.getElementById("gasmask");
+	var hudMedikit = document.getElementById("medikit");
 	var hudHealthOn = document.getElementById("healthon");
 	var hudHealthOff = document.getElementById("healthoff");
-	var hudResident = document.getElementById("resident-icon");	
+	var hudResident = document.getElementById("resident");	
 	
     var player = gameController.gameModel.player;
 
