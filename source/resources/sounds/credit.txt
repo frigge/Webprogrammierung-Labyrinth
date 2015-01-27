@@ -1,0 +1,58 @@
+Kredit (Sound):
+
+
+
+equip-item:
+Name: fins
+https://www.freesound.org/people/fins/sounds/146727/
+
+
+medi-kit:
+Name: bernd666
+https://www.freesound.org/people/bernd666/sounds/114497/
+
+
+fire: 
+Name: suonho
+https://www.freesound.org/people/suonho/sounds/17725/
+
+
+clock-ticking: 
+Name: unfa
+https://www.freesound.org/people/unfa/sounds/154906/
+
+
+time-out:
+Name: HerbertBoland
+https://www.freesound.org/people/HerbertBoland/sounds/29842/
+
+
+pickup:
+Name: f4ngy
+https://www.freesound.org/people/f4ngy/sounds/240784/
+
+
+extinguisher:
+Name:211redman112
+https://www.freesound.org/people/211redman112/sounds/234083/
+
+
+gasmaske:
+Name:jacobzeier
+https://www.freesound.org/people/jacobzeier/sounds/163164/
+
+
+Axe:
+Name: MV4824
+https://www.freesound.org/people/MV4824/sounds/61307/
+
+
+
+
+
+Beispiel zur Einbindung:
+
+This [video/theatre piece/...] uses these sounds from freesound:
+sound1 by user1 ( http://freesound.org/people/user1/ )
+sound2, sound3 by user2 ( http://freesound.org/people/user2/ )
+etc..
