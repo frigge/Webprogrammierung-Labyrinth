@@ -25,6 +25,10 @@ lab_OverlayRenderer.prototype.renderGasMask = function() {
     }
 }
 
+/**
+ * This method will be render the clock. 
+ * In dependence on the time remaining,  the size and the color of the clock is changed
+ */
 lab_OverlayRenderer.prototype.renderClock = function () {
 
     var clockElement = document.getElementById("clock");
