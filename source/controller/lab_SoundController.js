@@ -2,7 +2,12 @@ function lab_SoundController(){
     
     this.domElement = null;
     
-    this.soundDescription   = lab_ajaxGetJson('resources/sounds.json');
+    try {
+        this.soundDescription   = lab_ajaxGetJson('view/sounds.json');
+    }
+    catch(e) {
+        throw new Error("Sound file could not be loaded! Reason: " + e.message);
+    }
     
     this.init();
     
