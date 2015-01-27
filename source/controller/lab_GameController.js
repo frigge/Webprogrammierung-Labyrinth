@@ -4,7 +4,9 @@
  * game loop. Furthermore it will be responsible for the updating within the
  * model.
  *
- * @param HTML tag - screenElement
+ * @param screenElement the html element where the 3d view goes
+ * @param minimapElement the html element where the 2d view/minimap goes
+ * @param soundsElement the html element where the audio goes
  */
 function lab_GameController(screenElement, minimapElement, soundsElement){
 
@@ -24,38 +26,40 @@ function lab_GameController(screenElement, minimapElement, soundsElement){
     // defining stage properties
     this.labyrinthRenderer;
     this.minimapRenderer;
-    this.scene3D;
+    this.scene3d;
+    this.scene2d;
     this.camera;
-    this.ambientLights;
+    this.cameraMap;
     this.controls;
 
-    this.cameraMap;
-
-    // level handler
+    // level controller
     this.levelController;
 
-    // the game model holding the entire model
+    // event controller
+    this.eventController;
+
+    // sound system controller
+    this.soundController;
+
+    // the game model holding the entire game state
     this.gameModel;
 
+    // the game can be paused
     this.pause = true;
 
+    // the clock uses the threeJS clock as a base
     this.clock = new THREE.Clock(false);
 
+    // game duration for completing the level
     this.gameDuration = 600;
 
+    // game duration which is left
     this.timeLeft = this.gameDuration;
-	
-	// Sound System Controller
-    this.soundController;
-	
-	
-	
-	
 }
 
 /**
- * This method will initialize the game. Tha will include
- * initilaizing the stage and the model.
+ * This method will initialize all parts of the game.
+ * The Methods will invoke the different controllers for further processing
  */
 lab_GameController.prototype.initGame = function(){
     this.initSounds();
@@ -69,28 +73,26 @@ lab_GameController.prototype.initGame = function(){
 
 
 /**
- * This method will initialize the model. It will start the
- * model and will retrieve tgether with the level controller
+ * This method will initialize the model.
  */
 lab_GameController.prototype.initModel = function(){
-
     this.gameModel = new lab_GameModel();
-
 };
 
 
-
+/**
+ * This method will initialize the sound controller.
+ */
 lab_GameController.prototype.initSounds = function(){
+    this.soundController = new lab_SoundController();
   
-  this.soundController = new lab_SoundController();
-  
-  this.sounds.appendChild(this.soundController.getDomElement());
-  
+    this.sounds.appendChild(this.soundController.getDomElement());
 };
 
-
-
-lab_GameController.prototype.resize = function(event) {
+/**
+ * This method will handle resizing of the window if necessary
+ */
+lab_GameController.prototype.resize = function() {
     this.screenWidth = this.screen.width;
     this.screenWidth = this.screen.height;
     this.labyrinthRenderer.setSize(this.screenWidth, this.screenHeight);
@@ -108,20 +110,22 @@ lab_GameController.prototype.initView = function(){
     this.labyrinthRenderer = new lab_LabyrinthRenderer(this.screenWidth, this.screenHeight);
     this.screen.appendChild(this.labyrinthRenderer.getDomElement());
 
+    // adds an event listener/handler for resizing of the browser window
     this.screen.addEventListener("resize", this.resize, false);
 
     // MINIMAP RENDERER
     this.minimapRenderer = new lab_MinimapRenderer(this.minimapWidth, this.minimapHeight);
     this.minimap.appendChild(this.minimapRenderer.getDomElement());
 
-    // SCENE
-    this.scene3D        = new THREE.Scene();
-    this.sceneMinimap   = new THREE.Scene();
+    // CREATE THREEJS SCENES
+    this.scene3d = new THREE.Scene();
+    this.scene2d = new THREE.Scene();
 
     // LIGHTS
-    this.scene3D.add(new THREE.AmbientLight(0xffffff));
-    this.sceneMinimap.add(new THREE.AmbientLight(0xffffff));
+    this.scene3d.add(new THREE.AmbientLight(0xffffff));
+    this.scene2d.add(new THREE.AmbientLight(0xffffff));
 
+    // OVERLAY
     this.overlayRenderer = new lab_OverlayRenderer(this);
 };
 
@@ -131,13 +135,15 @@ lab_GameController.prototype.initView = function(){
 lab_GameController.prototype.initCameras = function(){
      // CAMERA
     var aspectRatioScreen = this.screenWidth / this.screenHeight;
-    this.camera = new THREE.PerspectiveCamera(45, aspectRatioScreen, 0.0001, 1000);
+    // the 3d camera and its properties: (a) field of view (b) aspect ratio (c) near (d) far
+    this.camera = new THREE.PerspectiveCamera(70, aspectRatioScreen, 0.0001, 1000);
 
     // MINIMAP
     var aspectRatioMinimap = this.minimapWidth / this.minimapHeight;
 
     // the size of the level is used to determine the cameras position for the minimap
     var viewSize = this.levelController.levelSize;
+    // the 2d camera is a orthographic camera (view from above)
     this.cameraMap  = new THREE.OrthographicCamera(
         -aspectRatioMinimap * viewSize / 2,  // Left
         aspectRatioMinimap * viewSize / 2,   // Right
@@ -148,15 +154,16 @@ lab_GameController.prototype.initCameras = function(){
     // set the camera to look top down
     this.cameraMap.up = new THREE.Vector3(0,0,-1);
     this.cameraMap.lookAt( new THREE.Vector3(0,-1,0) );
-    this.sceneMinimap.add(this.cameraMap);
+
+    // add the map camera to the 2d scene (3d camera is added in initControls)
+    this.scene2d.add(this.cameraMap);
 };
 
 /**
- * This method will initialize the level (model and view)
+ * This method will initialize the level (model and views)
  */
 lab_GameController.prototype.initLevel = function(){
-
-    this.levelController    = new lab_LevelController(this.gameModel,this.scene3D,this.sceneMinimap);
+    this.levelController    = new lab_LevelController(this.gameModel,this.scene3d,this.scene2d);
 
     // init level
     this.levelController.init();
@@ -166,7 +173,6 @@ lab_GameController.prototype.initLevel = function(){
  * This method will initialize the events
  */
 lab_GameController.prototype.initEvents = function(){
-
     this.eventController    = new lab_EventController(this.gameModel);
 
     // init events
@@ -176,7 +182,7 @@ lab_GameController.prototype.initEvents = function(){
 
 /**
  * This method will initialize the controls. This will instantiate
- * a new controls object and configure it with the apropriaet
+ * a new controls object and configure it with the appropriate
  * settings for this game.
  */
 lab_GameController.prototype.initControls = function(){
@@ -194,23 +200,33 @@ lab_GameController.prototype.initControls = function(){
         cameraHeight: 1.8, // the player eyes height
         cameraStartPosition: {y: 1.8, x: this.gameModel.player.getPosition().x, z:this.gameModel.player.getPosition().z}
     });
-    this.scene3D.add(this.controls.getObject());
+    this.scene3d.add(this.controls.getObject());
 };
 
-// This method is getting called every frame, so within every
+// This method is called every frame, so within every
 // iteration of the game loop. Giving the controller the possibility
-// to update the modell and the controls
+// to update the model and the controls
+// 
+/**
+ * This method is called every frame, so within every
+ * iteration of the game loop. Giving the controller the possibility
+ * to update the model and the controls
+ */
 lab_GameController.prototype.update = function(){
     if(!this.pause) {
-        this.updateClock();
+        // handle a lost game
         if(this.gameModel.lost) {
             this.clock.stop();
             this.gameLost();
         }
+
+        // handle a won game
         if(this.gameModel.won) {
             this.clock.stop();
             this.gameWon();
         }
+        // all controllers are updated
+        this.updateClock();
         this.controls.update();
         this.levelController.update();
         this.eventController.update();
@@ -218,6 +234,9 @@ lab_GameController.prototype.update = function(){
 
 };
 
+/**
+ * Updates the clock and checks if time is over
+ */
 lab_GameController.prototype.updateClock = function(){
     this.timeLeft = this.gameDuration - this.clock.getElapsedTime();
     if (this.timeLeft <= 0) {

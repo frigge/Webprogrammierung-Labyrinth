@@ -164,8 +164,8 @@
         
         // rendering within the game loop happens here
         function render(){
-            gameController.labyrinthRenderer.render(gameController.scene3D, gameController.camera);
-            gameController.minimapRenderer.render(gameController.sceneMinimap, gameController.cameraMap);
+            gameController.labyrinthRenderer.render(gameController.scene3d, gameController.camera);
+            gameController.minimapRenderer.render(gameController.scene2d, gameController.cameraMap);
             gameController.overlayRenderer.render();
         }
         
