@@ -13,7 +13,7 @@
     },
     "axe": {
         "id"      : "axe",
-        "url"     : "resources/sounds/axe.mp3",
+        "url"     : "resources/sounds/axe.ogg",
         "volume"  : 1,
         "autoPlay": false
     },
