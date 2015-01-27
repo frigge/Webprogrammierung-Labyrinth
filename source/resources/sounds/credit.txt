@@ -43,8 +43,8 @@ https://www.freesound.org/people/jacobzeier/sounds/163164/
 
 
 Axe:
-Name: MV4824
-https://www.freesound.org/people/MV4824/sounds/61307/
+Name: OtisJames
+http://www.freesound.org/people/OtisJames/sounds/215162/
 
 damage:
 Name:trettfilms
