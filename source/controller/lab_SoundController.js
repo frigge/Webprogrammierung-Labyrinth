@@ -10,9 +10,12 @@ function lab_SoundController(){
     }
     
     this.init();
-    
 }
 
+/**
+ * This method will initialize the sound and created a "div" for sound from the sounds.json file
+ * if in some description the attribute autoplay, start and play the sound in loop
+ */
 lab_SoundController.prototype.init = function(){
     
     var soundsWrapper = document.createElement('div');
@@ -33,49 +36,10 @@ lab_SoundController.prototype.init = function(){
         
     }
     
-    this.domElement = soundsWrapper;
-    
+    this.domElement = soundsWrapper;   
 };
 
 
-/*
-lab_SoundController.prototype.playSound = function(key){
-
-    var sound = document.getElementById(key);
-    
-    if(sound){
-        // chrome specific handling
-        if(window.chrome){
-            sound.load();
-        } 
-        sound.currentTime = 0;
-        sound.play();
-    }
-    
-};
-
-lab_SoundController.prototype.stopPlayback = function(key){
-  
-    var sound = document.getElementById(key);
-    
-    if(!sound.paused){
-        sound.pause();
-        sound.currentElement = 0;
-    }
-    
-};
-
-lab_SoundController.prototype.startPlayback = function(key){
-    
-    var sound = document.getElementById(key);
-    
-    if(sound.paused){
-        this.playSound(key);
-    }
-    
-};
-
-*/
 lab_SoundController.prototype.getDomElement = function(){
     return this.domElement;
 };
