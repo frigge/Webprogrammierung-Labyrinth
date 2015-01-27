@@ -309,12 +309,12 @@ function InputController(configurationObject){
 			   // play sound by item selection
 			   document.getElementById('equipItem').play();		
                break;
-            case inventorySelection.medikit:
+            case inventorySelection.gasmask:
                player.setActiveItem(3);
 			   // play sound by item selection
 			   document.getElementById('equipItem').play();		
                break;
-            case inventorySelection.gasmask:
+            case inventorySelection.medikit:
                player.setActiveItem(4);
 			   // play sound by item selection
 			   document.getElementById('equipItem').play();		
