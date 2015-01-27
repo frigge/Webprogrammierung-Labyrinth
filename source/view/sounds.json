@@ -23,9 +23,9 @@
         "volume"  : 1,
         "autoPlay": false
     },
-    "useHealthKit": {
-        "id"      : "useHealthKit",
-        "url"     : "resources/sounds/use-health-kit.mp3",
+    "mediKit": {
+        "id"      : "mediKit",
+        "url"     : "resources/sounds/mediKit.ogg",
         "volume"  : 1,
         "autoPlay": false
     },
@@ -46,12 +46,6 @@
         "url"     : "resources/sounds/background.mp3",
         "volume"  : 0.2,
         "autoPlay": true
-    },
-	"test": {
-        "id"      : "test",
-        "url"     : "resources/sounds/test.mp3",
-        "volume"  : 1,
-        "autoPlay": false
 	},
 	"clock-ticking": {
         "id"      : "clock-ticking",
