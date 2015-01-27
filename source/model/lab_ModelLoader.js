@@ -34,6 +34,7 @@ lab_ModelLoader.prototype.createModelByToken = function(mapToken){
  */
 lab_ModelLoader.prototype.createModelByName = function(name){
     var className = this.modelDescription[name].className;
+    console.log(className);
     if (className == undefined) {
         throw new error("Model not existing");
     } else {
