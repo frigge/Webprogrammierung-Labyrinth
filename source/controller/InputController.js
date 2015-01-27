@@ -113,7 +113,7 @@ function InputController(configurationObject){
         document.addEventListener("mouseup", function(event) {
             player = gameController.gameModel.player;
 	
-		if (player.activeItem.type != undefined ) {			// if the player use the Item, play specific sound
+		if (player.activeItem != undefined ) {			// if the player use the Item, play specific sound
 		document.getElementById(player.activeItem.type).play();
 		
 		}	
