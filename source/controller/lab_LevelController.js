@@ -59,7 +59,10 @@ lab_LevelController.prototype.initModels = function(){
     // each model gets an unique id
     var id;
 
-	// set levelsize
+	/* set levelsize
+	calculated by the size of the level file (number of lines)
+	and the length of the line
+	*/
 	this.levelSizeX = level.levelData[0].line.length;
 	this.levelSizeY = level.levelData.length;
 	this.levelSize = Math.max(this.levelSizeX, this.levelSizeY);
@@ -88,15 +91,20 @@ lab_LevelController.prototype.initModels = function(){
 	this.gameModel.models[id].id = id;
 	this.gameModel.models[id].setPosition(0,wallHeight,0);
 
-	// the level file is translated
+	/*
+	translate every character of each line in the level file into an object
+	specified by the character
+	*/
 	for (i=0; i<this.levelSizeY; i++) {
 		var str = level.levelData[i].line;
 		for (j=0; j<this.levelSizeX; j++) {
 			if(this.modelLoader.tokenExists(str[j])) {
+				// create a unique id for each object
 				id = generateUUID();
 				this.gameModel.models[id] = this.modelLoader.createModelByToken(str[j]);
 				this.gameModel.models[id].id = id;
 				
+				// calculate the position of the object and give it to the model
 				var posY = this.setObjectYPosition(this.gameModel.models[id].type,defaultOffset);
 				this.gameModel.models[id].setPosition(j-rangeX,posY,i-rangeY);
 
