@@ -31,6 +31,13 @@ function lab_PlayerModel(gameModel){
     // player has not only a position but a velocity
     this.velocity = {x: 0.0, y: 0.0, z: 0.0};
 
+    this.movementConfig = {
+        normalSpeed:    2,
+        sprintSpeed:    5,
+        jumpAcceleration:     10,
+        acceleration:   7
+    }
+
     // the height of the player
     this.height = 1.8;
 }

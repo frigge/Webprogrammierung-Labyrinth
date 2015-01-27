@@ -11,7 +11,6 @@ function InputController(configurationObject){
     var moveZ = 0;
 
     var sprint              = false;
-    var crouch              = false;
     var jump                = false;
 
     /* VIEW */
@@ -29,20 +28,8 @@ function InputController(configurationObject){
 
     /* CONFIGURATION */
     var configuration = {
-        acceleration:   7,
-        normalSpeed:    2,
-        sprintSpeed:    5,
-        crouchSpeed:    1,
-        jumpAcceleration:     10,
-        crouchHeight:   0.9,
         debug:          false,
         camera:         {},
-        cameraHeight:   1.8,
-        cameraStartPosition: {
-            x: 0,
-            y: 1.8,
-            z: 6
-        },
         clock: new THREE.Clock(true),
         movement:       {
             forward:        87, // w
@@ -52,8 +39,7 @@ function InputController(configurationObject){
             up:             69, // e
             down:           81, // q
             jump:           32, // SPACE
-            sprint:         16, // SHIFT
-            crouch:         17  // CONTROL
+            sprint:         16 // SHIFT
         },
         inventorySelection: {
             axe : 49, // 1
@@ -66,7 +52,6 @@ function InputController(configurationObject){
         invertMouse:                false,
         fly:                        false,
         xCollisionHeights:          [1.8, 1.5, 1.2, 0.9, 0.6, 0.3, 0.1],
-        xCollisionCrouchHeights:    [0.9, 0.6, 0.3, 0.1]
     };
 
     var debug = function(message){
@@ -189,10 +174,6 @@ function InputController(configurationObject){
             case movement.sprint:
                sprint = true;
                break;
-            case movement.crouch:
-               crouch = true;
-               break;
-
             case movement.up:
                moveY += 1;
                break;
@@ -223,7 +204,7 @@ function InputController(configurationObject){
 
         debug('Key down: '+event.key+' ('+event.keyCode+')');
 
-        if(sprint || crouch) {
+        if(sprint) {
             event.preventDefault();
         }
 
@@ -248,9 +229,6 @@ function InputController(configurationObject){
                break;
             case movement.sprint:
                sprint = false;
-               break;
-            case movement.crouch:
-               crouch = false;
                break;
             case movement.forward:
                moveZ += 1;
@@ -391,13 +369,8 @@ function InputController(configurationObject){
         var positionTypes   = [leftPosition, centerPosition, rightPosition];
         var positions       = [];
         var heights         = configuration.xCollisionHeights;
-        var crouchHeights   = configuration.xCollisionCrouchHeights;
 
         currentHeight = gameController.gameModel.player.height;
-
-        if(crouch){
-            heights = crouchHeights;
-        }
 
         for(var i = 0; i < positionTypes.length; i++){
             for(var heightIndex = 0; heightIndex < heights.length; heightIndex++){
@@ -415,18 +388,16 @@ function InputController(configurationObject){
     /* ########################## */
 
     this.update = function(){
-        var delta   = configuration.clock.getDelta(),
-            speed   = configuration.normalSpeed;
-            accel   = configuration.acceleration;
+        var player = gameController.gameModel.player;
 
-        if( crouch && !configuration.fly ){
-            speed = configuration.crouchSpeed;
-            player.height = configuration.crouchHeight;
-        } else if( sprint && !configuration.fly ){
-            speed = configuration.sprintSpeed;
+        var delta   = configuration.clock.getDelta(),
+            speed   = player.movementConfig.normalSpeed;
+            accel   = player.movementConfig.acceleration;
+
+        if( sprint && !configuration.fly ){
+            speed = player.movementConfig.sprintSpeed;
         }
 
-        var player = gameController.gameModel.player;
         var vel = player.velocity;
         var pos = player.getPosition();
         position = new THREE.Vector3(pos.x, pos.y, pos.z);
@@ -482,7 +453,7 @@ function InputController(configurationObject){
         }
 
         if( jump && !configuration.fly  && floor_collision){
-            velocity.y = configuration.jumpAcceleration * (sprint ? 2 : 1) * delta;
+            velocity.y = player.movementConfig.jumpAcceleration * (sprint ? 2 : 1) * delta;
         }
 
         if(!detectXCollisions() || configuration.fly){
