@@ -59,8 +59,17 @@ lab_EventController.prototype.checkForAreaEvent = function(){
 					this.gameModel.addModelToUpdateList(model);
 					model.areaEvent();
 					// play sound when a model is collected
-					if (model.areaEventType == 'collect' && model.isCollected) {
-   						document.getElementById('collect').play();
+					switch(model.areaEventType) {
+						case 'collect':
+							if (model.isCollected) {
+								document.getElementById('collect').play();
+							}
+							break;
+						case 'damage': 
+							document.getElementById('damage').play();
+							break;
+						default:
+							break;	
 					}
 		    }
         }
