@@ -98,22 +98,13 @@ function InputController(configurationObject){
         console.log("init interactions");
         document.addEventListener("mouseup", function(event) {
             player = gameController.gameModel.player;
-			
-		if (Player.activeItem.type != undefined ) {
-			document.getElementById(Player.activeItem.type).play();
+	
+		if (player.activeItem.type != undefined ) {						// Sound from activeItem
+		document.getElementById(player.activeItem.type).play();
+		
 		}	
-			
-			
-			
-			
-			
-           
-//  switch anweisung
-//	Player.activeItem.type
-//  document.getElementById(Player.activeItem.type).play();
-
-		   player.useActiveItem();
-	//		document.getElementById('test').play();
+		
+		player.useActiveItem();
         }, false);
     };
 

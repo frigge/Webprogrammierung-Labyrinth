@@ -43,7 +43,7 @@
         "mapToken":   "E"
     },
     "gasMask":  {
-        "name":       "Medikit",
+        "name":       "GasMask",
         "className":  "lab_GasMaskItemModel",
         "mapToken":   "G"
     },
