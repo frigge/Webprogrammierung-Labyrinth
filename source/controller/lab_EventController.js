@@ -1,48 +1,65 @@
+/**
+ * The event controller handles events (at the moment only area events)
+ * @param gameModel the game model holding the game state
+ */
 function lab_EventController(gameModel){
-	// all objects for which area events are relevant
 
 	this.gameModel = gameModel;
 }
 
-// initialize all event types
+/**
+ * initialize all event types
+ */
 lab_EventController.prototype.init = function(){
 	this.initAreaEvents();
 }
 
-// initialize all event types
+/**
+ * update all event types
+ */
 lab_EventController.prototype.update = function(){
 	this.checkForAreaEvent();
 }
 
-// initialize area events
+/**
+ * inizialize area events
+ * adds all models which have an area event to a list
+ */
 lab_EventController.prototype.initAreaEvents = function(){
-	// area events
 	for(var modelId in this.gameModel.models){		
 		if (this.gameModel.models[modelId].hasAreaEvent) {
 			this.gameModel.addModelToAreaEventList(this.gameModel.models[modelId]);
 		}
 	}
-	console.log(this.gameModel.areaEventList);
 }
 
-// if player is in area of entity the corresponding area event is fired
+/**
+ * if player is in area of entity the corresponding area event is fired
+ */
 lab_EventController.prototype.checkForAreaEvent = function(){
-    var position = this.gameModel.player.getPosition();
+    var playerPosition = this.gameModel.player.getPosition();
     var eventRadius = 1;
 
     for(var modelId in this.gameModel.areaEventList){
         model = this.gameModel.areaEventList[modelId];
-        if (model.isDeleted) {
+        // checks if model is deleted or collected in the meantime
+        if (model.isDeleted || model.isCollected) {
         	this.gameModel.removeModelFromAreaEventList(model);
         } else {
-        	modelposition = model.getPosition();
-	    	if ((position.x >= modelposition.x - eventRadius) &&
-		    	(position.x <= modelposition.x + eventRadius) &&
-				(position.z >= modelposition.z - eventRadius) &&
-				(position.z <= modelposition.z + eventRadius)) {
+        	var modelPosition = model.getPosition();
+        	/* 
+	   		  check if player position lies in radius of model and call
+	   		  the area event
+        	*/
+	    	if ((playerPosition.x >= modelPosition.x - eventRadius) &&
+		    	(playerPosition.x <= modelPosition.x + eventRadius) &&
+				(playerPosition.z >= modelPosition.z - eventRadius) &&
+				(playerPosition.z <= modelPosition.z + eventRadius)) {
+					// something happens, put the model in the updatelist
 					this.gameModel.addModelToUpdateList(model);
 					model.areaEvent();
-					if (model.areaEventType == 'collect' && model.isCollected) {				// if the subject overrun spend Sound
+					// play sound when a model is collected
+					if (model.areaEventType == 'collect' && model.isCollected) {
    						document.getElementById('collect').play();
 					}
 		    }
