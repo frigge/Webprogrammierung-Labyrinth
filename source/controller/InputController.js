@@ -1,5 +1,10 @@
 var InputController = InputController || {};
 
+/**
+ * The InputController handles mouse and keyboard input and alters the
+ * state of the player.
+ */
+
 function InputController(configurationObject){
 
     if (!(this instanceof InputController)){
@@ -54,23 +59,44 @@ function InputController(configurationObject){
         xCollisionHeights:          [1.8, 1.5, 1.2, 0.9, 0.6, 0.3, 0.1],
     };
 
+    /**
+     * Utility function used to output debug information
+     * a global configuration flag can be used to disable all debug output
+     * for deployment
+     * @param message the string output to the console
+     */
     var debug = function(message){
         if(configuration.debug){
             console.debug(message);
         }
     };
 
+    /**
+     * Utility function used to output warnings.
+     * @param message the string output to the console
+     */
     var warn = function(message){
         console.warn(message);
     };
 
+    /**
+     * Returns the object containing the camera
+     * only used by the GameController as THREE.js needs the camera as part
+     * of the scene.
+     */
     this.getObject = function() { return groundPosObject; };
 
+    /**
+     * Utility function used to output errors.
+     * @param message the string output to the console
+     */
     var error = function(message){
         console.error(message);
     };
 
-
+    /**
+     * Initializes the InputController is called at the end of the constructor
+     */
     var init = function(){
         initConfiguration();
         initCamera();
@@ -79,6 +105,10 @@ function InputController(configurationObject){
         initPointerLock();
     };
 
+    /**
+     * Initializes the Interactions. Sets up an EventListener for the mouseUp
+     * Event to be able to use active items
+     */
     var initInteraction = function(){
         console.log("init interactions");
         document.addEventListener("mouseup", function(event) {
@@ -93,6 +123,11 @@ function InputController(configurationObject){
         }, false);
     };
 
+    /**
+     * Initializes the configuration. Copies the contents of the configuration object
+     * passed into the Constructor to the InputControllers configuration, overriding
+     * only values that actually got passed in, thus preserving default values.
+     */
     var initConfiguration = function(){
 
         for (var property in configurationObject){
@@ -113,6 +148,10 @@ function InputController(configurationObject){
 
     };
 
+    /**
+     * Initializes the camera. Sets up a parent->child hierarchy to handle
+     * position, y-Rotation and x-Rotation separately
+     */
     var initCamera = function(){
 
         debug('Initializing camera ...');
@@ -126,6 +165,9 @@ function InputController(configurationObject){
         groundPosObject.position.set(pos.x, pos.y, pos.z);
     };
 
+    /**
+     * Sets up keyboard input event listeners
+     */
     var initMovement = function (){
 
         debug('Initializing movement ...');
@@ -137,6 +179,12 @@ function InputController(configurationObject){
 
     /* #################### */
 
+    /**
+     * Movement function.
+     *
+     * Handles mouse input, sets up camera rotation and copies that information
+     * over to the player model.
+     */
     var onMouseMove = function ( event ) {
         if(gameController.pause) return;
 
@@ -162,6 +210,10 @@ function InputController(configurationObject){
         player.setPosition(pos.x, pos.y, pos.z);
     };
 
+    /**
+     * Handles keyboard input for player translation by setting movement masks
+     * based on key pressed.
+     */
     var onKeyDown = function ( event ) {
 
         var movement = configuration.movement;
@@ -210,6 +262,10 @@ function InputController(configurationObject){
 
     };
 
+    /**
+     * Handles keyboard input for player translation. Resets movement masks and
+     * handles item selection based on key pressed.
+     */
     var onKeyUp = function ( event ) {
 
         var movement = configuration.movement;
@@ -275,6 +331,9 @@ function InputController(configurationObject){
 
     };
 
+    /**
+     * Handles collision detection in the Y Plane
+     */
     var detectXCollisions = function(){
         var direction = getDirection();
         var positions = getPositions( direction );
@@ -308,6 +367,9 @@ function InputController(configurationObject){
 
     };
 
+    /**
+     * Handles ground collision detection
+     */
     var detectYCollisions = function() {
         var player = gameController.gameModel.player;
         var pos = player.getPosition();
@@ -344,10 +406,17 @@ function InputController(configurationObject){
         return false;
     };
 
+    /**
+     * returns the direction the player is looking at.
+     */
     var getDirection = function() {
         return gameController.gameModel.player.getAxisZ();
     }
 
+    /**
+     * Returns a set of pre positions relative to the viewing direction
+     * used for collision detection
+     */
     var getPositions = function( direction ){
 
         var centerPosition  = groundPosObject.position.clone();
@@ -387,6 +456,10 @@ function InputController(configurationObject){
 
     /* ########################## */
 
+    /**
+     * Updates the player velocity and position based on the movement masks and
+     * collision detection.
+     */
     this.update = function(){
         var player = gameController.gameModel.player;
 
@@ -465,6 +538,11 @@ function InputController(configurationObject){
         player.velocity = {x : velocity.x, y : velocity.y, z : velocity.z};
     };
 
+    /**
+     * Sets up the mouse pointer lock itself as well as the click event on the instructions overlay
+     * to actually enable the lock; Hides the instructions and starts/resumes the game when locking, reveals it when
+     * the lock is lost and pauses the game.
+     */
     function initPointerLock(){
 
         var hasPointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
