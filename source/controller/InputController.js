@@ -110,7 +110,6 @@ function InputController(configurationObject){
      * Event to be able to use active items
      */
     var initInteraction = function(){
-        console.log("init interactions");
         document.addEventListener("mouseup", function(event) {
             player = gameController.gameModel.player;
 	
