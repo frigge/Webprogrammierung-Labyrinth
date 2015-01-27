@@ -66,7 +66,10 @@ lab_EventController.prototype.checkForAreaEvent = function(){
 							}
 							break;
 						case 'damage': 
-							document.getElementById('damage').play();
+							// only play damage sound when user has damage
+							if (this.gameModel.player.passiveItem != "gasMask") {
+								document.getElementById('damage').play();	
+							}
 							break;
 						default:
 							break;	
