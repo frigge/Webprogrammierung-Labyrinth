@@ -7,8 +7,8 @@ var lab_InputController = lab_InputController || {};
 
 function lab_InputController(configurationObject){
 
-    if (!(this instanceof InputController)){
-        return new InputController(configurationObject);
+    if (!(this instanceof lab_InputController)){
+        return new lab_InputController(configurationObject);
     }
     /* MOVEMENT */
     var moveX = 0;
