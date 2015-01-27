@@ -84,7 +84,7 @@ function InputController(configurationObject){
         document.addEventListener("mouseup", function(event) {
             player = gameController.gameModel.player;
 	
-		if (player.activeItem.type != undefined ) {						// Sound from activeItem
+		if (player.activeItem.type != undefined ) {			// if the player use the Item, play specific sound
 		document.getElementById(player.activeItem.type).play();
 		
 		}	
@@ -245,19 +245,19 @@ function InputController(configurationObject){
 
             case inventorySelection.axe:
                player.setActiveItem(1);
-			   document.getElementById('test').play();
+			   document.getElementById('test').play();		 // play sound by item selection 
                break;
             case inventorySelection.extinguisher:
                player.setActiveItem(2);
-			   document.getElementById('test').play();
+			   document.getElementById('test').play();		 // play sound by item selection 
                break;
             case inventorySelection.medikit:
                player.setActiveItem(3);
-			   document.getElementById('test').play();
+			   document.getElementById('test').play();		 // play sound by item selection 
                break;
             case inventorySelection.gasmask:
                player.setActiveItem(4);
-			   document.getElementById('test').play();
+			   document.getElementById('test').play();		 // play sound by item selection 
                break;
             case inventorySelection.resident:
                player.setActiveItem(5);
