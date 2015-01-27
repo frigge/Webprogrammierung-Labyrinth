@@ -47,7 +47,7 @@
         },
         "View2D": {
             "category":     "sprite",
-            "textureUrl":   "resources/images/door.png",
+            "textureUrl":   "resources/images/levelend.png",
             "scaleX":       1,
             "scaleY":       1
         }

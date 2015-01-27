@@ -1,3 +1,6 @@
+/**
+ * The Sound Controller handels all sounds
+ */
 function lab_SoundController(){
     
     this.domElement = null;

@@ -110,11 +110,10 @@ function lab_InputController(configurationObject){
      * Event to be able to use active items
      */
     var initInteraction = function(){
-        console.log("init interactions");
         document.addEventListener("mouseup", function(event) {
             player = gameController.gameModel.player;
 	
-		if (player.activeItem.type != undefined ) {			// if the player use the Item, play specific sound
+		if (player.activeItem != undefined ) {			// if the player use the Item, play specific sound
 		document.getElementById(player.activeItem.type).play();
 		
 		}	
@@ -301,19 +300,23 @@ function lab_InputController(configurationObject){
 
             case inventorySelection.axe:
                player.setActiveItem(1);
-			   document.getElementById('test').play();		 // play sound by item selection 
+			   // play sound by item selection
+			   document.getElementById('equipItem').play();		
                break;
             case inventorySelection.extinguisher:
                player.setActiveItem(2);
-			   document.getElementById('test').play();		 // play sound by item selection 
-               break;
-            case inventorySelection.medikit:
-               player.setActiveItem(3);
-			   document.getElementById('test').play();		 // play sound by item selection 
+			   // play sound by item selection
+			   document.getElementById('equipItem').play();		
                break;
             case inventorySelection.gasmask:
+               player.setActiveItem(3);
+			   // play sound by item selection
+			   document.getElementById('equipItem').play();		
+               break;
+            case inventorySelection.medikit:
                player.setActiveItem(4);
-			   document.getElementById('test').play();		 // play sound by item selection 
+			   // play sound by item selection
+			   document.getElementById('equipItem').play();		
                break;
             case inventorySelection.resident:
                player.setActiveItem(5);
