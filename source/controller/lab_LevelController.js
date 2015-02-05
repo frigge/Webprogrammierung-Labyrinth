@@ -50,7 +50,7 @@ lab_LevelController.prototype.init = function(){
 lab_LevelController.prototype.initModels = function(){
 	// load level data from JSON file
 	try {
-        var level = lab_ajaxGetJson('resources/level-01.json');
+        var level = lab_ajaxGetJson('resources/level-02.json');
     }
     catch(e) {
         throw new Error("Level file could not be loaded! Reason: " + e.message);
