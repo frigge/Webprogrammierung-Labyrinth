@@ -27,7 +27,6 @@ lab_MediKitItemModel.prototype.constructor = lab_MediKitItemModel;
 
 /**
  * Heals the player when used
- * @return {[type]} [description]
  */
 lab_MediKitItemModel.prototype.use = function(){
 	this.gameModel.player.addHealth(this.healthBonus);

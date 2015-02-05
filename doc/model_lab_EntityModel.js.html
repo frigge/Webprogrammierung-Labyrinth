@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: model/lab_EntityModel.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: model/lab_EntityModel.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Abstract entity model
+ * All game entities inherit from this class
+ * @param  gameModel
+ * @abstract
+ */
+function lab_EntityModel(gameModel){
+    
+    this.gameModel = gameModel;
+
+    /* COLLISION DETECTION */
+    this.raycaster       = new THREE.Raycaster();
+    this.raycaster.near = .01;
+    this.raycaster.far  = 1000;
+
+    // each entity will get an unique ID
+    this.id;
+
+    // each entity will get a type (e.g. wall)
+    this.type = '';
+
+    // each entity has a collision or not
+    this.collidable = true;
+    
+    // Transformation of the Entity
+    this.transformation = new THREE.Matrix4();
+
+    // entities can be destroyed/deleted
+    this.isDeleted = false;
+}
+
+// sets the position on x,y and z dimension
+lab_EntityModel.prototype.setPosition = function(x,y,z){
+    var elem = this.transformation.elements;
+    elem[12] = x;
+    elem[13] = y;
+    elem[14] = z;
+};
+
+lab_EntityModel.prototype.getPosition = function() {
+    var elem = this.transformation.elements;
+    return {x : elem[12], y : elem[13], z : elem[14]};
+}
+
+lab_EntityModel.prototype.getAxisX = function() {
+    var elem = this.transformation.elements;
+    return new THREE.Vector3(elem[0], elem[1], elem[2]);
+}
+
+lab_EntityModel.prototype.getAxisY = function() {
+    var elem = this.transformation.elements;
+    return new THREE.Vector3(elem[4], elem[5], elem[6]);
+}
+
+lab_EntityModel.prototype.getAxisZ = function() {
+    var elem = this.transformation.elements;
+    return new THREE.Vector3(elem[8], elem[9], elem[10]);
+}
+
+//utillity method that checks for collisions with other objects
+//given a position and a direction
+lab_EntityModel.prototype.checkCollision = function(position, direction) {
+    this.raycaster.set(position, direction);
+
+    var collidables = gameController.levelController.collidables;
+    var collisions = this.raycaster.intersectObjects( collidables );
+
+    if(collisions.length == 0) 
+        return false;
+
+    collisions.sort(function(a,b){
+        return a.distance-b.distance;
+    });
+
+    return collisions[0];
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#generateUUID">generateUUID</a></li><li><a href="global.html#getObject">getObject</a></li><li><a href="global.html#lab_ajaxGetJson">lab_ajaxGetJson</a></li><li><a href="global.html#lab_AxeItemModel">lab_AxeItemModel</a></li><li><a href="global.html#lab_CeilingModel">lab_CeilingModel</a></li><li><a href="global.html#lab_DoorModel">lab_DoorModel</a></li><li><a href="global.html#lab_EntityModel">lab_EntityModel</a></li><li><a href="global.html#lab_EventController">lab_EventController</a></li><li><a href="global.html#lab_FireExtinguisherItemModel">lab_FireExtinguisherItemModel</a></li><li><a href="global.html#lab_FireModel">lab_FireModel</a></li><li><a href="global.html#lab_FloorModel">lab_FloorModel</a></li><li><a href="global.html#lab_GameController">lab_GameController</a></li><li><a href="global.html#lab_GameModel">lab_GameModel</a></li><li><a href="global.html#lab_GasMaskItemModel">lab_GasMaskItemModel</a></li><li><a href="global.html#lab_InputController">lab_InputController</a></li><li><a href="global.html#lab_ItemModel">lab_ItemModel</a></li><li><a href="global.html#lab_LabyrinthRenderer">lab_LabyrinthRenderer</a></li><li><a href="global.html#lab_LevelController">lab_LevelController</a></li><li><a href="global.html#lab_LevelendModel">lab_LevelendModel</a></li><li><a href="global.html#lab_MediKitItemModel">lab_MediKitItemModel</a></li><li><a href="global.html#lab_MinimapRenderer">lab_MinimapRenderer</a></li><li><a href="global.html#lab_ModelLoader">lab_ModelLoader</a></li><li><a href="global.html#lab_OverlayRenderer">lab_OverlayRenderer</a></li><li><a href="global.html#lab_PlayerModel">lab_PlayerModel</a></li><li><a href="global.html#lab_RepresentationLoader">lab_RepresentationLoader</a></li><li><a href="global.html#lab_ResidentItemModel">lab_ResidentItemModel</a></li><li><a href="global.html#lab_SmokeModel">lab_SmokeModel</a></li><li><a href="global.html#lab_SoundController">lab_SoundController</a></li><li><a href="global.html#lab_WallModel">lab_WallModel</a></li><li><a href="global.html#randomInt">randomInt</a></li><li><a href="global.html#THREE">THREE</a></li><li><a href="global.html#update">update</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0-dev</a> on Thu Feb 05 2015 18:01:36 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

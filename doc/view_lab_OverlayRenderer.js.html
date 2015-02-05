@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: view/lab_OverlayRenderer.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: view/lab_OverlayRenderer.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * The overlay renderer is responsible for showing the HUD elements
+ * @param gameController
+ */
+function lab_OverlayRenderer(gameController){
+	this.gameController = gameController;
+}
+
+/**
+ * initialize all overlay items
+ */
+lab_OverlayRenderer.prototype.render = function() {
+	this.renderHud();
+	this.renderDebugHud();
+	this.renderClock();
+	this.renderGasMask();
+}
+
+/**
+ * This method handles the gas mask view
+ */
+lab_OverlayRenderer.prototype.renderGasMask = function() {
+    var gasmaskOverlay = document.getElementById('gasmaskoverlay');
+	// switch limited field of view off
+    if(this.gameController.gameModel.player.passiveItem == undefined) {
+    	if (gasmaskOverlay.style.display != 'none') {
+    		gasmaskOverlay.style.display = 'none';
+    	}
+    } else {
+		// switch limited field of view on
+    	if(this.gameController.gameModel.player.passiveItem.type == 'gasMask'){
+	    	if (gasmaskOverlay.style.display != 'block') {
+	    		gasmaskOverlay.style.display = 'block';
+	    	}
+    	}
+    }
+}
+
+/**
+ * This method will be render the clock. 
+ * In dependence on the time remaining,  the size and the color of the clock is changed
+ */
+lab_OverlayRenderer.prototype.renderClock = function () {
+
+    // load div for clock into variable
+	var clockElement = document.getElementById("clock");
+
+    // get rest time from gameController
+	var timeLeft = this.gameController.timeLeft;
+
+	// convert rest time to string (min:sec)
+	var timeMin = Math.floor(timeLeft / 60);
+	var timeSec = parseInt(timeLeft - (timeMin * 60));
+	if (timeSec &lt; 10) {
+		var timeStr = timeMin + ':0' + timeSec;
+	} else var timeStr = timeMin + ':' + timeSec;
+
+	// show time on HUD
+	if (timeLeft >= 0 ) clockElement.textContent = timeStr;
+
+	// edit style of timer if only a few seconds are left
+    if(timeLeft &lt; 1){
+        clockElement.style.color = "blue";
+		document.getElementById('time-out').play();
+    }
+    else if(timeLeft &lt; 10)
+    {
+        clockElement.style.color = "red";
+		document.getElementById('clock-ticking').play();
+        if(parseInt(timeLeft * 2) % 2 === 0)
+        {
+            clockElement.style.fontSize = "350%";
+        }
+        else
+        {
+            clockElement.style.fontSize = "200%";
+        }
+    }
+    else if(timeLeft &lt; 20)
+    {
+        clockElement.style.color = "orange";
+        if(parseInt(timeLeft) % 2 === 0)
+        {
+            clockElement.style.fontSize = "280%";
+        }
+        else
+        {
+            clockElement.style.fontSize = "200%";
+        }
+    }
+}
+
+/**
+ * This method will be render the HUD inventory and health display 
+ */
+lab_OverlayRenderer.prototype.renderHud = function() {
+	// Load HUD div elements from CSS to var
+	var debugHud = document.getElementById("debug-hud");
+	var hudAxe = document.getElementById("hudAxe");
+	var hudExtinguisher = document.getElementById("hudExtinguisher");
+	var hudGasmask = document.getElementById("hudGasmask");
+	var hudMedikit = document.getElementById("hudMedikit");
+	var hudHealthOn = document.getElementById("healthon");
+	var hudHealthOff = document.getElementById("healthoff");
+	var hudResident = document.getElementById("resident");	
+	
+    // get player object from gameController
+	var player = gameController.gameModel.player;
+
+	// clear HUD items
+	hudExtinguisher.innerHTML = '&lt;img class="hudimage" src="resources/images/extinguisher_off.png" />';
+	hudAxe.innerHTML = '&lt;img class="hudimage" src="resources/images/axe_off.png" />';
+	hudMedikit.innerHTML = '&lt;img class="hudimage" src="resources/images/medikit_off.png" />';
+	hudGasmask.innerHTML = '&lt;img class="hudimage" src="resources/images/gasmask_off.png" />';
+	hudResident.innerHTML = '&lt;img class="hudimage" src="resources/images/resident_off.png" />';
+	
+	// show items in inventory on HUD	
+    for (var  slot in player.inventory) {
+		if (player.inventory[slot].type == 'axe') hudAxe.innerHTML = '&lt;img class="hudimage" src="resources/images/axe_on.png" />';
+		if (player.inventory[slot].type == 'fireExtinguisher') {
+			var extinguisherPos = 2;
+			var fireExtinguisher = player.inventory[extinguisherPos];
+			if(fireExtinguisher) {
+  				var uses = fireExtinguisher.amountUses;
+				var size = fireExtinguisher.possibleAmountUses;
+				// calculating filling level of extinguisher to show different images
+				var usesPercent = uses / (size * 0.01);
+				if (usesPercent > 66) hudExtinguisher.innerHTML = '&lt;img class="hudimage" src="resources/images/extinguisher_on.png" />';
+				if (usesPercent > 33 &amp;&amp; usesPercent &lt; 67) hudExtinguisher.innerHTML = '&lt;img class="hudimage" src="resources/images/extinguisher_on_2-3.png" />';
+				if (usesPercent &lt; 34) hudExtinguisher.innerHTML = '&lt;img class="hudimage" src="resources/images/extinguisher_on_1-3.png" />';
+			}
+		}
+		if (player.inventory[slot].type == 'mediKit') hudMedikit.innerHTML = '&lt;img class="hudimage" src="resources/images/medikit_on.png" />';
+		if (player.inventory[slot].type == 'gasMask') hudGasmask.innerHTML = '&lt;img class="hudimage" src="resources/images/gasmask_on.png" />';
+		if (player.inventory[slot].type == 'resident') hudResident.innerHTML = '&lt;img class="hudimage" src="resources/images/resident_on.png" />';
+    }
+
+	// Show active items
+    if(player.activeItem !== undefined) {
+		if (player.activeItem.type == 'axe') hudAxe.innerHTML = '&lt;img class="hudimage" src="resources/images/axe_active.png" />';
+		if (player.activeItem.type == 'fireExtinguisher') {
+			var uses = player.activeItem.amountUses;
+			var size = player.activeItem.possibleAmountUses;
+			// calculating filling level of extinguisher to show different images
+			var usesPercent = uses / (size * 0.01);
+			if (usesPercent > 66) hudExtinguisher.innerHTML = '&lt;img class="hudimage" src="resources/images/extinguisher_active.png" />';
+			if (usesPercent > 33 &amp;&amp; usesPercent &lt; 67) hudExtinguisher.innerHTML = '&lt;img class="hudimage" src="resources/images/extinguisher_active_2-3.png" />';	
+			if (usesPercent &lt; 34) hudExtinguisher.innerHTML = '&lt;img class="hudimage" src="resources/images/extinguisher_active_1-3.png" />';			
+		}
+		if (player.activeItem.type == 'mediKit') hudMedikit.innerHTML = '&lt;img class="hudimage" src="resources/images/medikit_active.png" />';
+		if (player.activeItem.type == 'gasMask') hudGasmask.innerHTML = '&lt;img class="hudimage" src="resources/images/gasmask_active.png" />';
+	}
+
+	// Show current health
+	var healthNum = 70 - Math.round(70 * (player.health * 0.01));
+	// resize div for health - only rest health is shown
+	var healthStr = "rect(" + healthNum + "px, 70px, 70px, 0px)";
+	document.getElementById("hud-health-on").style.clip = healthStr;
+	hudHealthOn.innerHTML = '&lt;img class="hudimage" src="resources/images/health_on.png" />';
+	hudHealthOff.innerHTML = '&lt;img class="hudimage" src="resources/images/health_off.png" />';
+}
+
+/**
+ * This method shows the HUD inventory and health as text
+ * Only for debugging
+ */
+lab_OverlayRenderer.prototype.renderDebugHud = function () {
+    var text = "";
+    var player = gameController.gameModel.player;
+
+    text += "Health: " + player.health + " %&lt;br>";
+    if(player.activeItem !== undefined)
+        text += "Active Item: " + player.activeItem.type + " (" + player.activeItem.amountUses + ")&lt;br>";
+    else
+        text += "Active Item: None&lt;br>";
+    if(player.passiveItem !== undefined)
+        text += "Passive Item: " + player.passiveItem.type + " (" + player.passiveItem.amountUses + ")&lt;br>";
+    else
+        text += "Passive Item: None&lt;br>";
+    text += "Inventory: [";
+    for (var  slot in player.inventory) {
+        text += slot + ": " + player.inventory[slot].type;
+        text += ", ";
+    }
+     //debugHud.innerHTML = text;
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#generateUUID">generateUUID</a></li><li><a href="global.html#getObject">getObject</a></li><li><a href="global.html#lab_ajaxGetJson">lab_ajaxGetJson</a></li><li><a href="global.html#lab_AxeItemModel">lab_AxeItemModel</a></li><li><a href="global.html#lab_CeilingModel">lab_CeilingModel</a></li><li><a href="global.html#lab_DoorModel">lab_DoorModel</a></li><li><a href="global.html#lab_EntityModel">lab_EntityModel</a></li><li><a href="global.html#lab_EventController">lab_EventController</a></li><li><a href="global.html#lab_FireExtinguisherItemModel">lab_FireExtinguisherItemModel</a></li><li><a href="global.html#lab_FireModel">lab_FireModel</a></li><li><a href="global.html#lab_FloorModel">lab_FloorModel</a></li><li><a href="global.html#lab_GameController">lab_GameController</a></li><li><a href="global.html#lab_GameModel">lab_GameModel</a></li><li><a href="global.html#lab_GasMaskItemModel">lab_GasMaskItemModel</a></li><li><a href="global.html#lab_InputController">lab_InputController</a></li><li><a href="global.html#lab_ItemModel">lab_ItemModel</a></li><li><a href="global.html#lab_LabyrinthRenderer">lab_LabyrinthRenderer</a></li><li><a href="global.html#lab_LevelController">lab_LevelController</a></li><li><a href="global.html#lab_LevelendModel">lab_LevelendModel</a></li><li><a href="global.html#lab_MediKitItemModel">lab_MediKitItemModel</a></li><li><a href="global.html#lab_MinimapRenderer">lab_MinimapRenderer</a></li><li><a href="global.html#lab_ModelLoader">lab_ModelLoader</a></li><li><a href="global.html#lab_OverlayRenderer">lab_OverlayRenderer</a></li><li><a href="global.html#lab_PlayerModel">lab_PlayerModel</a></li><li><a href="global.html#lab_RepresentationLoader">lab_RepresentationLoader</a></li><li><a href="global.html#lab_ResidentItemModel">lab_ResidentItemModel</a></li><li><a href="global.html#lab_SmokeModel">lab_SmokeModel</a></li><li><a href="global.html#lab_SoundController">lab_SoundController</a></li><li><a href="global.html#lab_WallModel">lab_WallModel</a></li><li><a href="global.html#randomInt">randomInt</a></li><li><a href="global.html#THREE">THREE</a></li><li><a href="global.html#update">update</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0-dev</a> on Thu Feb 05 2015 18:01:36 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
